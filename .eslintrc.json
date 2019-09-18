@@ -5,8 +5,7 @@
     },
     "parser": "babel-eslint",
     "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
+        "airbnb"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -22,5 +21,24 @@
     "plugins": [
         "react"
     ],
-    "rules": {}
+    "rules": {
+        "max-len": [
+            "error",
+            {
+                "code": 120
+            }
+        ],
+        "prefer-promise-reject-errors": [
+            "off"
+        ],
+        "react/jsx-filename-extension": [
+            "off"
+        ],
+        "react/prop-types": [
+            "warn"
+        ],
+        "no-return-assign": [
+            "off"
+        ]
+    }
 }
