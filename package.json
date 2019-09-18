@@ -7,14 +7,12 @@
     "build": "react-scripts build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src",
-    "test": "react-scripts test --env=jsdom",
-    "jest-test": "jest ./src",
-    "eject": "react-scripts eject"
+    "test": " react-scripts test"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
-      "pre-push": "npm run test"
+      "pre-push": "set CI=true && npm run test "
     }
   },
   "dependencies": {
