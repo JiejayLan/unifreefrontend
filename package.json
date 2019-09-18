@@ -2,23 +2,25 @@
   "name": "unifreefrontend",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-scripts": "3.1.1"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jsdom",
+    "jest-test": "jest ./src",
     "eject": "react-scripts eject"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
     }
+  },
+  "dependencies": {
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-scripts": "3.1.1"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,7 +38,7 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.0.2",
     "eslint": "^6.4.0",
     "eslint-plugin-react": "^7.14.3",
     "husky": "^3.0.5"
