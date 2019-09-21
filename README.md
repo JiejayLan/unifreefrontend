@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/JiejayLan/unifreefrontend.svg?branch=master)](https://travis-ci.org/JiejayLan/unifreefrontend)
+[![Build Status](https://travis-ci.org/JiejayLan/unifreefrontend.svg?branch=develop)](https://travis-ci.org/JiejayLan/unifreefrontend)
+
+[![Coverage Status](https://coveralls.io/repos/github/JiejayLan/unifreefrontend/badge.svg?branch=develop)](https://coveralls.io/github/JiejayLan/unifreefrontend?branch=develop)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
