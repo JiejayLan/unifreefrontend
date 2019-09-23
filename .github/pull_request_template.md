@@ -5,8 +5,8 @@
 
 ### Technical Changs
 
-<!-- Explain any technical changes here, if any-->
-<!-- List what you changed, for example added functions to this file. The functionalities should be included as well-->
+<!-- Explain any technical changes hre, if any-->
+<!-- List what you changed, for example aded functions to this file. The functionalities should be included as well-->
 
 ### Architecture Changes
 
