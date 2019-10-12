@@ -1,4 +1,4 @@
-import AppRouter from '../AppRouter';
+import { AppRouter } from '../AppRouter';
 
 describe('app router test suite', () => {
   it('renders without crashing', () => {

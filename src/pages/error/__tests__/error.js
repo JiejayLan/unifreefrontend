@@ -1,4 +1,4 @@
-import Error from '../Error';
+import { Error } from '../Error';
 
 describe('error page test suite', () => {
   it('renders without crashing', () => {

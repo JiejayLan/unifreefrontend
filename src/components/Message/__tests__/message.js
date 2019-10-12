@@ -1,4 +1,4 @@
-import Message from '../Message';
+import { Message } from '../Message';
 
 describe('message component test suite', () => {
   it('renders without crashing', () => {

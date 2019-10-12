@@ -1,4 +1,4 @@
-import Home from '../Home';
+import { Home } from '../Home';
 
 describe('home page test suite', () => {
   it('renders without crashing', () => {
