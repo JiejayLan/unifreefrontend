@@ -21,7 +21,8 @@
     },
     "plugins": [
         "react",
-        "eslint-plugin-react"
+        "eslint-plugin-react",
+        "eslint-plugin-import"
     ],
     "rules": {
         "max-len": [
@@ -41,6 +42,7 @@
         ],
         "no-return-assign": [
             "off"
-        ]
+        ],
+        "import/prefer-default-export": "off"
     }
 }
