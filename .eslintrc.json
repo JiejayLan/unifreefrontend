@@ -43,6 +43,7 @@
         "no-return-assign": [
             "off"
         ],
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "eol-last":2
     }
 }
