@@ -11,9 +11,31 @@ const defaultTasks = [
   { ...task, id: '6', title: 'Task 6' },
 ];
 
-describe('Task object example', () => {
+describe('TaskList object example', () => {
   it('renders without crashing', () => {
-    const taskList = <TaskList tasks={defaultTasks} />;
+    const taskList = <TaskList tasks={defaultTasks} loading={false} />;
+    expect(taskList).toBeDefined();
+  });
+});
+
+describe('TaskList object loading', () => {
+  it('renders without crashing', () => {
+    const taskList = <TaskList tasks={defaultTasks} loading />;
+    expect(taskList).toBeDefined();
+  });
+});
+
+describe('TaskList object empty', () => {
+  it('renders without crashing', () => {
+    const taskList = <TaskList tasks={[]} loading={false} />;
+    expect(taskList).toBeDefined();
+  });
+});
+
+
+describe('TaskList object loading empty', () => {
+  it('renders without crashing', () => {
+    const taskList = <TaskList tasks={[]} loading />;
     expect(taskList).toBeDefined();
   });
 });
