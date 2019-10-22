@@ -1,5 +1,3 @@
-// src/components/Task.js
-
 import React from 'react';
 import { string, shape } from 'prop-types';
 import './Task.css';

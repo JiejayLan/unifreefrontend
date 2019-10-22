@@ -1,9 +1,6 @@
-// src/components/Task.stories.js
-
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
-
 import { Task } from './Task';
 
 export const task = {

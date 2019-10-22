@@ -1,5 +1,3 @@
-// src/components/TaskList.stories.js
-
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
