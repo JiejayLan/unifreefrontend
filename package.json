@@ -20,7 +20,8 @@
       "!**/node_modules/**",
       "!**/*.stories.{js,jsx}",
       "!**/index.{js,jsx}",
-      "!**/config/**"
+      "!**/config/**",
+      "!**/pages/**"
     ]
   },
   "husky": {
