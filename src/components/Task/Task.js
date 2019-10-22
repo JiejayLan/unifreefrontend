@@ -1,6 +1,6 @@
 import React from 'react';
 import { string, shape } from 'prop-types';
-import './Task.css';
+import './Task.scss';
 
 export function Task({ task: { title, state, checked } }) {
   return (
