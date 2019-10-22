@@ -8,5 +8,4 @@ export default { title: 'Message' };
 // write a story for this component
 export const withText = () => <Message />;
 
-
 export const withButton = () => <button type="submit" onSubmit={action('clicked')}>Example</button>;
