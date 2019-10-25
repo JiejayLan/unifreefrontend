@@ -8,7 +8,10 @@ export const SignInForm = () => {
   const [formData, setForm] = useState({ email: '', password: '' });
 
   useEffect(() => {
-    ValidatorForm.addValidationRule('isValidEmail', (email) => emailPattern.test(email));
+    ValidatorForm.addValidationRule('isValidEmail', (email) => {
+      if (email) { return emailPattern.test(email); }
+      return true;
+    });
   });
 
   function handleChange(event) {
