@@ -40,6 +40,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
+    "react-material-ui-form-validator": "^2.0.9",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
     "request-promise-native": "^1.0.7"
