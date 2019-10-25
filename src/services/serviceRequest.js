@@ -1,10 +1,8 @@
 import request from 'request-promise-native';
 
-export async function serviceRequest(method, uri, qs = null, headers = null, body = null) {
+export async function serviceRequest(requestInfo) {
   try {
-    const response = request({
-      uri, headers, method, qs, body,
-    });
+    const response = request(requestInfo);
     return response;
   } catch (err) {
     return err;

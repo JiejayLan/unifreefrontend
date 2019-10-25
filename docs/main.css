@@ -1,0 +1,14 @@
+.list-item {
+    background-color: azure;
+}
+.TASK_PINNED {
+   background-color: lightgray
+}
+
+.TASK_ARCHIVED {
+     background-color: lightcoral;
+     text-decoration: line-through;
+     color: lightgrey
+}
+
+/*# sourceMappingURL=main.css.map*/
