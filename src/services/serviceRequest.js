@@ -10,7 +10,6 @@ export async function serviceRequest(requestInfo) {
     }
     return data;
   } catch (err) {
-    console.log('catch error');
     throw err;
   }
 }
