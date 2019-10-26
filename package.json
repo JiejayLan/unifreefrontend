@@ -8,8 +8,21 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "test": "react-scripts test --watchAll=false",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:update": "react-scripts test --updateSnapshot --watchAll=false",
     "coveralls": "react-scripts test --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
-    "test:coverage": "react-scripts test --coverage --watchAll=false"
+    "storybook": "start-storybook",
+    "build-storybook": "build-storybook -c .storybook -o docs"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/*.stories.{js,jsx}",
+      "!src/components/**/index.{js,jsx}",
+      "!src/pages/**/index.{js,jsx}",
+      "!src/config/**"
+    ]
   },
   "husky": {
     "hooks": {
@@ -17,10 +30,16 @@
     }
   },
   "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "@material-ui/core": "^4.5.1",
+    "@material-ui/icons": "^4.5.1",
+    "@material-ui/styles": "^4.5.0",
+    "node-sass": "^4.12.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1"
+    "react-scripts": "3.1.1",
+    "request-promise-native": "^1.0.7"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -38,14 +57,20 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-notes": "^5.2.5",
+    "@storybook/react": "^5.2.5",
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
     "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
     "coveralls": "^3.0.6",
     "eslint": "^6.4.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-react": "^7.14.3",
-    "husky": "^3.0.5"
+    "husky": "^3.0.5",
+    "react-test-renderer": "^16.10.2"
   }
 }
