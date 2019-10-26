@@ -22,6 +22,7 @@ export const SignInForm = () => {
 
   function preparePayload(method, data) {
     const url = `${config.api_domain}${path}`;
+    console.log(config.api_domain, path, url);
     return {
       method,
       url,
@@ -33,6 +34,7 @@ export const SignInForm = () => {
     try {
       const requestPayload = preparePayload('post', formData);
       const response = await serviceRequest(requestPayload);
+      console.log(requestPayload);
       if (response.status && response.status === 'success') {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
