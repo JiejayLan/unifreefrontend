@@ -12,7 +12,7 @@ export const NavBar = ({ isAuthenticated }) => (
     <Toolbar>
       <ForumRoundedIcon edge="start" aria-label="UniFree-forum" />
       <Typography variant="h6" className="title">
-          UniFree
+        UniFree
       </Typography>
       {isAuthenticated ? (
         <Button color="inherit" component={Link} to="/">
@@ -21,10 +21,10 @@ export const NavBar = ({ isAuthenticated }) => (
       ) : (
         <>
           <Button color="inherit" component={Link} to="/">
-            Login
+              Login
           </Button>
           <Button variant="contained" component={Link} to="/">
-            Signup
+              Signup
           </Button>
         </>
       )}
@@ -32,6 +32,10 @@ export const NavBar = ({ isAuthenticated }) => (
   </AppBar>
 );
 
+NavBar.defaultProps = {
+  isAuthenticated: false,
+};
+
 NavBar.propTypes = {
-  isAuthenticated: bool.isRequired,
+  isAuthenticated: bool,
 };
