@@ -8,6 +8,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 
 const errorMsg = 'Invalid username or password';
 const path = '/api/v1/signin';
+const domain = config.api_domain.replace('\'', '');
 
 export const SignInForm = () => {
   const [formData, setForm] = useState({ username: '', password: '' });
@@ -21,8 +22,8 @@ export const SignInForm = () => {
   }
 
   function preparePayload(method, data) {
-    const url = config.api_domain + path;
-    console.log(config.api_domain, path, url);
+    const url = domain + path;
+    console.log(domain, path, url);
     return {
       method,
       url,
@@ -61,6 +62,7 @@ export const SignInForm = () => {
             label="Username"
             onChange={handleChange}
             name="username"
+            autoComplete="on"
             value={formData.username}
             validators={['required']}
             errorMessages={['this field is required']}
@@ -72,6 +74,7 @@ export const SignInForm = () => {
             onChange={handleChange}
             name="password"
             type="password"
+            autoComplete="on"
             value={formData.password}
             validators={['required']}
             errorMessages={['this field is required']}
