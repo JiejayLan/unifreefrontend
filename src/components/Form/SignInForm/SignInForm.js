@@ -1,14 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
+import { ErrorMessage } from '../../ErrorMessage';
+
+const errorMsg = 'Invalid username or password';
 
 export const SignInForm = () => {
-  const [formData, setForm] = useState({ email: '', password: '' });
+  const [formData, setForm] = useState({ username: '', password: '' });
   const [isLogin, setIsLogin] = useState(false);
-  const inputRef = useRef(null);
+  const [isError, setIsError] = useState(false);
 
   function handleChange(event) {
     const updateForm = { ...formData };
@@ -32,10 +35,10 @@ export const SignInForm = () => {
         window.localStorage.jwtToken = jwtToken;
         setIsLogin(true);
       } else if (response.errors) {
-        console.log(response.errors);
+        setIsError(true);
       }
     } catch (err) {
-      console.log('error:', err.message);
+      setIsError(true);
     }
   }
 
@@ -43,10 +46,10 @@ export const SignInForm = () => {
     <>
       {isLogin && <Redirect to="/" />}
       <ValidatorForm
-        ref={inputRef}
         onSubmit={handleSubmit}
       >
         <h2>Sign In</h2>
+        {isError && <ErrorMessage message={errorMsg} />}
         <div>
           <TextValidator
             label="Username"
