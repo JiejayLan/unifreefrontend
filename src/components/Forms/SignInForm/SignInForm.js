@@ -7,6 +7,7 @@ import config from '../../../config';
 import { ErrorMessage } from '../../ErrorMessage';
 
 const errorMsg = 'Invalid username or password';
+const path = '/api/v1/signin';
 
 export const SignInForm = () => {
   const [formData, setForm] = useState({ username: '', password: '' });
@@ -19,16 +20,19 @@ export const SignInForm = () => {
     setForm(updateForm);
   }
 
+  function preparePayload(method, data) {
+    const url = `${config.api_domain}${path}`;
+    return {
+      method,
+      url,
+      data,
+    };
+  }
+
   async function handleSubmit() {
     try {
-      const uri = `${config.api_domain}/api/v1/signin`;
-      const response = await serviceRequest({
-        method: 'post',
-        url: uri,
-        data: {
-          ...formData,
-        },
-      });
+      const requestPayload = preparePayload('post', formData);
+      const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
