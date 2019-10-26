@@ -21,7 +21,7 @@ export const SignInForm = () => {
   }
 
   function preparePayload(method, data) {
-    const url = `${config.api_domain}${path}`;
+    const url = config.api_domain + path;
     console.log(config.api_domain, path, url);
     return {
       method,
