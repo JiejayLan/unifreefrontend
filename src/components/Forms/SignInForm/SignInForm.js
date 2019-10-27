@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
@@ -14,7 +14,10 @@ export const SignInForm = () => {
   const [formData, setForm] = useState({ username: '', password: '' });
   const [isLogin, setIsLogin] = useState(false);
   const [isError, setIsError] = useState(false);
-
+  useEffect(() => {
+    // Update the document title using the browser API
+    console.log(`You clicked ${isError}`);
+  });
   function handleChange(event) {
     const updateForm = { ...formData };
     updateForm[event.target.name] = event.target.value;
@@ -39,17 +42,21 @@ export const SignInForm = () => {
         const jwtToken = `bearer ${data.token}`;
         window.localStorage.jwtToken = jwtToken;
         setIsLogin(true);
+        console.log('click the button1', isLogin, isError);
       } else if (response.errors) {
         setIsError(true);
       }
+      console.log('click the butto2', isLogin, isError);
     } catch (err) {
       setIsError(true);
+      console.log('click the button3', isLogin, isError);
     }
   }
 
+
   return (
     <>
-      {isLogin && <Redirect to="/" />}
+      {isLogin && <Redirect to="/hghfgh" />}
       <ValidatorForm
         onSubmit={handleSubmit}
       >
