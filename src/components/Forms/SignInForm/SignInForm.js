@@ -33,6 +33,7 @@ export const SignInForm = () => {
   async function handleSubmit() {
     try {
       const requestPayload = preparePayload('post', formData);
+      console.log(requestPayload);
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         const { data } = response;
