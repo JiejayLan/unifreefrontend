@@ -8,7 +8,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 
 const errorMsg = 'Invalid username or password';
 const path = '/api/v1/signin';
-const domain = config.api_domain.replace('\'', '');
+const domain = config.apiDomain;
 
 export const SignInForm = () => {
   const [formData, setForm] = useState({ username: '', password: '' });
