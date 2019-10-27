@@ -9,7 +9,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 const errorMsg = 'Invalid username or password';
 const path = '/api/v1/signin';
 const domain = config.api_domain.replace('\'', '');
-console.log(config.api_domain);
+
 export const SignInForm = () => {
   const [formData, setForm] = useState({ username: '', password: '' });
   const [isLogin, setIsLogin] = useState(false);
@@ -22,7 +22,7 @@ export const SignInForm = () => {
   }
 
   function preparePayload(method, data) {
-    const url = domain + path;
+    const url = `https://${domain}${path}`;
     return {
       method,
       url,
@@ -33,7 +33,6 @@ export const SignInForm = () => {
   async function handleSubmit() {
     try {
       const requestPayload = preparePayload('post', formData);
-      console.log(requestPayload);
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         const { data } = response;
