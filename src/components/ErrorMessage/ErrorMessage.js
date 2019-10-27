@@ -1,11 +1,20 @@
+
 import React from 'react';
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
+import { Box, Button } from '@material-ui/core';
 
 export const ErrorMessage = (props) => {
-  const { message } = props;
-  return (<div>{message}</div>);
+  const { message, styles } = props;
+  return (
+    <Box component="span" m={1}>
+      <Button style={styles}>{message}</Button>
+    </Box>
+  );
 };
 
 ErrorMessage.propTypes = {
-  message: string.isRequired,
+  message: PropTypes.string.isRequired,
+  /* eslint-disable react/require-default-props */
+  /* eslint-disable react/forbid-prop-types */
+  styles: PropTypes.object,
 };
