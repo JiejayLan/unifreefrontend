@@ -1,3 +1,6 @@
+// const apiDomain = process.env.REACT_APP_API_DOMAIN.replace('\'', '');
+const apiDomain = 'https://unifree-backend.herokuapp.com';
+
 export default {
-  api_domain: process.env.REACT_APP_API_DOMAIN,
+  apiDomain,
 };
