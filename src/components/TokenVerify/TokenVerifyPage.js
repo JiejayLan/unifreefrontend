@@ -46,8 +46,6 @@ export const TokenVerifyPage = () => {
         if (error.response) {
           console.log(error.response);
         }
-        console.log(typeof (tokenData));
-        console.log(tokenData);
       });
   };
 
