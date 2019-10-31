@@ -9,7 +9,4 @@ storiesOf('Form', module)
       text: 'description: User login with username and password',
       inline: false,
       source: false,
-    })(() => <SignInForm />),
-    {
-      notes: 'note',
-    });
+    })(() => <SignInForm />));
