@@ -19,14 +19,14 @@
       "**/*.{js,jsx}",
       "!**/node_modules/**",
       "!**/*.stories.{js,jsx}",
-      "!src/components/**/index.{js,jsx}",
-      "!src/pages/**/index.{js,jsx}",
+      "!src/**/index.{js,jsx}",
       "!src/config/**"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint"
+      "pre-commit": "npm run lint",
+      "pre-push":"npm run build-storybook"
     }
   },
   "dependencies": {

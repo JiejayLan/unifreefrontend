@@ -8,6 +8,6 @@ describe('SignInForm test', () => {
     const { getByText } = render(<SignIn />);
     expect(getByText('Username')).toBeInTheDocument();
     expect(getByText('Password')).toBeInTheDocument();
-    expect(getByText('Submit')).toBeInTheDocument();
+    expect(getByText('Sign In')).toBeInTheDocument();
   });
 });
