@@ -1,15 +1,14 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { bool, element } from 'prop-types';
+import { element } from 'prop-types';
 
 export const PrivateRoute = ({
-  isAuthenticated,
   component: Component,
   ...rest
 }) => (
   <Route
     {...rest}
-    component={(props) => (isAuthenticated ? (
+    component={(props) => (window.localStorage.jwtToken ? (
       <>
         <Component {...props} />
       </>
@@ -20,7 +19,6 @@ export const PrivateRoute = ({
 );
 
 PrivateRoute.propTypes = {
-  isAuthenticated: bool.isRequired,
   component: element.isRequired,
 };
 

@@ -1,16 +1,15 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { bool, element } from 'prop-types';
+import { element } from 'prop-types';
 
 export const PublicRoute = ({
-  isAuthenticated,
   component: Component,
   ...rest
 }) => (
   <Route
     {...rest}
     component={(props) => (
-      isAuthenticated ? (
+      window.localStorage.jwtToken ? (
         <>
           <Component {...props} />
         </>
@@ -24,7 +23,6 @@ export const PublicRoute = ({
 );
 
 PublicRoute.propTypes = {
-  isAuthenticated: bool.isRequired,
   component: element.isRequired,
 };
 
