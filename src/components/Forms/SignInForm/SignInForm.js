@@ -12,7 +12,6 @@ import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
 import { ErrorMessage } from '../../ErrorMessage';
 
-const errorMsg = 'Invalid username or password';
 const path = '/api/v1/signin';
 const domain = config.apiDomain;
 
@@ -30,6 +29,7 @@ export const SignInForm = () => {
   const [formData, setForm] = useState({ username: null, password: null });
   const [isLogin, setIsLogin] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('Invalid username or password');
 
   function handleChange(event) {
     const updateForm = { ...formData };
@@ -48,10 +48,14 @@ export const SignInForm = () => {
         const jwtToken = `bearer ${data.token}`;
         window.localStorage.jwtToken = jwtToken;
         setIsLogin(true);
-      } else if (response.errors) {
+      } else if (response.status && response.status === 'error') {
+        setErrorMsg('Invalid username or password');
         setIsError(true);
+      } else {
+        throw new Error('Internal Service Error');
       }
     } catch (err) {
+      setErrorMsg('Internal Service Error');
       setIsError(true);
     }
   }

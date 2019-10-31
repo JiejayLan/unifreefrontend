@@ -1,5 +1,4 @@
 import request from 'axios';
-
 import { serviceRequest } from '../serviceRequest';
 
 jest.mock('axios');
@@ -19,9 +18,8 @@ describe('User service test suite', () => {
 
   it('Should catch any error', async () => {
     try {
-      request.mockReturnValue({ data: { status: 'error', message: 'Internal Server Error' } });
-      const response = await serviceRequest(payLoad);
-      expect(response.status).toBe('success');
+      request.mockImplementation(async () => { throw new Error('Internal Server Error'); });
+      await serviceRequest(payLoad);
     } catch (err) {
       expect(err.message).toBe('Internal Server Error');
     }
