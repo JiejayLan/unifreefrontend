@@ -7,7 +7,7 @@ import { serviceRequest } from '../../../../services/serviceRequest';
 jest.mock('../../../../services/serviceRequest');
 jest.setTimeout(5000);
 
-describe('SignInForm test', () => {
+describe('SignInForm test suite', () => {
   const successPayLoad = {
     status: 'success',
     data: {
