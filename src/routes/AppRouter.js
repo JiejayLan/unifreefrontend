@@ -1,13 +1,17 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Error } from '../pages/error';
 import { Home } from '../pages/home';
+import { Message } from '../components/Message';
+import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRouter = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="*" component={Error} />
+      <PublicRoute exact path="/" component={Home} />
+      <PrivateRoute path="/message" component={Message} />
+      <PublicRoute path="*" component={Error} />
     </Switch>
   </Router>
 );
