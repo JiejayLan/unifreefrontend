@@ -27,7 +27,7 @@ function preparePayload(method, data) {
 
 export const SignInForm = () => {
   const classes = useStyles();
-  const [formData, setForm] = useState({ username: '', password: '' });
+  const [formData, setForm] = useState({ username: null, password: null });
   const [isLogin, setIsLogin] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -39,6 +39,7 @@ export const SignInForm = () => {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (!formData.password || !formData.username) { return; }
     try {
       const requestPayload = preparePayload('post', formData);
       const response = await serviceRequest(requestPayload);
