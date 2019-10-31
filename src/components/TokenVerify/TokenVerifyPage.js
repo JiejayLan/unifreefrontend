@@ -3,13 +3,13 @@ import axios from 'axios';
 import cookie from 'react-cookies';
 import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
+import { Redirect } from 'react-router-dom';
 import config from '../../config';
-
 
 export const TokenVerifyPage = () => {
   const [tokenData, setTokenData] = useState({ username: cookie.load('username').username, token: '' });
+  const [redirectValid, setRedirectValid] = useState(false);
   const [tokenMessage, setTokenMessage] = useState('');
-
 
   const path = '/api/v1/signup/verify';
   const domain = config.apiDomain;
@@ -20,13 +20,17 @@ export const TokenVerifyPage = () => {
     setTokenData(updateTokenData);
   }
 
+  const renderRedirect = () => {
+    if (redirectValid) {
+      return <Redirect to="/" />;
+    }
+    return null;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    if (tokenData.token === '') {
-      setTokenMessage('Please fill in the token');
-    }
-    axios.post(domain + path,
+    axios.post(`https://${domain}${path}`,
       JSON.stringify(tokenData), {
         headers: {
           'Content-Type': 'application/json',
@@ -34,15 +38,15 @@ export const TokenVerifyPage = () => {
       })
       .then((res) => {
         if (res.data.data.isValidToken === true) {
-          // suppose to direct to the log in page
-          window.location = '/';
+          // direct to the log in page
+          // window.location = '/';
+          setRedirectValid(true);
         } else {
           setTokenMessage('Wrong Token, Please Re-enter');
           setTokenData({ username: cookie.load('username').username, token: '' });
         }
       })
       .catch((error) => {
-        console.log(error);
         if (error.response) {
           console.log(error.response);
         }
@@ -51,6 +55,7 @@ export const TokenVerifyPage = () => {
 
   return (
     <div>
+      {renderRedirect()}
       <span>Welcome </span>
       {tokenData.username}
       <p> Please enter token to verify your email!</p>
@@ -62,6 +67,7 @@ export const TokenVerifyPage = () => {
           name="token"
           label="Token"
           placeholder="Token"
+          required
           value={tokenData.token}
           onChange={handleChange}
         />
