@@ -16,7 +16,8 @@
 - Jin Chen
 - Nan Chen
 - Jie Lan
+- Enger Then
 
 # Project: UniFree
 - This project is our class project for CSC59939, instructed by Nikolai Avteniev
-- This is a backend repo for our project UniFree, the front end repo can be found [here](https://github.com/JiejayLan/unifreefrontend)
+- This is a frontend repo for our project UniFree, the front end repo can be found [here](https://github.com/JiejayLan/unifreefrontend)
