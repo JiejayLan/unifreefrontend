@@ -43,11 +43,11 @@
         "no-return-assign": [
             "off"
         ],
-        "no-useless-catch":[
+        "no-useless-catch": [
             "off"
         ],
         "import/prefer-default-export": "off",
-        "eol-last":2,
+        "eol-last": 2,
         "import/no-extraneous-dependencies": [
             "error",
             {
