@@ -1,10 +1,12 @@
-import request from 'request-promise-native';
+import request from 'axios';
 
 export async function serviceRequest(requestInfo) {
   try {
-    const response = request(requestInfo);
-    return response;
+    // eslint-disable-next-line no-unused-vars
+    const response = await request({ ...requestInfo, validateStatus: (_) => true });
+    const { data } = response;
+    return data;
   } catch (err) {
-    return err;
+    throw err;
   }
 }
