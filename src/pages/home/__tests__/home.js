@@ -1,8 +1,11 @@
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
 import { Home } from '../Home';
 
-describe('home page test suite', () => {
+describe('Home Page test', () => {
   it('renders without crashing', () => {
-    const div1 = Home;
-    expect(div1).toBeDefined();
+    const { getByText } = render(<Home />);
+    expect(getByText('This is home page')).toBeInTheDocument();
   });
 });
