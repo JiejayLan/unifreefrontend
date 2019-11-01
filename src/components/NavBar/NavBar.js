@@ -8,11 +8,11 @@ import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import { bool } from 'prop-types';
 
 export const NavBar = ({ isAuthenticated }) => {
-  function handleSignOut() {
+  const handleSignOut = () => {
     if (window.localStorage.jwtToken) {
       window.localStorage.clear();
     }
-  }
+  };
 
   return (
     <AppBar position="static" className="nav-bar">
@@ -22,15 +22,15 @@ export const NavBar = ({ isAuthenticated }) => {
           UniFree
         </Typography>
         {isAuthenticated ? (
-          <Button color="inherit" component={Link} to="/" onClick={handleSignOut}>
+          <Button data-testid="logout-button" color="inherit" component={Link} to="/" onClick={handleSignOut}>
             Logout
           </Button>
         ) : (
           <>
-            <Button color="inherit" component={Link} to="/signin">
+            <Button data-testid="login-button" color="inherit" component={Link} to="/signin">
                 Login
             </Button>
-            <Button variant="contained" component={Link} to="/">
+            <Button data-testid="signup-button" variant="contained" component={Link} to="/">
                 Signup
             </Button>
           </>
