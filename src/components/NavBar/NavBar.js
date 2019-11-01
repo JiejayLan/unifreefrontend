@@ -26,15 +26,15 @@ export const NavBar = ({ isAuthenticated }) => {
             Logout
           </Button>
         ) : (
-            <>
-              <Button color="inherit" component={Link} to="/">
+          <>
+            <Button color="inherit" component={Link} to="/">
                 Login
-              </Button>
-              <Button variant="contained" component={Link} to="/">
+            </Button>
+            <Button variant="contained" component={Link} to="/">
                 Signup
-              </Button>
-            </>
-          )}
+            </Button>
+          </>
+        )}
       </Toolbar>
     </AppBar>
   );
