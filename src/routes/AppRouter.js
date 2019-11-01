@@ -8,7 +8,7 @@ export const AppRouter = () => (
   <Router>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/token" component={TokenVerification} />
+      <Route path="/verifyToken" component={TokenVerification} />
       <Route path="*" component={Error} />
     </Switch>
   </Router>

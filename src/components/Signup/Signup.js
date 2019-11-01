@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import cookie from 'react-cookies';
 
+// Don't need to be review!
 // Fake signup page, will later be replace by the sign up page
 export const Signup = () => {
   const [username, setUsername] = useState('');
 
   const changePath = () => {
-    cookie.save('username', username, { path: '/' });
-    window.location = '/token';
+    window.localStorage.username = JSON.stringify(username.username).split('"').join('');
+    window.location = '/verifyToken';
   };
 
   return (
@@ -26,10 +26,6 @@ export const Signup = () => {
         <button
           className="btn btn-lg btn-primary btn-block"
           type="button"
-          // onClick={() => {
-          //   cookie.save('username', username, { path: '/' });
-          //   window.location = '/token';
-          // }}
           onClick={changePath}
         >
           Submit Username
