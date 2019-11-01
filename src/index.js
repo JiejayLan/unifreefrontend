@@ -12,13 +12,13 @@ const theme = createMuiTheme({
     secondary: {
       main: '#333333',
     },
-    surface: {
+    background: {
       main: '#d2d2d2',
     },
     text: {
-      primary: '#ffffff',
-      secondary: '#464646',
-      contrast: '#f3cf45',
+      primary: '#464646',
+      secondary: '#7d5cc6',
+      hint: '#f3cf45',
     },
   },
 });

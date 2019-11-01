@@ -1,3 +1,4 @@
+import './SignInForm.scss';
 import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -7,7 +8,6 @@ import { Redirect } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import useStyles from './style';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
 import { ErrorMessage } from '../../ErrorMessage';
@@ -25,7 +25,6 @@ function preparePayload(method, data) {
 }
 
 export const SignInForm = () => {
-  const classes = useStyles();
   const [formData, setForm] = useState({ username: null, password: null });
   const [isLogin, setIsLogin] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -60,18 +59,18 @@ export const SignInForm = () => {
     }
   }
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="root">
       {isLogin && <Redirect to="/" />}
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+      <div className="wrapper">
+        <Avatar className="avatar">
+          <LockOutlinedIcon className="icon" />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign In
         </Typography>
         {isError && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
             margin="normal"
@@ -101,7 +100,7 @@ export const SignInForm = () => {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            className="submit"
           >
             Sign In
           </Button>
