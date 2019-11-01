@@ -27,7 +27,7 @@ export const NavBar = ({ isAuthenticated }) => {
           </Button>
         ) : (
           <>
-            <Button color="inherit" component={Link} to="/">
+            <Button color="inherit" component={Link} to="/signin">
                 Login
             </Button>
             <Button variant="contained" component={Link} to="/">
