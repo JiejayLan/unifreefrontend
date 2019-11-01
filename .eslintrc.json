@@ -46,6 +46,9 @@
         "react/jsx-props-no-spreading": [
             "off"
         ],
+        "no-useless-catch": [
+            "off"
+        ],
         "import/prefer-default-export": "off",
         "eol-last": 2,
         "import/no-extraneous-dependencies": [
