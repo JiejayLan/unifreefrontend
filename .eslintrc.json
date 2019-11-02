@@ -43,6 +43,9 @@
         "no-return-assign": [
             "off"
         ],
+        "react/jsx-props-no-spreading": [
+            "off"
+        ],
         "no-useless-catch": [
             "off"
         ],
