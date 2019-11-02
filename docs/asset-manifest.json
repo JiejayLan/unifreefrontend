@@ -1,5 +1,6 @@
 {
   "files": {
+<<<<<<< HEAD
     "main.css": "/main.css",
     "main.js": "/main.c00accdb1724a10e0d49.bundle.js",
     "main.css.map": "/main.css.map",
@@ -12,6 +13,18 @@
     "vendors~main.js.map": "/vendors~main.c00accdb1724a10e0d49.bundle.js.map",
     "iframe.html": "/iframe.html",
     "precache-manifest.1888f62753e9fdc67e5c166dcfc52313.js": "/precache-manifest.1888f62753e9fdc67e5c166dcfc52313.js",
+=======
+    "main.js": "/main.50a1aa1cfa2b48eee245.bundle.js",
+    "main.js.map": "/main.50a1aa1cfa2b48eee245.bundle.js.map",
+    "runtime~main.js": "/runtime~main.50a1aa1cfa2b48eee245.bundle.js",
+    "runtime~main.js.map": "/runtime~main.50a1aa1cfa2b48eee245.bundle.js.map",
+    "vendors~main.css": "/vendors~main.css",
+    "vendors~main.js": "/vendors~main.50a1aa1cfa2b48eee245.bundle.js",
+    "vendors~main.css.map": "/vendors~main.css.map",
+    "vendors~main.js.map": "/vendors~main.50a1aa1cfa2b48eee245.bundle.js.map",
+    "iframe.html": "/iframe.html",
+    "precache-manifest.9d76574f6ed52498f9e8fcf88c277c80.js": "/precache-manifest.9d76574f6ed52498f9e8fcf88c277c80.js",
+>>>>>>> develop
     "service-worker.js": "/service-worker.js"
   }
 }
