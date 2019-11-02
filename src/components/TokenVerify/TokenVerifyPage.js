@@ -3,8 +3,25 @@ import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import { serviceRequest } from '../../services/serviceRequest';
 import config from '../../config';
+
+const useStyles = makeStyles({
+  '@global': {
+    input: {
+      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
+        '-webkit-appearance': 'none',
+        '-moz-appearance': 'none',
+        margin: 0,
+      },
+      '&[type=number]': {
+        '-webkit-appearance': 'textfield',
+        '-moz-appearance': 'textfield',
+      },
+    },
+  },
+});
 
 const path = '/api/v1/signup/verify';
 const domain = config.apiDomain;
@@ -19,6 +36,7 @@ function preparePayload(method, data) {
 }
 
 export const TokenVerifyPage = () => {
+  const classes = useStyles();
   const [tokenData, setTokenData] = useState({ username: window.localStorage.username, token: '' });
   const [redirectValid, setRedirectValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -85,6 +103,7 @@ export const TokenVerifyPage = () => {
             type="number"
             value={tokenData.token}
             onChange={handleChange}
+            className={classes.input}
           />
           <br />
           <Button
