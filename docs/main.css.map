@@ -1,1 +1,0 @@
-{"version":3,"file":"main.css","sources":["webpack:///NavBar.scss"],"sourcesContent":[".nav-bar {\r\n  flex-grow: 1;\r\n  .title {\r\n    flex-grow: 1;\r\n  }\r\n}\r\n"],"mappings":"AAAA;AACA;AADA;AAGA;;","sourceRoot":""}

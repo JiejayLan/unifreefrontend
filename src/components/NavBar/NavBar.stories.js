@@ -1,7 +1,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import StoryRouter from 'storybook-react-router';
+import { MemoryRouter } from 'react-router-dom';
 import { withInfo } from '@storybook/addon-info';
+import '@storybook/addon-notes';
 import { NavBar } from './NavBar';
 
 export default {
@@ -17,13 +19,19 @@ storiesOf('NavBar', module)
       inline: true,
       source: false,
     })(() => (
-      <NavBar isAuthenticated={false} />
-    )))
+      <MemoryRouter>
+        <NavBar isAuthenticated={false} />
+      </MemoryRouter>
+    )),
+    { notes: 'MemoryRouter used to prevent invariant error.' })
   .add('login user',
     withInfo({
-      text: 'User who signin will see logout button.',
+      text: 'description: User who signin will see logout button.',
       inline: true,
       source: false,
     })(() => (
-      <NavBar isAuthenticated />
-    )));
+      <MemoryRouter>
+        <NavBar isAuthenticated />
+      </MemoryRouter>
+    )),
+    { notes: 'MemoryRouter used to prevent invariant error.' });
