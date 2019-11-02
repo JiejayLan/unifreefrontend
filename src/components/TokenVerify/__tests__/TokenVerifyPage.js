@@ -17,7 +17,6 @@ describe('TokenVerifyPage test', () => {
     },
   };
 
-  // eslint-disable-next-line no-unused-vars
   const failPayLoad = {
     status: 'success',
     data: {
@@ -25,6 +24,11 @@ describe('TokenVerifyPage test', () => {
       isValidToken: false,
       updatedAt: '2019-10-15',
     },
+  };
+
+  const failPayLoads = {
+    status: 'error',
+    message: 'Can not find matching token',
   };
 
   beforeAll(() => {
@@ -41,14 +45,79 @@ describe('TokenVerifyPage test', () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
     const renderDom = render(<TokenVerifyPage />);
     const { container, baseElement } = renderDom;
-    // const usernameInput = container.querySelectorAll('input')[0];
-    const tokenInput = container.querySelectorAll('input')[0];
-
-    // fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    const usernameInput = container.querySelectorAll('input')[0];
+    const tokenInput = container.querySelectorAll('input')[1];
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(tokenInput, { target: { value: '12345' } });
-    fireEvent.click(container.querySelector('button'));
 
+    fireEvent.click(container.querySelector('button'));
     await new Promise((_) => setTimeout(_, 100));
-    // expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
+    expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
+  });
+
+  it('should catch error for wrong token', async () => {
+    serviceRequest.mockReturnValue(failPayLoad);
+    const renderDom = render(<TokenVerifyPage />);
+    const { container, getByText } = renderDom;
+    const usernameInput = container.querySelectorAll('input')[0];
+    const tokenInput = container.querySelectorAll('input')[1];
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(tokenInput, { target: { value: '12345' } });
+
+    fireEvent.click(container.querySelector('button'));
+    await new Promise((_) => setTimeout(_, 100));
+    expect(getByText('Wrong Token, Please Re-enter')).toBeInTheDocument();
+  });
+
+  it('should catch error for wrong username', async () => {
+    serviceRequest.mockReturnValue(failPayLoads);
+    const renderDom = render(<TokenVerifyPage />);
+    const { container, getByText } = renderDom;
+    const usernameInput = container.querySelectorAll('input')[0];
+    const tokenInput = container.querySelectorAll('input')[1];
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(tokenInput, { target: { value: '12345' } });
+
+    fireEvent.click(container.querySelector('button'));
+    await new Promise((_) => setTimeout(_, 100));
+    expect(getByText('Invalid Username')).toBeInTheDocument();
+  });
+
+  it('should catch error for internal service error', async () => {
+    serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
+    const renderDom = render(<TokenVerifyPage />);
+    const { container, getByText } = renderDom;
+    const usernameInput = container.querySelectorAll('input')[0];
+    const tokenInput = container.querySelectorAll('input')[1];
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(tokenInput, { target: { value: '12345' } });
+
+    fireEvent.click(container.querySelector('button'));
+    await new Promise((_) => setTimeout(_, 100));
+    expect(getByText('Internal Service Error')).toBeInTheDocument();
+  });
+
+  it('should catch error for internal service error', async () => {
+    serviceRequest.mockImplementation(async () => {});
+    const renderDom = render(<TokenVerifyPage />);
+    const { container, getByText } = renderDom;
+    const usernameInput = container.querySelectorAll('input')[0];
+    const tokenInput = container.querySelectorAll('input')[1];
+    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(tokenInput, { target: { value: '12345' } });
+
+    fireEvent.click(container.querySelector('button'));
+    await new Promise((_) => setTimeout(_, 100));
+    expect(getByText('Internal Service Error')).toBeInTheDocument();
+  });
+
+  it('should fail to verify token, because of missing token', async () => {
+    serviceRequest.mockReturnValue(successPayLoad);
+    const renderDom = render(<TokenVerifyPage />);
+    const { container } = renderDom;
+    const tokenInput = container.querySelectorAll('input')[0];
+    fireEvent.change(tokenInput, { target: { value: 'testuser' } });
+    fireEvent.click(container.querySelector('button'));
+    expect(serviceRequest).not.toHaveBeenCalled();
   });
 });

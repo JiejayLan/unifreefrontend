@@ -6,7 +6,6 @@ import { Redirect } from 'react-router-dom';
 import { serviceRequest } from '../../services/serviceRequest';
 import config from '../../config';
 
-
 const path = '/api/v1/signup/verify';
 const domain = config.apiDomain;
 
@@ -18,7 +17,6 @@ function preparePayload(method, data) {
     data,
   };
 }
-
 
 export const TokenVerifyPage = () => {
   const [tokenData, setTokenData] = useState({ username: window.localStorage.username, token: '' });
@@ -45,7 +43,7 @@ export const TokenVerifyPage = () => {
           setTokenData({ username: window.localStorage.username, token: '' });
         }
       } else if (response.status && response.status === 'error') {
-        setErrorMessage('Can not find matching token');
+        setErrorMessage('Invalid Username');
       } else {
         throw new Error('Internal Service Error');
       }
@@ -62,19 +60,20 @@ export const TokenVerifyPage = () => {
           <span>Welcome</span>
         </h1>
         <h3> Please enter token to verify your email!</h3>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          id="username"
-          label="Username"
-          name="username"
-          defaultValue={tokenData.username}
-          InputProps={{
-            readOnly: true,
-          }}
-        />
         <form onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            defaultValue={tokenData.username}
+            onChange={handleChange}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
           <TextField
             variant="outlined"
             margin="normal"
