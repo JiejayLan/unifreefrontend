@@ -31,21 +31,21 @@ export const NavBar = ({ isAuthenticated }) => {
               Logout
             </Button>
           ) : (
-              <>
-                <Button
-                  className={classes.button}
-                  data-testid="login-button"
-                  color="inherit"
-                  component={Link}
-                  to="/signin"
-                >
+            <>
+              <Button
+                className={classes.button}
+                data-testid="login-button"
+                color="inherit"
+                component={Link}
+                to="/signin"
+              >
                   Login
               </Button>
-                <Button data-testid="signup-button" variant="contained" component={Link} to="/">
+              <Button data-testid="signup-button" variant="contained" component={Link} to="/">
                   Signup
               </Button>
-              </>
-            )}
+            </>
+          )}
         </Toolbar>
       </AppBar>
     </div>
