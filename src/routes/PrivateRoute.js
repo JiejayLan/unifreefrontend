@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { element } from 'prop-types';
+import { NavBar } from '../components/NavBar';
 
 export const PrivateRoute = ({
   component: Component,
@@ -10,6 +11,7 @@ export const PrivateRoute = ({
     {...rest}
     component={(props) => (window.localStorage.jwtToken ? (
       <>
+        <NavBar isAuthenticated />
         <Component {...props} />
       </>
     ) : (

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { element } from 'prop-types';
+import { NavBar } from '../components/NavBar';
 
 export const PublicRoute = ({
   component: Component,
@@ -9,15 +10,10 @@ export const PublicRoute = ({
   <Route
     {...rest}
     component={(props) => (
-      window.localStorage.jwtToken ? (
-        <>
-          <Component {...props} />
-        </>
-      ) : (
-        <>
-          <Component {...props} />
-        </>
-      )
+      <>
+        <NavBar isAuthenticated={window.localStorage.jwtToken} />
+        <Component {...props} />
+      </>
     )}
   />
 );
