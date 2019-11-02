@@ -1,11 +1,11 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { TokenVerification } from '../TokenVerification';
+import { TokenVerify } from '../TokenVerify';
 
-describe('SignInForm test', () => {
+describe('TokenVerify Form test', () => {
   it('renders without crashing', () => {
-    const { getByText } = render(<TokenVerification />);
+    const { getByText } = render(<TokenVerify />);
     expect(getByText('Please enter token to verify your email!')).toBeInTheDocument();
     expect(getByText('Username')).toBeInTheDocument();
     expect(getByText('Token')).toBeInTheDocument();

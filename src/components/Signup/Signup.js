@@ -8,7 +8,7 @@ export const Signup = () => {
 
   const changePath = () => {
     cookie.save('username', username.username, { path: '/' });
-    window.location = '/verifyToken';
+    window.location = '/TokenVerify';
   };
 
   return (

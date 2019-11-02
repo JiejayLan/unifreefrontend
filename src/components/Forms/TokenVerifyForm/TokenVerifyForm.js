@@ -4,25 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
-import { makeStyles } from '@material-ui/core/styles';
 import { serviceRequest } from '../../../services/serviceRequest';
+import useStyles from './sytle';
 import config from '../../../config';
-
-const useStyles = makeStyles({
-  '@global': {
-    input: {
-      '&::-webkit-outer-spin-button, &::-webkit-inner-spin-button': {
-        '-webkit-appearance': 'none',
-        '-moz-appearance': 'none',
-        margin: 0,
-      },
-      '&[type=number]': {
-        '-webkit-appearance': 'textfield',
-        '-moz-appearance': 'textfield',
-      },
-    },
-  },
-});
 
 const path = '/api/v1/signup/verify';
 const domain = config.apiDomain;
@@ -38,8 +22,9 @@ function preparePayload(method, data) {
 
 export const TokenVerifyForm = () => {
   const classes = useStyles();
-  const [tokenData, setTokenData] = useState({ username: cookie.load('username'), token: '' });
-  const [redirectValid, setRedirectValid] = useState(false);
+  const username = cookie.load('username');
+  const [tokenData, setTokenData] = useState({ username, token: '' });
+  const [isVerify, setIsVerify] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   function handleChange(event) {
@@ -56,7 +41,7 @@ export const TokenVerifyForm = () => {
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         if (response.data.isValidToken === true) {
-          setRedirectValid(true);
+          setIsVerify(true);
         } else {
           setErrorMessage('Wrong Token, Please Re-enter');
           setTokenData({ username: cookie.load('username'), token: '' });
@@ -74,7 +59,7 @@ export const TokenVerifyForm = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div>
-        {redirectValid && <Redirect to="/signin" />}
+        {isVerify && <Redirect to="/signin" />}
         <h1>
           <span>Welcome</span>
         </h1>
