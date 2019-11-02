@@ -3,9 +3,10 @@ import { Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Container from '@material-ui/core/Container';
 import { Redirect } from 'react-router-dom';
+import cookie from 'react-cookies';
 import { makeStyles } from '@material-ui/core/styles';
-import { serviceRequest } from '../../services/serviceRequest';
-import config from '../../config';
+import { serviceRequest } from '../../../services/serviceRequest';
+import config from '../../../config';
 
 const useStyles = makeStyles({
   '@global': {
@@ -35,9 +36,9 @@ function preparePayload(method, data) {
   };
 }
 
-export const TokenVerifyPage = () => {
+export const TokenVerifyForm = () => {
   const classes = useStyles();
-  const [tokenData, setTokenData] = useState({ username: window.localStorage.username, token: '' });
+  const [tokenData, setTokenData] = useState({ username: cookie.load('username'), token: '' });
   const [redirectValid, setRedirectValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -58,7 +59,7 @@ export const TokenVerifyPage = () => {
           setRedirectValid(true);
         } else {
           setErrorMessage('Wrong Token, Please Re-enter');
-          setTokenData({ username: window.localStorage.username, token: '' });
+          setTokenData({ username: cookie.load('username'), token: '' });
         }
       } else if (response.status && response.status === 'error') {
         setErrorMessage('Invalid Username');
@@ -73,7 +74,7 @@ export const TokenVerifyPage = () => {
   return (
     <Container component="main" maxWidth="xs">
       <div>
-        {redirectValid && <Redirect to="/" />}
+        {redirectValid && <Redirect to="/signin" />}
         <h1>
           <span>Welcome</span>
         </h1>

@@ -1,13 +1,13 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { TokenVerifyPage } from '../TokenVerifyPage';
-import { serviceRequest } from '../../../services/serviceRequest';
+import { TokenVerifyForm } from '../TokenVerifyForm';
+import { serviceRequest } from '../../../../services/serviceRequest';
 
-jest.mock('../../../services/serviceRequest');
+jest.mock('../../../../services/serviceRequest');
 jest.setTimeout(5000);
 
-describe('TokenVerifyPage test', () => {
+describe('TokenVerifyForm test', () => {
   const successPayLoad = {
     status: 'success',
     data: {
@@ -17,7 +17,7 @@ describe('TokenVerifyPage test', () => {
     },
   };
 
-  const failPayLoad = {
+  const failTokenPayLoad = {
     status: 'success',
     data: {
       username: 'test',
@@ -26,7 +26,7 @@ describe('TokenVerifyPage test', () => {
     },
   };
 
-  const failPayLoads = {
+  const failUsernamePayLoads = {
     status: 'error',
     message: 'Can not find matching token',
   };
@@ -43,7 +43,7 @@ describe('TokenVerifyPage test', () => {
 
   it('should verify token successfully', async () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
-    const renderDom = render(<TokenVerifyPage />);
+    const renderDom = render(<TokenVerifyForm />);
     const { container, baseElement } = renderDom;
     const usernameInput = container.querySelectorAll('input')[0];
     const tokenInput = container.querySelectorAll('input')[1];
@@ -56,8 +56,8 @@ describe('TokenVerifyPage test', () => {
   });
 
   it('should catch error for wrong token', async () => {
-    serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<TokenVerifyPage />);
+    serviceRequest.mockReturnValue(failTokenPayLoad);
+    const renderDom = render(<TokenVerifyForm />);
     const { container, getByText } = renderDom;
     const usernameInput = container.querySelectorAll('input')[0];
     const tokenInput = container.querySelectorAll('input')[1];
@@ -70,8 +70,8 @@ describe('TokenVerifyPage test', () => {
   });
 
   it('should catch error for wrong username', async () => {
-    serviceRequest.mockReturnValue(failPayLoads);
-    const renderDom = render(<TokenVerifyPage />);
+    serviceRequest.mockReturnValue(failUsernamePayLoads);
+    const renderDom = render(<TokenVerifyForm />);
     const { container, getByText } = renderDom;
     const usernameInput = container.querySelectorAll('input')[0];
     const tokenInput = container.querySelectorAll('input')[1];
@@ -85,7 +85,7 @@ describe('TokenVerifyPage test', () => {
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
-    const renderDom = render(<TokenVerifyPage />);
+    const renderDom = render(<TokenVerifyForm />);
     const { container, getByText } = renderDom;
     const usernameInput = container.querySelectorAll('input')[0];
     const tokenInput = container.querySelectorAll('input')[1];
@@ -99,7 +99,7 @@ describe('TokenVerifyPage test', () => {
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockImplementation(async () => {});
-    const renderDom = render(<TokenVerifyPage />);
+    const renderDom = render(<TokenVerifyForm />);
     const { container, getByText } = renderDom;
     const usernameInput = container.querySelectorAll('input')[0];
     const tokenInput = container.querySelectorAll('input')[1];
@@ -112,8 +112,8 @@ describe('TokenVerifyPage test', () => {
   });
 
   it('should fail to verify token, because of missing token', async () => {
-    serviceRequest.mockReturnValue(successPayLoad);
-    const renderDom = render(<TokenVerifyPage />);
+    serviceRequest.mockReturnValue(failTokenPayLoad);
+    const renderDom = render(<TokenVerifyForm />);
     const { container } = renderDom;
     const tokenInput = container.querySelectorAll('input')[0];
     fireEvent.change(tokenInput, { target: { value: 'testuser' } });

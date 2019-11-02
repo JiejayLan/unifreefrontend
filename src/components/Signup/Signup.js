@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import cookie from 'react-cookies';
 
 // Don't need to be review!
 // Fake signup page, will later be replace by the sign up page
@@ -6,7 +7,7 @@ export const Signup = () => {
   const [username, setUsername] = useState('');
 
   const changePath = () => {
-    window.localStorage.username = JSON.stringify(username.username).split('"').join('');
+    cookie.save('username', username.username, { path: '/' });
     window.location = '/verifyToken';
   };
 
