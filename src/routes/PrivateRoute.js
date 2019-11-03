@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { element } from 'prop-types';
+import { func } from 'prop-types';
 import { NavBar } from '../components/NavBar';
 
 export const PrivateRoute = ({
@@ -21,7 +21,7 @@ export const PrivateRoute = ({
 );
 
 PrivateRoute.propTypes = {
-  component: element.isRequired,
+  component: func.isRequired,
 };
 
 export default PrivateRoute;
