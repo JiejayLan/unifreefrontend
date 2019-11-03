@@ -1,8 +1,11 @@
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
+import React from 'react';
 import { Error } from '../Error';
 
-describe('error page test suite', () => {
+describe('Home Page test', () => {
   it('renders without crashing', () => {
-    const div1 = Error;
-    expect(div1).toBeDefined();
+    const { getByText } = render(<Error />);
+    expect(getByText('Not found')).toBeInTheDocument();
   });
 });

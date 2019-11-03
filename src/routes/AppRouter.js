@@ -1,13 +1,18 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Error } from '../pages/error';
 import { Home } from '../pages/home';
+import { TokenVerify } from '../pages/tokenVerify';
+import { PublicRoute } from './PublicRoute';
+import { SignIn } from '../pages/signIn';
 
 export const AppRouter = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="*" component={Error} />
+      <PublicRoute exact path="/" component={Home} />
+      <PublicRoute path="/tokenVerify" component={TokenVerify} />
+      <PublicRoute path="/signin" component={SignIn} />
+      <PublicRoute path="*" component={Error} />
     </Switch>
   </Router>
 );
