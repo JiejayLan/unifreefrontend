@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
-import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import {
+  CssBaseline,
+  Typography,
+  Container,
+  Button,
+  TextField,
+} from '@material-ui/core';
+import cookies from 'react-cookies';
+import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
+import useStyles from './style';
 
 
 const path = '/api/v1/signup';
 const domain = config.api_domain;
 
 export const SignUpForm = () => {
+  const classes = useStyles();
   const [formData, setFormData] = useState({
     email: '',
     username: '',
@@ -47,6 +56,7 @@ export const SignUpForm = () => {
       data,
     };
   }
+
   async function handleSubmit() {
     // eslint-disable-next-line no-useless-catch
     try {
@@ -64,42 +74,64 @@ export const SignUpForm = () => {
         throw new Error('Internal Service Error');
       }
     } catch (error) {
-      throw error;
+      setErrorMsg('Internal Service Error');
+      setIsError(true);
     }
   }
 
   return (
-    <div>
+    <Container maxWidth="sm">
       {handleIsSignedUp()}
-      <h1>Sign Up</h1>
-      <ValidatorForm onSubmit={handleSubmit}>
-        <TextValidator
-          placeholder="email"
-          label="Email"
-          name="email"
-          autoComplete="on"
-          value={formData.email}
-          validators={['required', 'isEmail']}
-          onChange={handleChange}
-        />
-        <TextValidator
-          placeholder="username"
-          label="Username"
-          name="username"
-          value={formData.username}
-          validators={['required']}
-          onChange={handleChange}
-        />
-        <TextValidator
-          placeholder="password"
-          label="Password"
-          name="password"
-          validators={['required']}
-          onChange={handleChange}
-        />
-        {handleIsError()}
-        <Button type="submit">Submit</Button>
-      </ValidatorForm>
-    </div>
+      <CssBaseline />
+      <Container className={classes.paper}>
+        <ForumRoundedIcon className={classes.avatar} />
+        <Typography component="h1" variant="h5">
+          Sign Up
+        </Typography>
+        <form onSubmit={handleSubmit}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Email"
+            name="email"
+            autoComplete="on"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            name="password"
+            validators={['required']}
+            onChange={handleChange}
+          />
+          {handleIsError()}
+          <Button
+            fullWidth
+            variant="contained"
+            color="primary"
+            type="submit"
+            className={classes.submit}
+          >
+            Submit
+          </Button>
+        </form>
+      </Container>
+    </Container>
   );
 };
