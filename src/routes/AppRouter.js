@@ -1,15 +1,16 @@
 import React from 'react';
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import { Error } from '../pages/error';
 import { Home } from '../pages/home';
+import { PublicRoute } from './PublicRoute';
 import { SignIn } from '../pages/signIn';
 
 export const AppRouter = () => (
   <Router>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route path="/signin" component={SignIn} />
-      <Route path="*" component={Error} />
+      <PublicRoute exact path="/" component={Home} />
+      <PublicRoute path="/signin" component={SignIn} />
+      <PublicRoute path="*" component={Error} />
     </Switch>
   </Router>
 );
