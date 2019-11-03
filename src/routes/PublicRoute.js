@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import { element } from 'prop-types';
+import { func } from 'prop-types';
 import { NavBar } from '../components/NavBar';
 
 export const PublicRoute = ({
@@ -11,7 +11,7 @@ export const PublicRoute = ({
     {...rest}
     component={(props) => (
       <>
-        <NavBar isAuthenticated={window.localStorage.jwtToken} />
+        <NavBar isAuthenticated={!!window.localStorage.jwtToken} />
         <Component {...props} />
       </>
     )}
@@ -19,7 +19,7 @@ export const PublicRoute = ({
 );
 
 PublicRoute.propTypes = {
-  component: element.isRequired,
+  component: func.isRequired,
 };
 
 export default PublicRoute;
