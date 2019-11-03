@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { func } from 'prop-types';
+import cookie from 'react-cookies';
 import { NavBar } from '../components/NavBar';
 
 export const PublicRoute = ({
@@ -11,7 +12,7 @@ export const PublicRoute = ({
     {...rest}
     component={(props) => (
       <>
-        <NavBar isAuthenticated={!!window.localStorage.jwtToken} />
+        <NavBar isAuthenticated={!!cookie.load('jwtToken')} />
         <Component {...props} />
       </>
     )}
