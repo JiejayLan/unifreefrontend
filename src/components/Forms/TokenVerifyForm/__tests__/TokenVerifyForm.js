@@ -26,11 +26,6 @@ describe('TokenVerifyForm test', () => {
     },
   };
 
-  const failUsernamePayLoads = {
-    status: 'error',
-    message: 'Can not find matching token',
-  };
-
   beforeAll(() => {
     // Silence console.error
     // eslint-disable-next-line no-console
@@ -67,20 +62,6 @@ describe('TokenVerifyForm test', () => {
     fireEvent.click(container.querySelector('button'));
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('Wrong Token, Please Re-enter')).toBeInTheDocument();
-  });
-
-  it('should catch error for wrong username', async () => {
-    serviceRequest.mockReturnValue(failUsernamePayLoads);
-    const renderDom = render(<TokenVerifyForm />);
-    const { container, getByText } = renderDom;
-    const usernameInput = container.querySelectorAll('input')[0];
-    const tokenInput = container.querySelectorAll('input')[1];
-    fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(tokenInput, { target: { value: '12345' } });
-
-    fireEvent.click(container.querySelector('button'));
-    await new Promise((_) => setTimeout(_, 100));
-    expect(getByText('Invalid Username')).toBeInTheDocument();
   });
 
   it('should catch error for internal service error', async () => {
