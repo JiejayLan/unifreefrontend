@@ -4,7 +4,7 @@ import { withInfo } from '@storybook/addon-info';
 import { SignUpForm } from './SignUpForm';
 
 storiesOf('Form', module)
-  .add('SignIn Form',
+  .add('SignUp Form',
     withInfo({
       text: 'description: User login with username and password',
       inline: false,

@@ -65,7 +65,9 @@ export const SignUpForm = () => {
       if (response.status && response.status === 'success') {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
+        const expirationTime = 60 * 60 * 24; //  24 hours
         window.localStorage.jwtToken = jwtToken;
+        cookies.save('jwtToken', jwtToken, { path: '/', maxAge: expirationTime });
         setIsSignedUp(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Invalid username or password');
