@@ -119,7 +119,6 @@ export const SignUpForm = () => {
             fullWidth
             label="Password"
             name="password"
-            validators={['required']}
             onChange={handleChange}
           />
           {handleIsError()}
