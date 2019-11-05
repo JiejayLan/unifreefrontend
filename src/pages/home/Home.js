@@ -1,9 +1,10 @@
 import React from 'react';
 import { Signup } from '../../components/Signup';
+import { Post } from '../../components/Post';
 
 export const Home = () => (
   <div>
-    <h1>This is home page</h1>
+    <Post />
     <Signup />
   </div>
 );
