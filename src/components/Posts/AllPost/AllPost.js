@@ -27,8 +27,9 @@ const featuredPosts = [
   },
 ];
 
-export const Post = () => {
+export const AllPost = () => {
   const classes = useStyles();
+
   return (
     <>
       <CssBaseline />

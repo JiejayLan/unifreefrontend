@@ -1,10 +1,10 @@
 import React from 'react';
 import { Signup } from '../../components/Signup';
-import { Post } from '../../components/Post';
+import { AllPost } from '../../components/Posts/AllPost';
 
 export const Home = () => (
   <div>
-    <Post />
+    <AllPost />
     <Signup />
   </div>
 );
