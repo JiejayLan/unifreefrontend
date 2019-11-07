@@ -10,56 +10,61 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
+import cookie from 'react-cookies';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
+import { StateProvider } from '../../StateProvider';
 import useStyles from './style';
 
-const path = '/api/v1/user/viewallposts';
+const path = '/api/v1/user/getposts?viewall=true';
 const domain = config.apiDomain;
 
-function preparePayload(method, data) {
+function preparePayload(method, headers, data) {
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
+    headers,
     data,
   };
 }
 
-const featuredPosts = [
-  {
-    title: 'Featured post',
-    date: 'Nov 12',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-  },
-  {
-    title: 'Post title',
-    date: 'Nov 11',
-    description:
-      'This is a wider card with supporting text below as a natural lead-in to additional content.',
-  },
-];
-
 export const AllPost = () => {
   const classes = useStyles();
-  const [postData, setPost] = useState({
-    postID: null,
-    title: null,
-    label: null,
-    content: null,
-    createdAt: null,
-    updatedAt: null,
-  });
+
+  const token = cookie.load('jwtToken');
+  const postData = { viewall: true };
+  const postHeaders = { Authorization: token };
+  const [allPosts, setAllPosts] = useState({ posts: [] });
+  const main = allPosts.posts[0];
+  const subPosts = allPosts.posts.slice(1);
+
+  const initialState = {
+    page: { currentPage: 1, totalPages: 1 },
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'changePage':
+        return {
+          ...state,
+          page: action.newPage,
+        };
+
+      default:
+        return state;
+    }
+  };
 
   useEffect(() => {
-    async function fetchPostAPI() {
-      const requestPayload = preparePayload('get', postData);
+    async function fetchAllPosts() {
+      const requestPayload = preparePayload('get', postHeaders, postData);
       const response = await serviceRequest(requestPayload);
       try {
         if (response.status && response.status === 'success') {
-          const { data } = response;
-          setPost(data);
+          setAllPosts(response.data);
+        } else if (response.status && response.status === 'error') {
+          throw new Error('Authorization Error');
         } else {
           throw new Error('Internal Service Error');
         }
@@ -68,11 +73,11 @@ export const AllPost = () => {
         console.error(err);
       }
     }
-    fetchPostAPI();
-  });
+    fetchAllPosts();
+  }, [allPosts, postHeaders, postData]);
 
   return (
-    <>
+    <StateProvider initialState={initialState} reducer={reducer}>
       <CssBaseline />
       <Container maxWidth="lg">
         <main>
@@ -91,11 +96,10 @@ export const AllPost = () => {
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
                   <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                    Title of a longer featured blog post
+                    {main && main.title}
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
-                    Multiple lines of text that form the lede, informing new readers quickly and
-                    efficiently about what&apos;s most interesting in this post&apos;s contents.
+                    {main && main.content}
                   </Typography>
                   <Link variant="subtitle1" href="/">
                     Continue reading…
@@ -107,8 +111,8 @@ export const AllPost = () => {
           {/* End main featured post */}
           {/* Sub featured posts */}
           <Grid container spacing={4}>
-            {featuredPosts.map((post) => (
-              <Grid item key={post.title} xs={12} md={6}>
+            {subPosts.map((post) => (
+              <Grid item key={post.title + post.createdAt} xs={12} md={6}>
                 <CardActionArea component="a" href="#">
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
@@ -117,10 +121,10 @@ export const AllPost = () => {
                           {post.title}
                         </Typography>
                         <Typography variant="subtitle1" color="textSecondary">
-                          {post.date}
+                          {post.updatedAt.substr(0, post.createdAt.indexOf('T'))}
                         </Typography>
                         <Typography variant="subtitle1" paragraph>
-                          {post.description}
+                          {post.content}
                         </Typography>
                         <Typography variant="subtitle1" color="primary">
                           Continue reading...
@@ -142,6 +146,6 @@ export const AllPost = () => {
           {/* End sub featured posts */}
         </main>
       </Container>
-    </>
+    </StateProvider>
   );
 };
