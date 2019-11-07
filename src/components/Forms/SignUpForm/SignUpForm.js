@@ -30,7 +30,7 @@ export const SignUpForm = () => {
 
   function handleIsSignedUp() {
     if (isSignedUp) {
-      return <Redirect to="/signup" />;
+      return <Redirect to="/signup/verify" />;
     }
     return null;
   }
@@ -57,20 +57,20 @@ export const SignUpForm = () => {
     };
   }
 
-  async function handleSubmit() {
+  async function handleSubmit(e) {
     // eslint-disable-next-line no-useless-catch
     try {
+      e.preventDefault()
       const reqInfo = preprarePayload('post', formData);
       const response = await serviceRequest(reqInfo);
       if (response.status && response.status === 'success') {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
         const expirationTime = 60 * 60 * 24; //  24 hours
-        window.localStorage.jwtToken = jwtToken;
-        cookies.save('jwtToken', jwtToken, { path: '/', maxAge: expirationTime });
+        cookies.save('jwtToken', jwtToken, { path: '/signup/verify', maxAge: expirationTime });
         setIsSignedUp(true);
       } else if (response.status && response.status === 'error') {
-        setErrorMsg('Invalid username or password');
+        setErrorMsg('Invalid email, username or password');
         setIsError(true);
       } else {
         throw new Error('Internal Service Error');
