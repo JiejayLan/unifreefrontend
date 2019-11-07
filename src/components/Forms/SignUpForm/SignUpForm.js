@@ -60,7 +60,7 @@ export const SignUpForm = () => {
   async function handleSubmit(e) {
     // eslint-disable-next-line no-useless-catch
     try {
-      e.preventDefault()
+      e.preventDefault();
       const reqInfo = preprarePayload('post', formData);
       const response = await serviceRequest(reqInfo);
       if (response.status && response.status === 'success') {
