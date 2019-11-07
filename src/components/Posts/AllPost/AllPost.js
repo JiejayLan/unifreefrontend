@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -10,7 +10,21 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
+import { serviceRequest } from '../../../services/serviceRequest';
+import config from '../../../config';
 import useStyles from './style';
+
+const path = '/api/v1/user/viewallposts';
+const domain = config.apiDomain;
+
+function preparePayload(method, data) {
+  const url = `https://${domain}${path}`;
+  return {
+    method,
+    url,
+    data,
+  };
+}
 
 const featuredPosts = [
   {
@@ -29,6 +43,33 @@ const featuredPosts = [
 
 export const AllPost = () => {
   const classes = useStyles();
+  const [postData, setPost] = useState({
+    postID: null,
+    title: null,
+    label: null,
+    content: null,
+    createdAt: null,
+    updatedAt: null,
+  });
+
+  useEffect(() => {
+    async function fetchPostAPI() {
+      const requestPayload = preparePayload('get', postData);
+      const response = await serviceRequest(requestPayload);
+      try {
+        if (response.status && response.status === 'success') {
+          const { data } = response;
+          setPost(data);
+        } else {
+          throw new Error('Internal Service Error');
+        }
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.error(err);
+      }
+    }
+    fetchPostAPI();
+  });
 
   return (
     <>
