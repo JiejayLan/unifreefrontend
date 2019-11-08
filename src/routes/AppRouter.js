@@ -13,8 +13,8 @@ export const AppRouter = () => (
       <PublicRoute exact path="/" component={Home} />
       <PublicRoute path="/tokenVerify" component={TokenVerify} />
       <PublicRoute path="/signin" component={SignIn} />
-      <PublicRoute path="*" component={Error} />
       <PublicRoute path="/signup" component={SignUp} />
+      <PublicRoute path="*" component={Error} />
     </Switch>
   </Router>
 );
