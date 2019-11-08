@@ -1,8 +1,9 @@
 import React from 'react';
+import { Grid } from '@material-ui/core';
 import { SignUpForm } from '../../components/Forms/SignUpForm';
 
 export const SignUp = () => (
-  <div>
+  <Grid container justify="center">
     <SignUpForm />
-  </div>
+  </Grid>
 );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import { SignUp } from './singup';
+import { SignUp } from './SignUp';
 
 storiesOf('Pages', module)
   .add('SignUp Page',
