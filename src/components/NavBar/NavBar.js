@@ -41,7 +41,7 @@ export const NavBar = ({ isAuthenticated }) => {
               >
                   Login
               </Button>
-              <Button data-testid="signup-button" variant="contained" component={Link} to="/">
+              <Button data-testid="signup-button" variant="contained" component={Link} to="/signup">
                   Signup
               </Button>
             </>
