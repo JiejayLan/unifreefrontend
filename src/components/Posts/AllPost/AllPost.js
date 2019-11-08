@@ -8,8 +8,9 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
-import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
+import Chip from '@material-ui/core/Chip';
 import cookie from 'react-cookies';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
@@ -81,9 +82,7 @@ export const AllPost = () => {
       <CssBaseline />
       <Container maxWidth="lg">
         <main>
-          {/* Main featured post */}
           <Paper className={classes.mainFeaturedPost}>
-            {/* Increase the priority of the hero background image */}
             {
               <img
                 style={{ display: 'none' }}
@@ -95,21 +94,25 @@ export const AllPost = () => {
             <Grid container>
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
+                  <Chip label={main && main.label} size="small" color="primary" />
                   <Typography component="h1" variant="h3" color="inherit" gutterBottom>
                     {main && main.title}
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
-                    {main && main.content}
+                    {main && `${main.content.substring(0, 100)}`}
                   </Typography>
-                  <Link variant="subtitle1" href="/">
-                    Continue reading…
-                  </Link>
+                  <Typography variant="subtitle1" color="white" gutterBottom>
+                    {main && `${main.updatedAt
+                      ? main.updatedAt.substr(0, main.updatedAt.indexOf('T'))
+                      : main.createdAt.substr(0, main.createdAt.indexOf('T'))} by ${main && main.username}`}
+                  </Typography>
+                  <Button variant="contained" color="primary">
+                    Continue Reading...
+                  </Button>
                 </div>
               </Grid>
             </Grid>
           </Paper>
-          {/* End main featured post */}
-          {/* Sub featured posts */}
           <Grid container spacing={4}>
             {subPosts.map((post) => (
               <Grid item key={post.title + post.createdAt} xs={12} md={6}>
@@ -117,17 +120,17 @@ export const AllPost = () => {
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                       <CardContent>
+                        <Chip label={post.label} size="small" color="primary" />
                         <Typography component="h2" variant="h5">
                           {post.title}
                         </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {post.updatedAt.substr(0, post.createdAt.indexOf('T'))}
-                        </Typography>
                         <Typography variant="subtitle1" paragraph>
-                          {post.content}
+                          {`${post.content.substring(0, 100)}...`}
                         </Typography>
-                        <Typography variant="subtitle1" color="primary">
-                          Continue reading...
+                        <Typography variant="subtitle1" color="textSecondary">
+                          {`${post.updatedAt
+                            ? post.updatedAt.substr(0, post.updatedAt.indexOf('T'))
+                            : post.createdAt.substr(0, post.createdAt.indexOf('T'))} by ${post.username}`}
                         </Typography>
                       </CardContent>
                     </div>
@@ -143,7 +146,6 @@ export const AllPost = () => {
               </Grid>
             ))}
           </Grid>
-          {/* End sub featured posts */}
         </main>
       </Container>
     </StateProvider>
