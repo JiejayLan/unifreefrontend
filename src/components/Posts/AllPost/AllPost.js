@@ -12,6 +12,7 @@ import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
 import Chip from '@material-ui/core/Chip';
 import cookie from 'react-cookies';
+import { Link } from 'react-router-dom';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
 import { StateProvider } from '../../StateProvider';
@@ -106,7 +107,7 @@ export const AllPost = () => {
                       ? main.updatedAt.substr(0, main.updatedAt.indexOf('T'))
                       : main.createdAt.substr(0, main.createdAt.indexOf('T'))} by ${main && main.username}`}
                   </Typography>
-                  <Button variant="contained" color="primary">
+                  <Button variant="contained" color="primary" component={Link} to="/">
                     Continue Reading...
                   </Button>
                 </div>
@@ -116,7 +117,7 @@ export const AllPost = () => {
           <Grid container spacing={4}>
             {subPosts.map((post) => (
               <Grid item key={post.title + post.createdAt} xs={12} md={6}>
-                <CardActionArea component="a" href="#">
+                <CardActionArea component={Link} to={`/viewpost/postID=${post.postID}`}>
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                       <CardContent>
