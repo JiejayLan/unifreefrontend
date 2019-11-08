@@ -33,11 +33,11 @@ function preparePayload(method, headers, params) {
 
 export const AllPost = () => {
   const classes = useStyles();
-  const allPostParams = { page: 1, pageSize: 5, viewall: true };
+  const [allPostParams] = useState({ page: 1, pageSize: 15, viewall: true });
   const token = cookie.load('jwtToken');
   const allPostHeaders = { Authorization: token };
   const [allPosts, setAllPosts] = useState({ posts: [] });
-  const main = allPosts.posts[0];
+  const mainPost = allPosts.posts[0];
   const subPosts = allPosts.posts.slice(1);
 
   const initialState = {
@@ -94,23 +94,23 @@ export const AllPost = () => {
             <Grid container>
               <Grid item md={6}>
                 <div className={classes.mainFeaturedPostContent}>
-                  <Chip label={main && main.label} size="small" color="primary" />
+                  <Chip label={mainPost && mainPost.label} size="small" color="primary" />
                   <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                    {main && main.title}
+                    {mainPost && mainPost.title}
                   </Typography>
                   <Typography variant="h5" color="inherit" paragraph>
-                    {main && `${main.content.substring(0, 100)}`}
+                    {mainPost && `${mainPost.content.substring(0, 100)}`}
                   </Typography>
                   <Typography variant="subtitle1" color="inherit" gutterBottom>
-                    {main && `${main.updatedAt
-                      ? main.updatedAt.substr(0, main.updatedAt.indexOf('T'))
-                      : main.createdAt.substr(0, main.createdAt.indexOf('T'))} by ${main && main.username}`}
+                    {mainPost && `${mainPost.updatedAt
+                      ? mainPost.updatedAt.substr(0, mainPost.updatedAt.indexOf('T'))
+                      : mainPost.createdAt.substr(0, mainPost.createdAt.indexOf('T'))} by ${mainPost && mainPost.username}`}
                   </Typography>
                   <Button
                     variant="contained"
                     color="primary"
                     component={Link}
-                    to={main && `/viewpost/${main.postID}`}
+                    to={mainPost && `/viewpost/${mainPost.postID}`}
                   >
                     Continue Reading...
                   </Button>
