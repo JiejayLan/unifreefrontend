@@ -13,7 +13,7 @@ describe('SignUpForm Test Suite', () => {
     data: {
       email: 'test@test.edu',
       username: 'test',
-      token: 1234,
+      token: '123',
       createdAt: new Date().toString(),
     },
   };
@@ -56,7 +56,6 @@ describe('SignUpForm Test Suite', () => {
     const emailInput = container.querySelectorAll('input')[0];
     const usernameInput = container.querySelectorAll('input')[1];
     const passwordInput = container.querySelectorAll('input')[2];
-
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
@@ -66,13 +65,12 @@ describe('SignUpForm Test Suite', () => {
   });
 
   it('Should catch error for internal service error', async () => {
-    serviceRequest.mockReturnValue({});
+    serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
     const usernameInput = container.querySelectorAll('input')[1];
     const passwordInput = container.querySelectorAll('input')[2];
-
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
@@ -84,42 +82,39 @@ describe('SignUpForm Test Suite', () => {
   it('should fail to sign up due to missing email', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
-    const { container } = renderDom;
+    const { container, getByText } = renderDom;
     const usernameInput = container.querySelectorAll('input')[1];
     const passwordInput = container.querySelectorAll('input')[2];
-
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(serviceRequest).not.toHaveBeenCalled();
+    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
   });
 
   it('Should fail to sign up due to missing username', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
-    const { container } = renderDom;
+    const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
     const passwordInput = container.querySelectorAll('input')[2];
-
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(serviceRequest).not.toHaveBeenCalled();
+    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
   });
 
   it('Should fail to sign up due to missing password', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
-    const { container } = renderDom;
+    const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
     const usernameInput = container.querySelectorAll('input')[1];
-
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(serviceRequest).not.toHaveBeenCalled();
+    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
   });
 });
