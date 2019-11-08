@@ -30,7 +30,7 @@ export const SignUpForm = () => {
 
   function handleIsSignedUp() {
     if (isSignedUp) {
-      return <Redirect to="/signup/verify" />;
+      return <Redirect to="/tokenVerify" />;
     }
     return null;
   }
@@ -58,7 +58,6 @@ export const SignUpForm = () => {
   }
 
   async function handleSubmit(e) {
-    // eslint-disable-next-line no-useless-catch
     try {
       e.preventDefault();
       const reqInfo = preprarePayload('post', formData);
@@ -67,7 +66,7 @@ export const SignUpForm = () => {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
         const expirationTime = 60 * 60 * 24; //  24 hours
-        cookies.save('jwtToken', jwtToken, { path: '/signup/verify', maxAge: expirationTime });
+        cookies.save('jwtToken', jwtToken, { path: '/', maxAge: expirationTime });
         setIsSignedUp(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Invalid email, username or password');
@@ -96,6 +95,7 @@ export const SignUpForm = () => {
             margin="normal"
             required
             fullWidth
+            autoFocus
             label="Email"
             name="email"
             autoComplete="on"
@@ -117,6 +117,7 @@ export const SignUpForm = () => {
             margin="normal"
             required
             fullWidth
+            type="password"
             label="Password"
             name="password"
             onChange={handleChange}
