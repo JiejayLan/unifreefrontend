@@ -18,31 +18,30 @@ import config from '../../../config';
 import { StateProvider } from '../../StateProvider';
 import useStyles from './style';
 
-const path = '/api/v1/user/getposts?viewall=true';
+const path = '/api/v1/user/getposts?';
 const domain = config.apiDomain;
 
-function preparePayload(method, headers, data) {
+function preparePayload(method, headers, params) {
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
     headers,
-    data,
+    params,
   };
 }
 
 export const AllPost = () => {
   const classes = useStyles();
-
+  const allPostParams = { page: 1, pageSize: 5, viewall: true };
   const token = cookie.load('jwtToken');
-  const postData = { viewall: true };
-  const postHeaders = { Authorization: token };
+  const allPostHeaders = { Authorization: token };
   const [allPosts, setAllPosts] = useState({ posts: [] });
   const main = allPosts.posts[0];
   const subPosts = allPosts.posts.slice(1);
 
   const initialState = {
-    page: { currentPage: 1, totalPages: 1 },
+    page: { offset: 0, limit: 1 },
   };
 
   const reducer = (state, action) => {
@@ -60,7 +59,7 @@ export const AllPost = () => {
 
   useEffect(() => {
     async function fetchAllPosts() {
-      const requestPayload = preparePayload('get', postHeaders, postData);
+      const requestPayload = preparePayload('get', allPostHeaders, allPostParams);
       const response = await serviceRequest(requestPayload);
       try {
         if (response.status && response.status === 'success') {
@@ -76,7 +75,7 @@ export const AllPost = () => {
       }
     }
     fetchAllPosts();
-  }, [allPosts, postHeaders, postData]);
+  }, [initialState.page.offset, initialState.page.limit, allPostHeaders, allPostParams]);
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
@@ -102,12 +101,17 @@ export const AllPost = () => {
                   <Typography variant="h5" color="inherit" paragraph>
                     {main && `${main.content.substring(0, 100)}`}
                   </Typography>
-                  <Typography variant="subtitle1" color="white" gutterBottom>
+                  <Typography variant="subtitle1" color="inherit" gutterBottom>
                     {main && `${main.updatedAt
                       ? main.updatedAt.substr(0, main.updatedAt.indexOf('T'))
                       : main.createdAt.substr(0, main.createdAt.indexOf('T'))} by ${main && main.username}`}
                   </Typography>
-                  <Button variant="contained" color="primary" component={Link} to="/">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    component={Link}
+                    to={main && `/viewpost/${main.postID}`}
+                  >
                     Continue Reading...
                   </Button>
                 </div>
@@ -117,7 +121,7 @@ export const AllPost = () => {
           <Grid container spacing={4}>
             {subPosts.map((post) => (
               <Grid item key={post.title + post.createdAt} xs={12} md={6}>
-                <CardActionArea component={Link} to={`/viewpost/postID=${post.postID}`}>
+                <CardActionArea component={Link} to={`/viewpost/${post.postID}`}>
                   <Card className={classes.card}>
                     <div className={classes.cardDetails}>
                       <CardContent>
