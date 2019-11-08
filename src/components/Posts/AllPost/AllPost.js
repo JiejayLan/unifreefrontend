@@ -104,7 +104,8 @@ export const AllPost = () => {
                   <Typography variant="subtitle1" color="inherit" gutterBottom>
                     {mainPost && `${mainPost.updatedAt
                       ? mainPost.updatedAt.substr(0, mainPost.updatedAt.indexOf('T'))
-                      : mainPost.createdAt.substr(0, mainPost.createdAt.indexOf('T'))} by ${mainPost && mainPost.username}`}
+                      : mainPost.createdAt.substr(0, mainPost.createdAt.indexOf('T'))} 
+                      by ${mainPost && mainPost.username}`}
                   </Typography>
                   <Button
                     variant="contained"
