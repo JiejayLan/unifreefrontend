@@ -44,6 +44,10 @@ export const AllPost = () => {
             type: 'changePosts',
             posts: data.posts,
           });
+          dispatch({
+            type: 'changePage',
+            page: { ...page, currentPage: data.currentPage, totalPages: data.totalPages },
+          });
         } else if (response.status && response.status === 'error') {
           setErrorMsg('Authorization Error');
           setIsError(true);
