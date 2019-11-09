@@ -20,7 +20,12 @@ const domain = config.api_domain;
 const emailPattern = /^[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+@[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+.edu$/;
 const usernamePattern = /^[A-Za-z0-9_!$%&*+=?`{|}~^.-]/;
 const passwordPattern = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
-
+const passwordPolicy = `
+    Passwords must be at least 6 characters long and contain 2 of the following:
+      * Lowercase character
+      * Uppercase character
+      * digits 0 - 9
+    `;
 export const SignUpForm = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -60,12 +65,7 @@ export const SignUpForm = () => {
       return 'Invalid username';
     }
     if (!passwordPattern.test(formData.password)) {
-      return `Invalid password.\n
-      Passwords must be at least 6 characters long and contain 2 of the following:\n
-      * Lowercase alphabetic character\n
-      * Uppercase alphabetic character\n
-      * digits 0 - 9
-      `;
+      return 'Invalid password';
     }
     return 'Internal Service Error';
   }
@@ -156,6 +156,7 @@ export const SignUpForm = () => {
             label="Password"
             name="password"
             onChange={handleChange}
+            helperText={passwordPolicy}
           />
           {handleIsError()}
           <Button
