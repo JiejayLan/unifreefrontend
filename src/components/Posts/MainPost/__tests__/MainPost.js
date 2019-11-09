@@ -9,7 +9,7 @@ describe('MainPost component test suite', () => {
     label: 'sample',
     title: 'sample title',
     content: 'This is a sample content for the sample post with sample title',
-    createdAt: '2019-11-07T09:26:51.822Z',
+    updatedAt: '2019-11-07T09:26:51.822Z',
     username: 'sampleMe',
     postID: 1,
   };

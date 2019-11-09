@@ -36,8 +36,8 @@ export const AllPost = () => {
     async function fetchAllPosts() {
       const requestPayload = preparePayload('get', allPostHeaders,
         { page: page.currentPage, pageSize: page.pageSize, viewall: true });
-      const response = await serviceRequest(requestPayload);
       try {
+        const response = await serviceRequest(requestPayload);
         if (response.status && response.status === 'success') {
           const { data } = response;
           dispatch({
@@ -74,7 +74,7 @@ export const AllPost = () => {
                 {posts[0] && <MainPost mainPost={posts[0]} />}
                 <Grid container spacing={4}>
                   {subPosts.map((post) => (
-                    <SubPost post={post} key={post.posterID + post.title} />
+                    <SubPost post={post} key={post.postID + post.title} />
                   ))}
                 </Grid>
               </main>

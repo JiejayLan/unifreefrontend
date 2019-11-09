@@ -5,11 +5,11 @@ import { MemoryRouter } from 'react-router-dom';
 import { SubPost } from '../SubPost';
 
 describe('SubPost component test suite', () => {
-  const Post = {
+  const post = {
     label: 'sample',
     title: 'sample title',
     content: 'This is a sample content for the sample post with sample title',
-    createdAt: '2019-11-07T09:26:51.822Z',
+    updatedAt: '2019-11-07T09:26:51.822Z',
     username: 'sampleMe',
     postID: 1,
   };
@@ -17,7 +17,7 @@ describe('SubPost component test suite', () => {
   it('should render without crash', () => {
     const { baseElement } = render(
       <MemoryRouter>
-        <SubPost mainPost={Post} />
+        <SubPost post={post} />
       </MemoryRouter>,
     );
 
