@@ -29,7 +29,7 @@ export const SubPost = ({ post }) => {
                 {post.title}
               </Typography>
               <Typography variant="subtitle1" paragraph>
-                {`${post.content.substring(0, 95)}...`}
+                {`${post.content.substring(0, 40)}...`}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {`${post.updatedAt
