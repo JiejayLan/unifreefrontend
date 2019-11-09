@@ -40,6 +40,10 @@ describe('AllPost component test suite', () => {
     },
   };
 
+  beforeAll(() => {
+    // eslint-disable-next-line no-console
+    console.error = jest.fn();
+  });
 
   beforeEach(() => {
     serviceRequest.mockClear();

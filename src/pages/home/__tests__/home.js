@@ -8,6 +8,11 @@ import { serviceRequest } from '../../../services/serviceRequest';
 jest.mock('../../../services/serviceRequest');
 
 describe('Home Page test', () => {
+  beforeAll(() => {
+    // eslint-disable-next-line no-console
+    console.error = jest.fn();
+  });
+
   beforeEach(() => {
     serviceRequest.mockClear();
   });
