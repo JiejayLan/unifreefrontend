@@ -37,8 +37,8 @@ export const AllPost = () => {
     async function fetchAllPosts() {
       const requestPayload = preparePayload('get', allPostHeaders,
         { page: page.currentPage, pageSize: page.pageSize, viewall: true });
-      const response = await serviceRequest(requestPayload);
       try {
+        const response = await serviceRequest(requestPayload);
         if (response.status && response.status === 'success') {
           const { data } = response;
           const { posts: newPosts, totalPages } = data;
@@ -49,6 +49,10 @@ export const AllPost = () => {
           dispatch({
             type: 'changePage',
             newPage: { totalPages },
+          });
+          dispatch({
+            type: 'changePage',
+            page: { ...page, currentPage: data.currentPage, totalPages: data.totalPages },
           });
         } else if (response.status && response.status === 'error') {
           setErrorMsg('Authorization Error');
