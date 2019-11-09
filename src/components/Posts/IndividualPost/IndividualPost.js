@@ -80,9 +80,6 @@ export const IndividualPost = () => {
           <Typography variant="h5" color="inherit" paragraph className={classes.content}>
             {post.content}
           </Typography>
-          <Typography variant="subtitle1" color="inherit" gutterBottom>
-            {}
-          </Typography>
         </div>
       </Container>
     </div>
