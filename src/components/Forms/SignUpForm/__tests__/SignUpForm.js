@@ -27,6 +27,12 @@ describe('SignUpForm Test Suite', () => {
       createdAt: new Date().toString(),
     },
   };
+
+  const failPayload2 = {
+    status: 'error',
+    message: 'This email or username has already been taken',
+  };
+
   beforeAll(() => {
     serviceRequest.mockImplementation(async () => (successPayload));
   });
@@ -43,14 +49,14 @@ describe('SignUpForm Test Suite', () => {
     const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword01' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
     expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
   });
 
-  it('Should catch error for wrong credential', async () => {
-    serviceRequest.mockReturnValue(failPayload);
+  it('Should catch error for existing account', async () => {
+    serviceRequest.mockReturnValue(failPayload2);
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
@@ -58,10 +64,10 @@ describe('SignUpForm Test Suite', () => {
     const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword01' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
+    expect(getByText('This email or username has already been taken')).toBeInTheDocument();
   });
 
   it('Should catch error for internal service error', async () => {
@@ -73,7 +79,7 @@ describe('SignUpForm Test Suite', () => {
     const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword01' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
     expect(getByText('Internal Service Error')).toBeInTheDocument();
@@ -86,10 +92,10 @@ describe('SignUpForm Test Suite', () => {
     const usernameInput = container.querySelectorAll('input')[1];
     const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword01' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(getByText('Invalid email')).toBeInTheDocument();
+    expect(getByText('Invalid email. You must use a college email.')).toBeInTheDocument();
   });
 
   it('Should fail to sign up due to missing username', async () => {
@@ -99,7 +105,7 @@ describe('SignUpForm Test Suite', () => {
     const emailInput = container.querySelectorAll('input')[0];
     const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
-    fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
+    fireEvent.change(passwordInput, { target: { value: 'TestPassword01' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
     expect(getByText('Invalid username')).toBeInTheDocument();
