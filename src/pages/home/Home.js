@@ -13,12 +13,12 @@ export const Home = () => {
       case 'changePage':
         return {
           ...state,
-          page: action.newPage,
+          page: { ...state.page, ...action.newPage },
         };
       case 'changePosts':
         return {
           ...state,
-          posts: action.posts,
+          posts: action.newPosts,
         };
       default:
         return state;

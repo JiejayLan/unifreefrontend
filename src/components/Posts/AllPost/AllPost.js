@@ -9,6 +9,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 import { MainPost } from '../MainPost';
 import { SubPost } from '../SubPost';
 import { useStateValue } from '../../StateProvider';
+import { Pagination } from '../../Pagination';
 
 const path = '/api/v1/user/getposts?';
 const domain = config.apiDomain;
@@ -37,12 +38,18 @@ export const AllPost = () => {
       const requestPayload = preparePayload('get', allPostHeaders,
         { page: page.currentPage, pageSize: page.pageSize, viewall: true });
       const response = await serviceRequest(requestPayload);
+      console.log('call api');
       try {
         if (response.status && response.status === 'success') {
           const { data } = response;
+          const { posts: newPosts, totalPages } = data;
           dispatch({
             type: 'changePosts',
-            posts: data.posts,
+            newPosts,
+          });
+          dispatch({
+            type: 'changePage',
+            newPage: { totalPages },
           });
         } else if (response.status && response.status === 'error') {
           setErrorMsg('Authorization Error');
@@ -56,8 +63,7 @@ export const AllPost = () => {
       }
     }
     fetchAllPosts();
-    // eslint-disable-next-line
-  }, [posts.currentPage]);
+  }, [page.currentPage, page.pageSize]);
 
   return (
     <>
@@ -73,6 +79,7 @@ export const AllPost = () => {
                     <SubPost post={post} key={post.posterID + post.title} />
                   ))}
                 </Grid>
+                <Pagination />
               </main>
             </Container>
           </>
