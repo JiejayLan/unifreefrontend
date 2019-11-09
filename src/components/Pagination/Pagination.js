@@ -5,14 +5,18 @@ import Pagin from 'material-ui-flat-pagination';
 import { useStateValue } from '../StateProvider';
 
 const theme = createMuiTheme();
+
 export const Pagination = () => {
   const [{ page }, dispatch] = useStateValue();
+  const { currentPage, pageSize, totalPages } = page;
+  const offset = (currentPage - 1) * pageSize;
+  const totalRow = totalPages * pageSize;
 
-  // eslint-disable-next-line no-unused-vars
-  const handleClick = (offset) => {
+  const handleClick = (offsetRow) => {
+    const newCurrentPage = Math.floor(offsetRow / pageSize) + 1;
     dispatch({
       type: 'changePage',
-      newPage: { currentPage: page.currentPage + 1 },
+      newPage: { currentPage: newCurrentPage },
     });
   };
 
@@ -20,10 +24,10 @@ export const Pagination = () => {
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
       <Pagin
-        limit={page.pageSize}
-        offset={(page.currentPage - 1) * page.pageSize}
-        total={page.totalPages * page.pageSize}
-        onClick={(e, offset) => handleClick(offset)}
+        limit={pageSize}
+        offset={offset}
+        total={totalRow}
+        onClick={(e, offsetRow) => handleClick(offsetRow)}
       />
     </MuiThemeProvider>
   );

@@ -14,7 +14,7 @@ import { Pagination } from '../../Pagination';
 const path = '/api/v1/user/getposts?';
 const domain = config.apiDomain;
 
-function preparePayload(method, headers, params) {
+const preparePayload = (method, headers, params) => {
   const url = `https://${domain}${path}`;
   return {
     method,
@@ -22,7 +22,7 @@ function preparePayload(method, headers, params) {
     headers,
     params,
   };
-}
+};
 
 export const AllPost = () => {
   const [{ posts, page }, dispatch] = useStateValue();
@@ -33,36 +33,33 @@ export const AllPost = () => {
   const allPostHeaders = { Authorization: token };
   const subPosts = posts.slice(1);
 
-  useEffect(() => {
-    async function fetchAllPosts() {
+  useEffect(async () => {
+    try {
       const requestPayload = preparePayload('get', allPostHeaders,
         { page: page.currentPage, pageSize: page.pageSize, viewall: true });
       const response = await serviceRequest(requestPayload);
-      console.log('call api');
-      try {
-        if (response.status && response.status === 'success') {
-          const { data } = response;
-          const { posts: newPosts, totalPages } = data;
-          dispatch({
-            type: 'changePosts',
-            newPosts,
-          });
-          dispatch({
-            type: 'changePage',
-            newPage: { totalPages },
-          });
-        } else if (response.status && response.status === 'error') {
-          setErrorMsg('Authorization Error');
-          setIsError(true);
-        } else {
-          throw new Error('Internal Service Error');
-        }
-      } catch (err) {
-        setErrorMsg('Internal Service Error');
+
+      if (response.status && response.status === 'success') {
+        const { data } = response;
+        const { posts: newPosts, totalPages } = data;
+        dispatch({
+          type: 'changePosts',
+          newPosts,
+        });
+        dispatch({
+          type: 'changePage',
+          newPage: { totalPages },
+        });
+      } else if (response.status && response.status === 'error') {
+        setErrorMsg('Authorization Error');
         setIsError(true);
+      } else {
+        throw new Error('Internal Service Error');
       }
+    } catch (err) {
+      setErrorMsg('Internal Service Error');
+      setIsError(true);
     }
-    fetchAllPosts();
   }, [page.currentPage, page.pageSize]);
 
   return (
@@ -76,7 +73,7 @@ export const AllPost = () => {
                 {posts[0] && <MainPost mainPost={posts[0]} />}
                 <Grid container spacing={4}>
                   {subPosts.map((post) => (
-                    <SubPost post={post} key={post.posterID + post.title} />
+                    <SubPost post={post} key={post.postID + post.title} />
                   ))}
                 </Grid>
                 <Pagination />
