@@ -4,7 +4,9 @@ import { Error } from '../pages/error';
 import { Home } from '../pages/home';
 import { TokenVerify } from '../pages/tokenVerify';
 import { PublicRoute } from './PublicRoute';
+import { PrivateRoute } from './PrivateRoute';
 import { SignIn } from '../pages/signIn';
+import { Post } from '../pages/Post';
 
 export const AppRouter = () => (
   <Router>
@@ -12,6 +14,7 @@ export const AppRouter = () => (
       <PublicRoute exact path="/" component={Home} />
       <PublicRoute path="/tokenVerify" component={TokenVerify} />
       <PublicRoute path="/signin" component={SignIn} />
+      <PrivateRoute path="/viewpost" component={Post} />
       <PublicRoute path="*" component={Error} />
     </Switch>
   </Router>
