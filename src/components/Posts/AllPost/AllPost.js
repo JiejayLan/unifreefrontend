@@ -67,7 +67,7 @@ export const AllPost = () => {
             <CssBaseline />
             <Container maxWidth="lg">
               <main>
-                <MainPost mainPost={posts[0]} />
+                {posts[0] && <MainPost mainPost={posts[0]} />}
                 <Grid container spacing={4}>
                   {subPosts.map((post) => (
                     <SubPost post={post} key={post.posterID + post.title} />

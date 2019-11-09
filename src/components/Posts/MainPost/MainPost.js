@@ -27,25 +27,23 @@ export const MainPost = ({ mainPost }) => {
       <Grid container>
         <Grid item md={6}>
           <div className={classes.mainFeaturedPostContent}>
-            <Chip label={mainPost && mainPost.label} size="small" color="primary" />
+            <Chip label={mainPost.label} size="small" color="primary" />
             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-              {mainPost && mainPost.title}
+              {mainPost.title}
             </Typography>
             <Typography variant="h5" color="inherit" paragraph>
-              {mainPost && `${mainPost.content.substring(0, 100)}`}
+              {`${mainPost.content.substring(0, 100)}`}
             </Typography>
             <Typography variant="subtitle1" color="inherit" gutterBottom>
-              {mainPost && `${mainPost.updatedAt
-                ? mainPost.updatedAt.substr(0, mainPost.updatedAt.indexOf('T'))
-                : mainPost.createdAt.substr(0, mainPost.createdAt.indexOf('T'))} 
-                            by ${mainPost && mainPost.username}`}
+              {`${mainPost.updatedAt.substr(0, mainPost.updatedAt.indexOf('T'))} 
+                by ${mainPost.username}`}
             </Typography>
             <Button
               data-testid="continue-read-button"
               variant="contained"
               color="primary"
               component={Link}
-              to={mainPost ? `/viewpost/${mainPost.postID}` : '/'}
+              to={`/viewpost/${mainPost.postID}`}
             >
               Continue Reading...
             </Button>
