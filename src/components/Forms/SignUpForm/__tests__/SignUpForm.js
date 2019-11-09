@@ -89,7 +89,7 @@ describe('SignUpForm Test Suite', () => {
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
+    expect(getByText('Invalid email')).toBeInTheDocument();
   });
 
   it('Should fail to sign up due to missing username', async () => {
@@ -102,7 +102,7 @@ describe('SignUpForm Test Suite', () => {
     fireEvent.change(passwordInput, { target: { value: 'testpassword' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
+    expect(getByText('Invalid username')).toBeInTheDocument();
   });
 
   it('Should fail to sign up due to missing password', async () => {
@@ -115,6 +115,6 @@ describe('SignUpForm Test Suite', () => {
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
-    expect(getByText('Invalid email, username or password')).toBeInTheDocument();
+    expect(getByText('Invalid password')).toBeInTheDocument();
   });
 });

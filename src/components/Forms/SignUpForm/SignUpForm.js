@@ -11,11 +11,15 @@ import cookies from 'react-cookies';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
+import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 
 
 const path = '/api/v1/signup';
 const domain = config.api_domain;
+const emailPattern = /^[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+@[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+.edu$/;
+const usernamePattern = /^[A-Za-z0-9_!$%&*+=?`{|}~^.-]/;
+const passwordPattern = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
 
 export const SignUpForm = () => {
   const classes = useStyles();
@@ -29,23 +33,41 @@ export const SignUpForm = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   function handleIsSignedUp() {
-    if (isSignedUp) {
-      return <Redirect to="/tokenVerify" />;
-    }
-    return null;
+    return isSignedUp ? <Redirect to="/tokenVerify" /> : null;
   }
 
   function handleIsError() {
-    if (isError) {
-      return <p>{errorMsg}</p>;
-    }
-    return null;
+    return isError ? <ErrorMessage message={errorMsg} /> : null;
   }
 
   function handleChange(event) {
     const updatedForm = { ...formData };
     updatedForm[event.target.name] = event.target.value;
     setFormData(updatedForm);
+  }
+
+  function isValid() {
+    return emailPattern.test(formData.email)
+      && usernamePattern.test(formData.username)
+      && passwordPattern.test(formData.password);
+  }
+
+  function reportValidationError() {
+    if (!emailPattern.test(formData.email)) {
+      return 'Invalid email. You must use a college email.';
+    }
+    if (!usernamePattern.test(formData.username)) {
+      return 'Invalid username';
+    }
+    if (!passwordPattern.test(formData.password)) {
+      return `Invalid password.
+      Passwords must be at least 6 characters long and contain 2 of the following:
+      * Lowercase alphabetic character
+      * Uppercase alphabetic character
+      * dgits 0 - 9
+      `;
+    }
+    return 'Internal Service Error';
   }
 
   function preprarePayload(method, data) {
@@ -60,16 +82,17 @@ export const SignUpForm = () => {
   async function handleSubmit(e) {
     try {
       e.preventDefault();
+      if (!isValid) reportValidationError();
       const reqInfo = preprarePayload('post', formData);
       const response = await serviceRequest(reqInfo);
       if (response.status && response.status === 'success') {
         const { data } = response;
-        const jwtToken = `bearer ${data.token}`;
+        const username = `bearer ${data.username}`;
         const expirationTime = 60 * 60 * 24; //  24 hours
-        cookies.save('jwtToken', jwtToken, { path: '/', maxAge: expirationTime });
+        cookies.save('username', username, { path: '/', maxAge: expirationTime });
         setIsSignedUp(true);
       } else if (response.status && response.status === 'error') {
-        setErrorMsg('Invalid email, username or password');
+        setErrorMsg(response.message);
         setIsError(true);
       } else {
         throw new Error('Internal Service Error');
