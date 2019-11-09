@@ -5,7 +5,11 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import { Link } from 'react-router-dom';
-import { objectOf, object } from 'prop-types';
+import {
+  string,
+  number,
+  shape,
+} from 'prop-types';
 import useStyles from './style';
 
 export const MainPost = ({ mainPost }) => {
@@ -37,10 +41,11 @@ export const MainPost = ({ mainPost }) => {
                             by ${mainPost && mainPost.username}`}
             </Typography>
             <Button
+              data-testid="continue-read-button"
               variant="contained"
               color="primary"
               component={Link}
-              to={mainPost && `/viewpost/${mainPost.postID}`}
+              to={mainPost ? `/viewpost/${mainPost.postID}` : '/'}
             >
               Continue Reading...
             </Button>
@@ -52,5 +57,14 @@ export const MainPost = ({ mainPost }) => {
 };
 
 MainPost.propTypes = {
-  mainPost: objectOf(object).isRequired,
+  // eslint-disable-next-line react/require-default-props
+  mainPost: shape({
+    label: string,
+    title: string,
+    content: string,
+    updatedAt: string,
+    createdAt: string,
+    postID: number.isRequired,
+    username: string,
+  }),
 };

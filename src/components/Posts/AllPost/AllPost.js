@@ -31,7 +31,6 @@ export const AllPost = () => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Authorization Error');
 
-  const mainPost = allPosts.posts[0];
   const subPosts = allPosts.posts.slice(1);
 
   const initialState = {
@@ -70,7 +69,7 @@ export const AllPost = () => {
       }
     }
     fetchAllPosts();
-  }, [initialState.page.offset, initialState.page.limit, allPostHeaders, allPostParams]);
+  }, [initialState.page.offset, initialState.page.limit]);
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
@@ -80,10 +79,10 @@ export const AllPost = () => {
             <CssBaseline />
             <Container maxWidth="lg">
               <main>
-                <MainPost mainPost={mainPost} />
+                <MainPost mainPost={allPosts.posts[0]} />
                 <Grid container spacing={4}>
                   {subPosts.map((post) => (
-                    <SubPost post={post} />
+                    <SubPost post={post} key={post.posterID + post.title} />
                   ))}
                 </Grid>
               </main>

@@ -2,22 +2,23 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import { Home } from '../Home';
-import { serviceRequest } from '../../../services/serviceRequest';
+import { AllPost } from '../AllPost';
+import { serviceRequest } from '../../../../services/serviceRequest';
 
-jest.mock('../../../services/serviceRequest');
+jest.mock('../../../../services/serviceRequest');
 
-describe('Home Page test', () => {
+describe('AllPost component test suite', () => {
   beforeEach(() => {
     serviceRequest.mockClear();
   });
 
-  it('renders without crashing', () => {
+  it('should render without crash', () => {
     const { baseElement } = render(
       <MemoryRouter>
-        <Home />
+        <AllPost />
       </MemoryRouter>,
     );
-    expect(expect(baseElement.outerHTML).toBeDefined());
+
+    expect(baseElement.outerHTML).toBeDefined();
   });
 });

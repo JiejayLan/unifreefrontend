@@ -8,14 +8,18 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Hidden from '@material-ui/core/Hidden';
 import Chip from '@material-ui/core/Chip';
 import { Link } from 'react-router-dom';
-import { objectOf, object } from 'prop-types';
+import {
+  string,
+  number,
+  shape,
+} from 'prop-types';
 import useStyles from './style';
 
 export const SubPost = ({ post }) => {
   const classes = useStyles();
 
   return (
-    <Grid item key={post.title + post.createdAt} xs={12} md={6}>
+    <Grid item key={post.postID} xs={12} md={6}>
       <CardActionArea component={Link} to={`/viewpost/${post.postID}`}>
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
@@ -25,7 +29,7 @@ export const SubPost = ({ post }) => {
                 {post.title}
               </Typography>
               <Typography variant="subtitle1" paragraph>
-                {`${post.content.substring(0, 100)}...`}
+                {`${post.content.substring(0, 95)}...`}
               </Typography>
               <Typography variant="subtitle1" color="textSecondary">
                 {`${post.updatedAt
@@ -47,7 +51,14 @@ export const SubPost = ({ post }) => {
   );
 };
 
-
 SubPost.propTypes = {
-  post: objectOf(object).isRequired,
+  post: shape({
+    label: string,
+    title: string,
+    content: string,
+    updatedAt: string,
+    createdAt: string,
+    postID: number.isRequired,
+    username: string,
+  }).isRequired,
 };
