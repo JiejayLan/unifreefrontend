@@ -52,7 +52,7 @@ export const SignUpForm = () => {
       && passwordPattern.test(formData.password);
   }
 
-  function reportValidationError() {
+  function getValidationError() {
     if (!emailPattern.test(formData.email)) {
       return 'Invalid email. You must use a college email.';
     }
@@ -60,11 +60,11 @@ export const SignUpForm = () => {
       return 'Invalid username';
     }
     if (!passwordPattern.test(formData.password)) {
-      return `Invalid password.
-      Passwords must be at least 6 characters long and contain 2 of the following:
-      * Lowercase alphabetic character
-      * Uppercase alphabetic character
-      * dgits 0 - 9
+      return `Invalid password.\n
+      Passwords must be at least 6 characters long and contain 2 of the following:\n
+      * Lowercase alphabetic character\n
+      * Uppercase alphabetic character\n
+      * digits 0 - 9
       `;
     }
     return 'Internal Service Error';
@@ -79,10 +79,8 @@ export const SignUpForm = () => {
     };
   }
 
-  async function handleSubmit(e) {
+  async function submitForm() {
     try {
-      e.preventDefault();
-      if (!isValid) reportValidationError();
       const reqInfo = preprarePayload('post', formData);
       const response = await serviceRequest(reqInfo);
       if (response.status && response.status === 'success') {
@@ -96,6 +94,20 @@ export const SignUpForm = () => {
         setIsError(true);
       } else {
         throw new Error('Internal Service Error');
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
+      if (!isValid()) {
+        setIsError(true);
+        setErrorMsg(getValidationError());
+      } else {
+        await submitForm();
       }
     } catch (error) {
       setErrorMsg('Internal Service Error');
