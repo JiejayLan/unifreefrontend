@@ -25,8 +25,10 @@ function preparePayload(method, headers, params) {
 
 export const IndividualPost = () => {
   const classes = useStyles();
+  const urls = window.location.href;
+  const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
   const [post, setPost] = useState('');
-  const [postIdParams] = useState({ postID: 17 });
+  const [postIdParams] = useState({ postID: postId });
   const token = cookie.load('jwtToken');
   const postHeaders = { Authorization: token };
   const [isError, setIsError] = useState(false);
