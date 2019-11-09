@@ -7,7 +7,7 @@ export const Home = () => {
     posts: [],
     page: { pageSize: 25, currentPage: 1, totalPages: 1 },
   };
-  // may need to chagne this
+
   const reducer = (state, action) => {
     switch (action.type) {
       case 'changePage':

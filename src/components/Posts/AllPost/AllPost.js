@@ -33,33 +33,35 @@ export const AllPost = () => {
   const allPostHeaders = { Authorization: token };
   const subPosts = posts.slice(1);
 
-  useEffect(async () => {
-    try {
+  useEffect(() => {
+    async function fetchAllPosts() {
       const requestPayload = preparePayload('get', allPostHeaders,
         { page: page.currentPage, pageSize: page.pageSize, viewall: true });
       const response = await serviceRequest(requestPayload);
-
-      if (response.status && response.status === 'success') {
-        const { data } = response;
-        const { posts: newPosts, totalPages } = data;
-        dispatch({
-          type: 'changePosts',
-          newPosts,
-        });
-        dispatch({
-          type: 'changePage',
-          newPage: { totalPages },
-        });
-      } else if (response.status && response.status === 'error') {
-        setErrorMsg('Authorization Error');
+      try {
+        if (response.status && response.status === 'success') {
+          const { data } = response;
+          const { posts: newPosts, totalPages } = data;
+          dispatch({
+            type: 'changePosts',
+            newPosts,
+          });
+          dispatch({
+            type: 'changePage',
+            newPage: { totalPages },
+          });
+        } else if (response.status && response.status === 'error') {
+          setErrorMsg('Authorization Error');
+          setIsError(true);
+        } else {
+          throw new Error('Internal Service Error');
+        }
+      } catch (err) {
+        setErrorMsg('Internal Service Error');
         setIsError(true);
-      } else {
-        throw new Error('Internal Service Error');
       }
-    } catch (err) {
-      setErrorMsg('Internal Service Error');
-      setIsError(true);
     }
+    fetchAllPosts();
   }, [page.currentPage, page.pageSize]);
 
   return (
