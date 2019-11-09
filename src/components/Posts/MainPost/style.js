@@ -28,18 +28,6 @@ const useStyles = makeStyles((theme) => ({
       paddingRight: 0,
     },
   },
-  mainGrid: {
-    marginTop: theme.spacing(3),
-  },
-  card: {
-    display: 'flex',
-  },
-  cardDetails: {
-    flex: 1,
-  },
-  cardMedia: {
-    width: 160,
-  },
 }));
 
 export default useStyles;

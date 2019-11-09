@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Hidden from '@material-ui/core/Hidden';
-import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
-import Chip from '@material-ui/core/Chip';
 import cookie from 'react-cookies';
-import { Link } from 'react-router-dom';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
 import { StateProvider } from '../../StateProvider';
-import useStyles from './style';
+import { ErrorMessage } from '../../ErrorMessage';
+import { MainPost } from '../MainPost';
+import { SubPost } from '../SubPost';
 
 const path = '/api/v1/user/getposts?';
 const domain = config.apiDomain;
@@ -32,11 +24,13 @@ function preparePayload(method, headers, params) {
 }
 
 export const AllPost = () => {
-  const classes = useStyles();
   const [allPostParams] = useState({ page: 1, pageSize: 15, viewall: true });
   const token = cookie.load('jwtToken');
   const allPostHeaders = { Authorization: token };
   const [allPosts, setAllPosts] = useState({ posts: [] });
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('Authorization Error');
+
   const mainPost = allPosts.posts[0];
   const subPosts = allPosts.posts.slice(1);
 
@@ -65,13 +59,14 @@ export const AllPost = () => {
         if (response.status && response.status === 'success') {
           setAllPosts(response.data);
         } else if (response.status && response.status === 'error') {
-          throw new Error('Authorization Error');
+          setErrorMsg('Authorization Error');
+          setIsError(true);
         } else {
           throw new Error('Internal Service Error');
         }
       } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error(err);
+        setErrorMsg('Internal Service Error');
+        setIsError(true);
       }
     }
     fetchAllPosts();
@@ -79,81 +74,22 @@ export const AllPost = () => {
 
   return (
     <StateProvider initialState={initialState} reducer={reducer}>
-      <CssBaseline />
-      <Container maxWidth="lg">
-        <main>
-          <Paper className={classes.mainFeaturedPost}>
-            {
-              <img
-                style={{ display: 'none' }}
-                src="https://source.unsplash.com/user/erondu"
-                alt="background"
-              />
-            }
-            <div className={classes.overlay} />
-            <Grid container>
-              <Grid item md={6}>
-                <div className={classes.mainFeaturedPostContent}>
-                  <Chip label={mainPost && mainPost.label} size="small" color="primary" />
-                  <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                    {mainPost && mainPost.title}
-                  </Typography>
-                  <Typography variant="h5" color="inherit" paragraph>
-                    {mainPost && `${mainPost.content.substring(0, 100)}`}
-                  </Typography>
-                  <Typography variant="subtitle1" color="inherit" gutterBottom>
-                    {mainPost && `${mainPost.updatedAt
-                      ? mainPost.updatedAt.substr(0, mainPost.updatedAt.indexOf('T'))
-                      : mainPost.createdAt.substr(0, mainPost.createdAt.indexOf('T'))} 
-                      by ${mainPost && mainPost.username}`}
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    component={Link}
-                    to={mainPost && `/viewpost/${mainPost.postID}`}
-                  >
-                    Continue Reading...
-                  </Button>
-                </div>
-              </Grid>
-            </Grid>
-          </Paper>
-          <Grid container spacing={4}>
-            {subPosts.map((post) => (
-              <Grid item key={post.title + post.createdAt} xs={12} md={6}>
-                <CardActionArea component={Link} to={`/viewpost/${post.postID}`}>
-                  <Card className={classes.card}>
-                    <div className={classes.cardDetails}>
-                      <CardContent>
-                        <Chip label={post.label} size="small" color="primary" />
-                        <Typography component="h2" variant="h5">
-                          {post.title}
-                        </Typography>
-                        <Typography variant="subtitle1" paragraph>
-                          {`${post.content.substring(0, 100)}...`}
-                        </Typography>
-                        <Typography variant="subtitle1" color="textSecondary">
-                          {`${post.updatedAt
-                            ? post.updatedAt.substr(0, post.updatedAt.indexOf('T'))
-                            : post.createdAt.substr(0, post.createdAt.indexOf('T'))} by ${post.username}`}
-                        </Typography>
-                      </CardContent>
-                    </div>
-                    <Hidden xsDown>
-                      <CardMedia
-                        className={classes.cardMedia}
-                        image="https://source.unsplash.com/random"
-                        title="Image title"
-                      />
-                    </Hidden>
-                  </Card>
-                </CardActionArea>
-              </Grid>
-            ))}
-          </Grid>
-        </main>
-      </Container>
+      {isError ? (<ErrorMessage message={errorMsg} styles={{ color: 'red' }} />)
+        : (
+          <>
+            <CssBaseline />
+            <Container maxWidth="lg">
+              <main>
+                <MainPost mainPost={mainPost} />
+                <Grid container spacing={4}>
+                  {subPosts.map((post) => (
+                    <SubPost post={post} />
+                  ))}
+                </Grid>
+              </main>
+            </Container>
+          </>
+        )}
     </StateProvider>
   );
 };
