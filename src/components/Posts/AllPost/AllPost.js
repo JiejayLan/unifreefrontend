@@ -68,6 +68,7 @@ export const AllPost = () => {
 
   useEffect(() => {
     fetchAllPosts();
+    // eslint-disable-next-line
   }, [page.currentPage, page.pageSize]);
 
   if (isError) {
