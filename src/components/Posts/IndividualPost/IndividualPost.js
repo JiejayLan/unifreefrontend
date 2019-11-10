@@ -28,12 +28,12 @@ export const IndividualPost = () => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const urls = window.location.href;
-  const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
-  const token = cookie.load('jwtToken');
-  const postHeaders = { Authorization: token };
-
   useEffect(() => {
+    const urls = window.location.href;
+    const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
+    const token = cookie.load('jwtToken');
+    const postHeaders = { Authorization: token };
+
     async function fetchPosts() {
       const requestPayload = preparePayload('get', postHeaders,
         { postID: postId });
