@@ -50,7 +50,7 @@ export const Pagination = () => {
         </Grid>
         <Grid item xs={4}>
           <FormControl className={classes.formControl}>
-            <InputLabel id="pageSize-input">Per Page</InputLabel>
+            <InputLabel className={classes.formTitle} id="pageSize-input">Per Page</InputLabel>
             <Select
               id="pageSize-dropdown"
               value={pageSize}
