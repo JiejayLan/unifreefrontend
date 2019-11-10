@@ -1,16 +1,12 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import PaginationComp from 'material-ui-flat-pagination';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Grid from '@material-ui/core/Grid';
+import {
+  InputLabel, MenuItem, FormControl, Select, Grid,
+} from '@material-ui/core';
 import useStyles from './style';
 import { useStateValue } from '../StateProvider';
-
-const theme = createMuiTheme();
 
 export const Pagination = () => {
   const classes = useStyles();
@@ -35,7 +31,7 @@ export const Pagination = () => {
   };
 
   return (
-    <MuiThemeProvider theme={theme}>
+    <MuiThemeProvider>
       <CssBaseline />
       <Grid container spacing={3}>
         <Grid item xs={8}>
