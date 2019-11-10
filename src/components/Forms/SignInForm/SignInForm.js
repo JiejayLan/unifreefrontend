@@ -17,14 +17,14 @@ const path = '/api/v1/signin';
 const domain = config.apiDomain;
 const expiredTime = 60 * 60 * 24; // 24hours
 
-function preparePayload(method, data) {
+const preparePayload = (method, data) => {
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
     data,
   };
-}
+};
 
 export const SignInForm = () => {
   const classes = useStyles();
@@ -33,13 +33,13 @@ export const SignInForm = () => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Invalid username or password');
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const updateForm = { ...formData };
     updateForm[event.target.name] = event.target.value;
     setForm(updateForm);
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.password || !formData.username) { return; }
     try {
@@ -60,7 +60,7 @@ export const SignInForm = () => {
       setErrorMsg('Internal Service Error');
       setIsError(true);
     }
-  }
+  };
   return (
     <Container component="main" maxWidth="xs">
       {isLogin && <Redirect to="/" />}

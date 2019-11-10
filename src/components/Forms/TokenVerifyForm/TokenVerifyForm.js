@@ -11,14 +11,14 @@ import config from '../../../config';
 const path = '/api/v1/signup/verify';
 const domain = config.apiDomain;
 
-function preparePayload(method, data) {
+const preparePayload = (method, data) => {
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
     data,
   };
-}
+};
 
 export const TokenVerifyForm = () => {
   const classes = useStyles();
@@ -27,13 +27,13 @@ export const TokenVerifyForm = () => {
   const [isVerify, setIsVerify] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const updateTokenData = { ...tokenData };
     updateTokenData[event.target.name] = event.target.value;
     setTokenData(updateTokenData);
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!tokenData.token || !tokenData.username) { return; }
     try {
@@ -54,7 +54,7 @@ export const TokenVerifyForm = () => {
     } catch (err) {
       setErrorMessage('Internal Service Error');
     }
-  }
+  };
 
   return (
     <Container component="main" maxWidth="xs">
