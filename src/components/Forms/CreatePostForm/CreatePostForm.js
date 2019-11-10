@@ -29,8 +29,8 @@ function preparePayload(method, data) {
 export const CreatePostForm = () => {
   const [open, setOpen] = useState(false);
   const [formData, setForm] = useState({ label: 'general', title: null, content: null });
-  const [isValid, setIsValid] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('Invalid entries');
+  const [isError, setIsError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('Please make sure all fields are complete');
 
   const handleChange = (event) => {
     const updateForm = { ...formData };
@@ -44,36 +44,35 @@ export const CreatePostForm = () => {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const validateInput = () => {
-    const { label, title, content } = formData;
-    const isEmpty = !!label && !!title && !!content;
-    if (isEmpty) {
-      setIsValid(false);
-      setErrorMsg('Empty!');
-      return false;
-    }
-    setIsValid(true);
-    return true;
+    setErrorMsg('');
   };
 
   const handleCreate = async () => {
+    if (!formData.label || !formData.title || !formData.content) {
+      setErrorMsg('Please make sure all fields are complete');
+      setIsError(true);
+      return;
+    }
     try {
-      validateInput();
       const requestPayload = preparePayload('post', formData);
       const response = await serviceRequest(requestPayload);
-      if (response.status && response.status === 'error') {
-        setErrorMsg('Please make sure field is not empty');
+      if (response.status && response.status === 'success') {
+        handleClose();
+      } else if (response.status && response.status === 'error') {
+        setErrorMsg('Authentication Error');
+        setIsError(true);
+      } else {
+        throw new Error('Internal Service Error');
       }
     } catch (err) {
       setErrorMsg('Internal Service Error');
+      setIsError(true);
     }
   };
 
   return (
     <div>
-      <Button variant="outlined" color="inherit" onClick={handleClickOpen}>
+      <Button data-testid="create-post-button" variant="outlined" color="inherit" onClick={handleClickOpen}>
         Create Post
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -83,6 +82,7 @@ export const CreatePostForm = () => {
             In order to create your post, you must filled out all the fields below
           </DialogContentText>
           <TextField
+            inputProps={{ 'data-testid': 'label' }}
             margin="dense"
             id="label"
             name="label"
@@ -91,8 +91,11 @@ export const CreatePostForm = () => {
             defaultValue="general"
             onChange={handleChange}
             fullWidth
+            required
+            autoFocus
           />
           <TextField
+            inputProps={{ 'data-testid': 'title' }}
             margin="dense"
             id="title"
             name="title"
@@ -100,8 +103,10 @@ export const CreatePostForm = () => {
             type="text"
             onChange={handleChange}
             fullWidth
+            required
           />
           <TextField
+            inputProps={{ 'data-testid': 'content' }}
             multiline
             margin="dense"
             id="content"
@@ -110,15 +115,16 @@ export const CreatePostForm = () => {
             type="text"
             onChange={handleChange}
             fullWidth
+            required
           />
         </DialogContent>
-        {isValid && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
+        {(isError) && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleCreate} color="primary">
-            Create!
+          <Button data-testid="create-button" onClick={handleCreate} color="primary">
+            Create
           </Button>
         </DialogActions>
       </Dialog>

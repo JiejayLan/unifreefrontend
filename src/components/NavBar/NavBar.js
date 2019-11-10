@@ -30,14 +30,21 @@ export const NavBar = ({ isAuthenticated }) => {
           {isAuthenticated ? (
             <>
               <CreatePostForm />
-              <Button data-testid="logout-button" color="inherit" component={Link} to="/" onClick={handleSignOut}>
+              <Button
+                className={classes.buttonRight}
+                data-testid="logout-button"
+                color="inherit"
+                component={Link}
+                to="/"
+                onClick={handleSignOut}
+              >
                 Logout
               </Button>
             </>
           ) : (
             <>
               <Button
-                className={classes.button}
+                className={classes.buttonLeft}
                 data-testid="login-button"
                 color="inherit"
                 component={Link}
