@@ -33,12 +33,13 @@ export const IndividualPost = () => {
     posterID: 1,
   });
   const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
-  const urls = window.location.href;
-  const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
-  const token = cookie.load('jwtToken');
-  const postHeaders = { Authorization: token };
 
   useEffect(() => {
+    const urls = window.location.href;
+    const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
+    const token = cookie.load('jwtToken');
+    const postHeaders = { Authorization: token };
+
     const fetchPost = async () => {
       try {
         const requestPayload = preparePayload('get', postHeaders,
