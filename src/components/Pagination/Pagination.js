@@ -30,9 +30,10 @@ export const Pagination = () => {
     const newPageSize = event.target.value;
     dispatch({
       type: 'changePage',
-      newPage: { pageSize: newPageSize },
+      newPage: { pageSize: newPageSize, currentPage: 1 },
     });
   };
+
   return (
     <MuiThemeProvider theme={theme}>
       <CssBaseline />
@@ -49,16 +50,16 @@ export const Pagination = () => {
         </Grid>
         <Grid item xs={4}>
           <FormControl className={classes.formControl}>
-            <InputLabel id="pageSize-input-label">Per Page</InputLabel>
+            <InputLabel id="pageSize-input">Per Page</InputLabel>
             <Select
-              id="pageSize-select"
+              id="pageSize-dropdown"
               value={pageSize}
               onChange={handlePageSizeChange}
             >
               <MenuItem value={5}>5</MenuItem>
               <MenuItem value={10}>10</MenuItem>
               <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>50</MenuItem>
+              <MenuItem value={30}>30</MenuItem>
             </Select>
           </FormControl>
         </Grid>
