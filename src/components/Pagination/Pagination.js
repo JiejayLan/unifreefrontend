@@ -13,6 +13,7 @@ export const Pagination = () => {
   const { currentPage, pageSize, totalPages } = page;
   const offset = (currentPage - 1) * pageSize;
   const totalRow = totalPages * pageSize;
+  const pageSizeOption = [5, 10, 20, 30];
 
   const handlePageChange = (offsetRow) => {
     const newCurrentPage = Math.floor(offsetRow / pageSize) + 1;
@@ -51,10 +52,7 @@ export const Pagination = () => {
               value={pageSize}
               onChange={handlePageSizeChange}
             >
-              <MenuItem value={5}>5</MenuItem>
-              <MenuItem value={10}>10</MenuItem>
-              <MenuItem value={20}>20</MenuItem>
-              <MenuItem value={30}>30</MenuItem>
+              { pageSizeOption.map((size) => <MenuItem value={size}>{size}</MenuItem>) }
             </Select>
           </FormControl>
         </Grid>

@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
   loaderImg: {
     height: '6rem',
     width: '6rem',
-  }
+  },
 }));
 
 export default useStyles;
