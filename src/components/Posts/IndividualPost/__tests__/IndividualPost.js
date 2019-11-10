@@ -42,8 +42,15 @@ describe('Individual Post test', () => {
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const { baseElement } = render(<IndividualPost />);
+    const { getByText } = render(<IndividualPost />);
     await new Promise((_) => setTimeout(_, 100));
-    expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
+    expect(getByText('Internal Service Error, Please Return to the Home Page')).toBeInTheDocument();
+  });
+
+  it('should catch error for internal service error', async () => {
+    serviceRequest.mockReturnValue({});
+    const { getByText } = render(<IndividualPost />);
+    await new Promise((_) => setTimeout(_, 100));
+    expect(getByText('Internal Service Error, Please Return to the Home Page')).toBeInTheDocument();
   });
 });
