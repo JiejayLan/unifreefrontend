@@ -85,13 +85,14 @@ export const IndividualPost = () => {
           {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
           by
           {` ${post && post.username}`}
-          <Chip
+          <Chip label={post.label} size="small" color="primary" className={classes.chip} />
+          {/* <Chip
             label={post.label}
             size="small"
             color="primary"
             variant="outlined"
             className={classes.chip}
-          />
+          /> */}
         </Typography>
         <hr />
         <Typography
