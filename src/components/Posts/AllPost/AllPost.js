@@ -75,25 +75,27 @@ export const AllPost = () => {
     return <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />;
   }
 
+  if (!isLoad) {
+    return <div> Loading </div>;
+  }
+
   return (
     <>
-      {isLoad ? (<div> Loading </div>)
-        : (
-          <>
-            <CssBaseline />
-            <Container maxWidth="lg">
-              <main>
-                {posts[0] && <MainPost mainPost={posts[0]} />}
-                <Grid container spacing={4}>
-                  {subPosts.map((post) => (
-                    <SubPost post={post} key={post.postID + post.title} />
-                  ))}
-                </Grid>
-                <Pagination />
-              </main>
-            </Container>
-          </>
-        ) }
+      <>
+        <CssBaseline />
+        <Container maxWidth="lg">
+          <main>
+            {posts[0] && <MainPost mainPost={posts[0]} />}
+            <Grid container spacing={4}>
+              {subPosts.map((post) => (
+                <SubPost post={post} key={post.postID + post.title} />
+              ))}
+            </Grid>
+            <Pagination />
+          </main>
+        </Container>
+      </>
+        )
     </>
   );
 };
