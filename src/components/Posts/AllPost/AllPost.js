@@ -10,6 +10,7 @@ import { MainPost } from '../MainPost';
 import { SubPost } from '../SubPost';
 import { useStateValue } from '../../StateProvider';
 import { Pagination } from '../../Pagination';
+import useStyles from './style';
 
 const path = '/api/v1/user/getposts?';
 const domain = config.apiDomain;
@@ -25,6 +26,7 @@ const preparePayload = (method, headers, params) => {
 };
 
 export const AllPost = () => {
+  const classes = useStyles();
   const [{ posts, page }, dispatch] = useStateValue();
   const [isError, setIsError] = useState(false);
   const [isLoad, setIsLoad] = useState(false);
@@ -76,7 +78,11 @@ export const AllPost = () => {
   }
 
   if (!isLoad) {
-    return <div> Loading </div>;
+    return (
+      <div className={classes.loader}>
+        <img className={classes.loaderImg} src="/images/loader.gif" alt="loading" />
+      </div>
+    );
   }
 
   return (
@@ -95,7 +101,7 @@ export const AllPost = () => {
           </main>
         </Container>
       </>
-        )
+      )
     </>
   );
 };

@@ -1,6 +1,5 @@
 import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import { MuiThemeProvider } from '@material-ui/core/styles';
 import PaginationComp from 'material-ui-flat-pagination';
 import {
   InputLabel, MenuItem, FormControl, Select, Grid,
@@ -31,7 +30,7 @@ export const Pagination = () => {
   };
 
   return (
-    <MuiThemeProvider>
+    <>
       <CssBaseline />
       <Grid container spacing={3}>
         <Grid item xs={8}>
@@ -60,6 +59,6 @@ export const Pagination = () => {
           </FormControl>
         </Grid>
       </Grid>
-    </MuiThemeProvider>
+    </>
   );
 };
