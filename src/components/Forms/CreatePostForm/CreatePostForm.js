@@ -48,11 +48,7 @@ export const CreatePostForm = () => {
   };
 
   const handleCreate = async () => {
-    if (!formData.label || !formData.title || !formData.content) {
-      setErrorMsg('Please make sure all fields are complete');
-      setIsError(true);
-      return;
-    }
+    if (!formData.label || !formData.title || !formData.content) return;
     try {
       const requestPayload = preparePayload('post', formData);
       const response = await serviceRequest(requestPayload);
@@ -77,57 +73,60 @@ export const CreatePostForm = () => {
         Create Post
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create your post</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            In order to create your post, you must filled out all the fields below
-          </DialogContentText>
-          <TextField
-            inputProps={{ 'data-testid': 'label' }}
-            margin="dense"
-            id="label"
-            name="label"
-            label="Label"
-            type="text"
-            defaultValue="general"
-            onChange={handleChange}
-            fullWidth
-            required
-            autoFocus
-          />
-          <TextField
-            inputProps={{ 'data-testid': 'title' }}
-            margin="dense"
-            id="title"
-            name="title"
-            label="Title"
-            type="text"
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-          <TextField
-            inputProps={{ 'data-testid': 'content' }}
-            multiline
-            margin="dense"
-            id="content"
-            name="content"
-            label="Content"
-            type="text"
-            onChange={handleChange}
-            fullWidth
-            required
-          />
-        </DialogContent>
-        {(isError) && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button data-testid="create-button" onClick={handleCreate} color="primary">
-            Create
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleCreate}>
+          <DialogTitle id="form-dialog-title">Create your post</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              In order to create your post, you must filled out all the fields below
+            </DialogContentText>
+            <TextField
+              inputProps={{ 'data-testid': 'label' }}
+              margin="dense"
+              id="label"
+              name="label"
+              label="Label"
+              type="text"
+              defaultValue="general"
+              onChange={handleChange}
+              fullWidth
+              required
+              autoFocus
+            />
+            <TextField
+              inputProps={{ 'data-testid': 'title' }}
+              margin="dense"
+              id="title"
+              name="title"
+              label="Title"
+              type="text"
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+            <TextField
+              inputProps={{ 'data-testid': 'content' }}
+              multiline
+              margin="dense"
+              id="content"
+              name="content"
+              label="Content"
+              type="text"
+              onChange={handleChange}
+              fullWidth
+              required
+            />
+
+          </DialogContent>
+          {(isError) && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button type="submit" data-testid="create-button" color="primary">
+              Create
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );
