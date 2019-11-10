@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import { bool } from 'prop-types';
 import cookie from 'react-cookies';
+import { CreatePostForm } from '../Forms/CreatePostForm';
 import useStyles from './style';
 
 export const NavBar = ({ isAuthenticated }) => {
@@ -27,9 +28,12 @@ export const NavBar = ({ isAuthenticated }) => {
             UniFree
           </Typography>
           {isAuthenticated ? (
-            <Button data-testid="logout-button" color="inherit" component={Link} to="/" onClick={handleSignOut}>
-              Logout
-            </Button>
+            <>
+              <CreatePostForm />
+              <Button data-testid="logout-button" color="inherit" component={Link} to="/" onClick={handleSignOut}>
+                Logout
+              </Button>
+            </>
           ) : (
             <>
               <Button

@@ -73,7 +73,7 @@ export const CreatePostForm = () => {
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <Button variant="outlined" color="inherit" onClick={handleClickOpen}>
         Create Post
       </Button>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -112,7 +112,7 @@ export const CreatePostForm = () => {
             fullWidth
           />
         </DialogContent>
-        { isValid && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} /> }
+        {isValid && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
