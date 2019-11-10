@@ -84,13 +84,6 @@ export const IndividualPost = () => {
           by
           {` ${post && post.username}`}
           <Chip label={post.label} size="small" color="primary" className={classes.chip} />
-          {/* <Chip
-            label={post.label}
-            size="small"
-            color="primary"
-            variant="outlined"
-            className={classes.chip}
-          /> */}
         </Typography>
         <hr />
         <Typography
