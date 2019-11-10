@@ -17,7 +17,7 @@ const API_REQUEST = `https://${domain}${path}`;
 
 export const initialState = {
   posts: [],
-  page: { pageSize: 25, currentPage: 1, totalPages: 1 },
+  page: { pageSize: 10, currentPage: 1, totalPages: 1 },
 };
 
 export const reducer = (state, action) => {

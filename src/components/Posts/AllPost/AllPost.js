@@ -70,13 +70,13 @@ export const AllPost = () => {
     fetchAllPosts();
   }, [page.currentPage, page.pageSize]);
 
-  if (!isLoad) {
-    return <div> Loading </div>;
+  if (isError) {
+    return <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />;
   }
 
   return (
     <>
-      {isError ? (<ErrorMessage message={errorMsg} styles={{ color: 'red' }} />)
+      {isLoad ? (<div> Loading </div>)
         : (
           <>
             <CssBaseline />

@@ -8,10 +8,24 @@ import { serviceRequest } from '../../../../services/serviceRequest';
 
 jest.mock('../../../../services/serviceRequest');
 
+const singlePost = {
+  canEdit: true,
+  content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
+  createdAt: '2019-11-10T15:40:29.201Z',
+  label: 'general',
+  obsolete: false,
+  postID: 183,
+  posterID: 55,
+  title: 'Lorem Ipsum',
+  updatedAt: '2019-11-10T15:40:29.201Z',
+  username: 'jielan3',
+};
+const posts = new Array(10).fill(singlePost);
+
 describe('AllPost component test suite', () => {
   const initialState = {
     posts: [],
-    page: { pageSize: 25, currentPage: 1, totalPages: 1 },
+    page: { pageSize: 10, currentPage: 1, totalPages: 1 },
   };
 
   const mockReducer = jest.fn();
@@ -21,10 +35,10 @@ describe('AllPost component test suite', () => {
     headers: {
       Authorization: 'bearer token',
     },
-    params: {
-      page: 1,
-      pageSize: 2,
-      viewall: true,
+    data: {
+      currentPage: 1,
+      totalPages: 10,
+      posts,
     },
   };
 
@@ -33,11 +47,7 @@ describe('AllPost component test suite', () => {
     headers: {
       Authorization: undefined,
     },
-    params: {
-      page: 1,
-      pageSize: 2,
-      viewall: true,
-    },
+    data: null,
   };
 
   beforeAll(() => {
