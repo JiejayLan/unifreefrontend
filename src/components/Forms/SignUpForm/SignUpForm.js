@@ -8,15 +8,13 @@ import {
   TextField,
 } from '@material-ui/core';
 import cookies from 'react-cookies';
-import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 
-
 const path = '/api/v1/signup';
-const domain = config.api_domain;
+const domain = config.apiDomain;
 const emailPattern = /^[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+@[A-Za-z0-9_!#$%&'*+=?`{|}~^.-]+.edu$/;
 const usernamePattern = /^[A-Za-z0-9_!$%&*+=?`{|}~^.-]/;
 const passwordPattern = /^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})/;
@@ -26,6 +24,16 @@ const passwordPolicy = `
       * Uppercase character
       * digits 0 - 9
     `;
+
+const preprarePayload = (method, data) => {
+  const url = `https://${domain}${path}`;
+  return {
+    method,
+    url,
+    data,
+  };
+};
+
 export const SignUpForm = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState({
@@ -34,30 +42,15 @@ export const SignUpForm = () => {
     password: '',
   });
   const [isSignedUp, setIsSignedUp] = useState(false);
-  const [isError, setIsError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
 
-  function handleIsSignedUp() {
-    return isSignedUp ? <Redirect to="/tokenVerify" /> : null;
-  }
-
-  function handleIsError() {
-    return isError ? <ErrorMessage message={errorMsg} /> : null;
-  }
-
-  function handleChange(event) {
+  const handleChange = (event) => {
     const updatedForm = { ...formData };
     updatedForm[event.target.name] = event.target.value;
     setFormData(updatedForm);
-  }
+  };
 
-  function isValid() {
-    return emailPattern.test(formData.email)
-      && usernamePattern.test(formData.username)
-      && passwordPattern.test(formData.password);
-  }
-
-  function getValidationError() {
+  const checkValidation = () => {
     if (!emailPattern.test(formData.email)) {
       return 'Invalid email. You must use a college email.';
     }
@@ -67,60 +60,54 @@ export const SignUpForm = () => {
     if (!passwordPattern.test(formData.password)) {
       return 'Invalid password';
     }
-    return 'Internal Service Error';
-  }
+    return null;
+  };
 
-  function preprarePayload(method, data) {
-    const url = `https://${domain}${path}`;
-    return {
-      method,
-      url,
-      data,
-    };
-  }
+  const handleSignUpSuccess = (data) => {
+    const username = `${data.username}`;
+    const expirationTime = 60 * 30 * 1; //  30 minutes
+    cookies.save('username', username, { path: '/', maxAge: expirationTime });
+    setIsSignedUp(true);
+  };
 
-  async function submitForm() {
+  const signUpRequest = async () => {
     try {
       const reqInfo = preprarePayload('post', formData);
       const response = await serviceRequest(reqInfo);
-      if (response.status && response.status === 'success') {
+      const isSignUpSuccess = response.status && response.status === 'success';
+      if (isSignUpSuccess) {
         const { data } = response;
-        const username = `bearer ${data.username}`;
-        const expirationTime = 60 * 60 * 24; //  24 hours
-        cookies.save('username', username, { path: '/', maxAge: expirationTime });
-        setIsSignedUp(true);
-      } else if (response.status && response.status === 'error') {
-        setErrorMsg(response.message);
-        setIsError(true);
+        handleSignUpSuccess(data);
       } else {
-        throw new Error('Internal Service Error');
+        const newError = { isError: true, errorMsg: response.message };
+        setErrorInfo(newError);
       }
     } catch (error) {
       throw error;
     }
-  }
+  };
 
   async function handleSubmit(e) {
     try {
       e.preventDefault();
-      if (!isValid()) {
-        setIsError(true);
-        setErrorMsg(getValidationError());
+      const validationMsg = checkValidation();
+      if (validationMsg) {
+        const newError = { isError: true, errorMsg: validationMsg };
+        setErrorInfo(newError);
       } else {
-        await submitForm();
+        await signUpRequest();
       }
     } catch (error) {
-      setErrorMsg('Internal Service Error');
-      setIsError(true);
+      const newError = { isError: true, errorMsg: 'Internal Service Error' };
+      setErrorInfo(newError);
     }
   }
 
   return (
     <Container maxWidth="sm">
-      {handleIsSignedUp()}
       <CssBaseline />
+      {isSignedUp && <Redirect to="/tokenVerify" />}
       <Container className={classes.paper}>
-        <ForumRoundedIcon className={classes.avatar} />
         <Typography component="h1" variant="h5">
           Sign Up
         </Typography>
@@ -158,7 +145,7 @@ export const SignUpForm = () => {
             onChange={handleChange}
             helperText={passwordPolicy}
           />
-          {handleIsError()}
+          {errorInfo.isError && <ErrorMessage message={errorInfo.errorMsg} />}
           <Button
             fullWidth
             variant="contained"

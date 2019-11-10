@@ -28,13 +28,10 @@ describe('SignUpForm Test Suite', () => {
     },
   };
 
-  const failPayload2 = {
-    status: 'error',
-    message: 'This email or username has already been taken',
-  };
-
   beforeAll(() => {
-    serviceRequest.mockImplementation(async () => (successPayload));
+    // Silence console.error
+    // eslint-disable-next-line no-console
+    console.error = jest.fn();
   });
 
   beforeEach(() => {
@@ -42,6 +39,7 @@ describe('SignUpForm Test Suite', () => {
   });
 
   it('Should sign up users successfully', async () => {
+    serviceRequest.mockImplementation(async () => (successPayload));
     const renderDom = render(<SignUpForm />);
     const { container, baseElement } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
@@ -56,7 +54,11 @@ describe('SignUpForm Test Suite', () => {
   });
 
   it('Should catch error for existing account', async () => {
-    serviceRequest.mockReturnValue(failPayload2);
+    const payload = {
+      status: 'error',
+      message: 'This email or username has already been taken',
+    };
+    serviceRequest.mockReturnValue(payload);
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
@@ -85,7 +87,7 @@ describe('SignUpForm Test Suite', () => {
     expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
-  it('should fail to sign up due to missing email', async () => {
+  it('should fail to sign up due to invalid email', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
@@ -98,7 +100,7 @@ describe('SignUpForm Test Suite', () => {
     expect(getByText('Invalid email. You must use a college email.')).toBeInTheDocument();
   });
 
-  it('Should fail to sign up due to missing username', async () => {
+  it('Should fail to sign up due to invalid username', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
@@ -111,14 +113,16 @@ describe('SignUpForm Test Suite', () => {
     expect(getByText('Invalid username')).toBeInTheDocument();
   });
 
-  it('Should fail to sign up due to missing password', async () => {
+  it('Should fail to sign up due to invalid password', async () => {
     serviceRequest.mockReturnValue(failPayload);
     const renderDom = render(<SignUpForm />);
     const { container, getByText } = renderDom;
     const emailInput = container.querySelectorAll('input')[0];
     const usernameInput = container.querySelectorAll('input')[1];
+    const passwordInput = container.querySelectorAll('input')[2];
     fireEvent.change(emailInput, { target: { value: 'test@test.edu' } });
     fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+    fireEvent.change(passwordInput, { target: { value: '123' } });
     fireEvent.click(container.querySelector('button'));
     await new Promise((x) => setTimeout(x, 100));
     expect(getByText('Invalid password')).toBeInTheDocument();
