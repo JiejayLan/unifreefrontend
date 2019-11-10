@@ -30,8 +30,8 @@ export const AllPost = () => {
   const [isLoad, setIsLoad] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Authorization Error');
   const token = cookie.load('jwtToken');
-  const requestHeader = { Authorization: token };
   const subPosts = posts.slice(1);
+  const requestHeader = { Authorization: token };
 
   const handleSuccessData = (data) => {
     const { posts: newPosts, totalPages } = data;
