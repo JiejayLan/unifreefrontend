@@ -6,7 +6,7 @@ import { TokenVerify } from '../pages/tokenVerify';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { SignIn } from '../pages/signIn';
-import { Post } from '../pages/Post';
+import { Post } from '../pages/post';
 import { SignUp } from '../pages/signup';
 
 export const AppRouter = () => (

@@ -11,7 +11,7 @@ import config from '../../../config';
 const path = '/api/v1/user/getpostbyid?';
 const domain = config.apiDomain;
 
-function preparePayload(method, headers, params) {
+const preparePayload = (method, headers, params) => {
   const url = `https://${domain}${path}`;
   return {
     method,
@@ -19,11 +19,10 @@ function preparePayload(method, headers, params) {
     headers,
     params,
   };
-}
+};
 
 export const IndividualPost = () => {
   const classes = useStyles();
-
   const [post, setPost] = useState({
     label: 'sample',
     title: 'sample title',
@@ -33,39 +32,38 @@ export const IndividualPost = () => {
     postID: 1,
     posterID: 1,
   });
-  const [isError, setIsError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
+  const urls = window.location.href;
+  const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
+  const token = cookie.load('jwtToken');
+  const postHeaders = { Authorization: token };
 
   useEffect(() => {
-    const urls = window.location.href;
-    const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
-    const token = cookie.load('jwtToken');
-    const postHeaders = { Authorization: token };
-
-    async function fetchPosts() {
-      const requestPayload = preparePayload('get', postHeaders,
-        { postID: postId });
+    const fetchPost = async () => {
       try {
+        const requestPayload = preparePayload('get', postHeaders,
+          { postID: postId });
         const response = await serviceRequest(requestPayload);
-        if (response.status && response.status === 'success') {
+        const isValidPost = response.status && response.status === 'success';
+        if (isValidPost) {
           setPost(response.data);
-        } else if (response.status && response.status === 'error') {
-          setIsError(true);
-          setErrorMsg('Internal Service Error, Please Return to the Home Page');
         } else {
           throw new Error('Internal Service Error');
         }
       } catch (err) {
-        setIsError(true);
-        setErrorMsg('Internal Service Error, Please Return to the Home Page');
+        const newErrorInfo = {
+          isError: true,
+          errorMsg: 'Internal Service Error, Please Return to the Home Page',
+        };
+        setErrorInfo(newErrorInfo);
       }
-    }
-    fetchPosts();
+    };
+    fetchPost();
   }, []);
 
   return (
     <Container maxWidth="lg">
-      {isError && (<ErrorMessage message={errorMsg} styles={{ color: 'red' }} />)}
+      {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
       <div>
         <Typography
           component="h1"
