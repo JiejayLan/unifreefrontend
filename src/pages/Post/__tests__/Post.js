@@ -6,6 +6,6 @@ import { Post } from '../Post';
 describe('Individual Post Page test', () => {
   it('renders without crashing', () => {
     const { getByText } = render(<Post />);
-    expect(getByText('by')).toBeInTheDocument();
+    expect(getByText('sample title')).toBeInTheDocument();
   });
 });

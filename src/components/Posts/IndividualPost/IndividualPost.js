@@ -24,7 +24,15 @@ function preparePayload(method, headers, params) {
 export const IndividualPost = () => {
   const classes = useStyles();
 
-  const [post, setPost] = useState('');
+  const [post, setPost] = useState({
+    label: 'sample',
+    title: 'sample title',
+    content: 'This is a sample content for the sample post with sample title',
+    updatedAt: '2019-11-07T09:26:51.822Z',
+    username: 'sampleMe',
+    postID: 1,
+    posterID: 1,
+  });
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
