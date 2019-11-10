@@ -58,6 +58,7 @@ export const CreatePostForm = () => {
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         handleClose();
+        window.location.reload();
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Authentication Error');
         setIsError(true);
