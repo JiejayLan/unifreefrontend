@@ -1,6 +1,6 @@
 import request from 'axios';
 
-export async function serviceRequest(requestInfo) {
+export const serviceRequest = async (requestInfo) => {
   // eslint-disable-next-line no-useless-catch
   try {
     // eslint-disable-next-line no-unused-vars
@@ -10,4 +10,4 @@ export async function serviceRequest(requestInfo) {
   } catch (err) {
     throw err;
   }
-}
+};
