@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { element } from 'prop-types';
+import { func } from 'prop-types';
+import cookie from 'react-cookies';
 import { NavBar } from '../components/NavBar';
 
 export const PrivateRoute = ({
@@ -9,19 +10,19 @@ export const PrivateRoute = ({
 }) => (
   <Route
     {...rest}
-    component={(props) => (window.localStorage.jwtToken ? (
+    component={(props) => (cookie.load('jwtToken') ? (
       <>
         <NavBar isAuthenticated />
         <Component {...props} />
       </>
     ) : (
-      <Redirect to="/" />
+      <Redirect to="/signin" />
     ))}
   />
 );
 
 PrivateRoute.propTypes = {
-  component: element.isRequired,
+  component: func.isRequired,
 };
 
 export default PrivateRoute;

@@ -6,14 +6,14 @@ import {
 import CssBaseline from '@material-ui/core/CssBaseline';
 import ForumRoundedIcon from '@material-ui/icons/ForumRounded';
 import { bool } from 'prop-types';
+import cookie from 'react-cookies';
 import useStyles from './style';
-
 
 export const NavBar = ({ isAuthenticated }) => {
   const classes = useStyles();
   const handleSignOut = () => {
-    if (window.localStorage.jwtToken) {
-      window.localStorage.clear();
+    if (cookie.load('jwtToken')) {
+      cookie.remove('jwtToken');
     }
   };
 
@@ -41,7 +41,7 @@ export const NavBar = ({ isAuthenticated }) => {
               >
                   Login
               </Button>
-              <Button data-testid="signup-button" variant="contained" component={Link} to="/">
+              <Button data-testid="signup-button" variant="contained" component={Link} to="/signup">
                   Signup
               </Button>
             </>

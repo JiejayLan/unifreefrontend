@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import cookie from 'react-cookies';
 import useStyles from './style';
 import { serviceRequest } from '../../../services/serviceRequest';
 import config from '../../../config';
@@ -14,15 +15,16 @@ import { ErrorMessage } from '../../ErrorMessage';
 
 const path = '/api/v1/signin';
 const domain = config.apiDomain;
+const expiredTime = 60 * 60 * 24; // 24hours
 
-function preparePayload(method, data) {
+const preparePayload = (method, data) => {
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
     data,
   };
-}
+};
 
 export const SignInForm = () => {
   const classes = useStyles();
@@ -31,13 +33,13 @@ export const SignInForm = () => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('Invalid username or password');
 
-  function handleChange(event) {
+  const handleChange = (event) => {
     const updateForm = { ...formData };
     updateForm[event.target.name] = event.target.value;
     setForm(updateForm);
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.password || !formData.username) { return; }
     try {
@@ -46,7 +48,7 @@ export const SignInForm = () => {
       if (response.status && response.status === 'success') {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
-        window.localStorage.jwtToken = jwtToken;
+        cookie.save('jwtToken', jwtToken, { path: '/', maxAge: expiredTime });
         setIsLogin(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Invalid username or password');
@@ -58,7 +60,7 @@ export const SignInForm = () => {
       setErrorMsg('Internal Service Error');
       setIsError(true);
     }
-  }
+  };
   return (
     <Container component="main" maxWidth="xs">
       {isLogin && <Redirect to="/" />}
