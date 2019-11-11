@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
@@ -30,6 +31,8 @@ export const CreatePostForm = () => {
   const [open, setOpen] = useState(false);
   const [formData, setForm] = useState({ label: 'general', title: null, content: null });
   const [isError, setIsError] = useState(false);
+  const [isValidPost, setIsValidPost] = useState(false);
+  const [Url, setUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('Please make sure all fields are complete');
 
   const handleChange = (event) => {
@@ -47,14 +50,16 @@ export const CreatePostForm = () => {
     setErrorMsg('');
   };
 
-  const handleCreate = async () => {
+  const handleCreate = async (e) => {
+    e.preventDefault();
     if (!formData.label || !formData.title || !formData.content) return;
     try {
       const requestPayload = preparePayload('post', formData);
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
+        setUrl(`/viewpost/${response.data.postID}`);
         handleClose();
-        window.location.reload();
+        setIsValidPost(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Authentication Error');
         setIsError(true);
@@ -69,6 +74,7 @@ export const CreatePostForm = () => {
 
   return (
     <div>
+      {isValidPost && <Redirect to={Url} />}
       <Button data-testid="create-post-button" variant="outlined" color="inherit" onClick={handleClickOpen}>
         Create Post
       </Button>
