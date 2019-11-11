@@ -5,7 +5,7 @@ import { AllPost } from '../../components/Posts/AllPost';
 export const Home = () => {
   const initialState = {
     posts: [],
-    page: { pageSize: 25, currentPage: 1, totalPages: 1 },
+    page: { pageSize: 10, currentPage: 1, totalPages: 1 },
   };
 
   const reducer = (state, action) => {
@@ -13,12 +13,12 @@ export const Home = () => {
       case 'changePage':
         return {
           ...state,
-          page: action.newPage,
+          page: { ...state.page, ...action.newPage },
         };
       case 'changePosts':
         return {
           ...state,
-          posts: action.posts,
+          posts: action.newPosts,
         };
       default:
         return state;
