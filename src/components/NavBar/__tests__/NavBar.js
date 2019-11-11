@@ -23,6 +23,7 @@ describe('Navbar component test suite', () => {
       </MemoryRouter>,
     );
 
+    expect(getByTestId('create-post-button')).toHaveTextContent('Create Post');
     expect(getByTestId('logout-button')).toHaveTextContent('Logout');
   });
 });

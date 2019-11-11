@@ -7,7 +7,7 @@ export const ErrorMessage = (props) => {
   const { message, styles } = props;
   return (
     <Box component="span" m={1}>
-      <Button style={styles}>{message}</Button>
+      <Button data-testid="errorMsg" style={styles}>{message}</Button>
     </Box>
   );
 };
