@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Chip from '@material-ui/core/Chip';
+import {
+  Typography, Container, Chip,
+} from '@material-ui/core';
 import cookie from 'react-cookies';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
