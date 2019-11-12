@@ -24,7 +24,7 @@ export const NavBar = ({ isAuthenticated }) => {
       <AppBar position="static">
         <Toolbar>
           <ForumRoundedIcon edge="start" aria-label="UniFree-forum" />
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h6" color="inherit" className={classes.title} component={Link} to="/">
             UniFree
           </Typography>
           {isAuthenticated ? (

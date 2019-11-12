@@ -6,6 +6,7 @@ import { TokenVerify } from '../pages/tokenVerify';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
 import { SignIn } from '../pages/signIn';
+import { Post } from '../pages/Post';
 import { SignUp } from '../pages/signup';
 
 export const AppRouter = () => (
@@ -14,6 +15,7 @@ export const AppRouter = () => (
       <PrivateRoute exact path="/" component={Home} />
       <PublicRoute path="/tokenVerify" component={TokenVerify} />
       <PublicRoute path="/signin" component={SignIn} />
+      <PrivateRoute path="/viewpost/:id" component={Post} />
       <PublicRoute path="/signup" component={SignUp} />
       <PublicRoute path="*" component={Error} />
     </Switch>

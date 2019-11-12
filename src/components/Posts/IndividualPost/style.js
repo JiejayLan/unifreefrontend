@@ -1,17 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
+  '@global': {
+    body: {
+      backgroundColor: theme.palette.common.white,
+    },
   },
   title: {
-    flexGrow: 1,
-    textDecoration: 'none',
+    paddingTop: theme.spacing(3),
   },
-  buttonLeft: {
-    marginRight: theme.spacing(2),
+  content: {
+    paddingTop: theme.spacing(2),
   },
-  buttonRight: {
+  chip: {
+    align: 'right',
     marginLeft: theme.spacing(2),
   },
 }));
