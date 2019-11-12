@@ -8,8 +8,11 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     textDecoration: 'none',
   },
-  button: {
+  buttonLeft: {
     marginRight: theme.spacing(2),
+  },
+  buttonRight: {
+    marginLeft: theme.spacing(2),
   },
 }));
 
