@@ -9,7 +9,7 @@ export default {
 };
 
 storiesOf('ScrollEvents', module)
-  .add('Default', withInfo({
+  .add('ElevationScroll', withInfo({
     text: 'description: Wrapper component to make navbar not scroll',
     inline: true,
     source: false,
