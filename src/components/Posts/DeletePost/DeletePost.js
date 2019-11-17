@@ -10,11 +10,11 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import { Delete as DeleteIcon } from '@material-ui/icons';
-import { number } from 'prop-types';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
+import { useStateValue } from '../../StateProvider';
 
 const path = '/api/v1/user/deletepost';
 const domain = config.apiDomain;
@@ -31,8 +31,9 @@ const preparePayload = (method, data) => {
   };
 };
 
-export const DeletePost = ({ postID }) => {
+export const DeletePost = () => {
   const classes = useStyles();
+  const [{ post }] = useStateValue();
   const [open, setOpen] = useState(false);
   const [isDelete, setIsDelete] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -49,7 +50,7 @@ export const DeletePost = ({ postID }) => {
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      const requestPayload = preparePayload('put', { postID });
+      const requestPayload = preparePayload('put', { postID: post.postID });
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         handleClose();
@@ -68,7 +69,7 @@ export const DeletePost = ({ postID }) => {
     <>
       {isDelete && <Redirect to="/" />}
       <Button
-        variant="outlined"
+        variant="contained"
         onClick={handleClickOpen}
         startIcon={<DeleteIcon />}
         size="small"
@@ -103,8 +104,4 @@ export const DeletePost = ({ postID }) => {
       </Dialog>
     </>
   );
-};
-
-DeletePost.propTypes = {
-  postID: number.isRequired,
 };

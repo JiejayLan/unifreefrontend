@@ -8,6 +8,8 @@ import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 import config from '../../../config';
 import { DeletePost } from '../DeletePost';
+import { EditPostForm } from '../../Forms/EditPostForm';
+import { useStateValue } from '../../StateProvider';
 
 const path = '/api/v1/user/getpostbyid?';
 const domain = config.apiDomain;
@@ -24,15 +26,7 @@ const preparePayload = (method, headers, params) => {
 
 export const IndividualPost = () => {
   const classes = useStyles();
-  const [post, setPost] = useState({
-    label: 'sample',
-    title: 'sample title',
-    content: 'This is a sample content for the sample post with sample title',
-    updatedAt: '2019-11-07T09:26:51.822Z',
-    username: 'sampleMe',
-    postID: 1,
-    posterID: 1,
-  });
+  const [{ post }, dispatch] = useStateValue();
   const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
 
   useEffect(() => {
@@ -40,7 +34,6 @@ export const IndividualPost = () => {
     const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
     const token = cookie.load('jwtToken');
     const postHeaders = { Authorization: token };
-
     const fetchPost = async () => {
       try {
         const requestPayload = preparePayload('get', postHeaders,
@@ -48,7 +41,10 @@ export const IndividualPost = () => {
         const response = await serviceRequest(requestPayload);
         const isValidPost = response.status && response.status === 'success';
         if (isValidPost) {
-          setPost(response.data);
+          dispatch({
+            type: 'changePost',
+            newPost: response.data,
+          });
         } else {
           throw new Error('Internal Service Error');
         }
@@ -61,7 +57,8 @@ export const IndividualPost = () => {
       }
     };
     fetchPost();
-  }, []);
+    // eslint-disable-next-line
+  }, [post]);
 
   return (
     <Container maxWidth="lg">
@@ -76,7 +73,8 @@ export const IndividualPost = () => {
         >
           {post.title}
         </Typography>
-        <DeletePost postID={post.postID} />
+        <DeletePost />
+        <EditPostForm />
         <Typography
           component="h3"
           variant="subtitle1"

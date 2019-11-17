@@ -44,21 +44,21 @@ export const NavBar = ({ isAuthenticated }) => {
                 </Button>
               </>
             ) : (
-                <>
-                  <Button
-                    className={classes.buttonLeft}
-                    data-testid="login-button"
-                    color="inherit"
-                    component={Link}
-                    to="/signin"
-                  >
+              <>
+                <Button
+                  className={classes.buttonLeft}
+                  data-testid="login-button"
+                  color="inherit"
+                  component={Link}
+                  to="/signin"
+                >
                     Login
                 </Button>
-                  <Button data-testid="signup-button" variant="contained" component={Link} to="/signup">
+                <Button data-testid="signup-button" variant="contained" component={Link} to="/signup">
                     Signup
                 </Button>
-                </>
-              )}
+              </>
+            )}
           </Toolbar>
         </AppBar>
       </ElevationScroll>
