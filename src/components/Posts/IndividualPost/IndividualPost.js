@@ -7,6 +7,7 @@ import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 import config from '../../../config';
+import { DeletePost } from '../DeletePost';
 
 const path = '/api/v1/user/getpostbyid?';
 const domain = config.apiDomain;
@@ -75,6 +76,7 @@ export const IndividualPost = () => {
         >
           {post.title}
         </Typography>
+        <DeletePost postID={post.postID} />
         <Typography
           component="h3"
           variant="subtitle1"

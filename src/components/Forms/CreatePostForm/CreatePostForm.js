@@ -10,7 +10,7 @@ import { PostForm } from '../PostForm/PostForm';
 const path = '/api/v1/user/createpost';
 const domain = config.apiDomain;
 
-function preparePayload(method, data) {
+const preparePayload = (method, data) => {
   const token = cookie.load('jwtToken');
   const requestHeader = { Authorization: token };
   const url = `https://${domain}${path}`;
@@ -20,7 +20,7 @@ function preparePayload(method, data) {
     headers: requestHeader,
     data,
   };
-}
+};
 
 export const CreatePostForm = () => {
   const [open, setOpen] = useState(false);

@@ -4,6 +4,7 @@ const useStyles = makeStyles((theme) => ({
   '@global': {
     body: {
       backgroundColor: theme.palette.common.white,
+      marginTop: theme.spacing(6),
     },
   },
   title: {
