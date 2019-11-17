@@ -17,7 +17,7 @@ export const PublicRoute = ({
       <>
         <NavBar isAuthenticated={!!cookie.load('jwtToken')} />
         <Component {...props} />
-        <ScrollToTop scrollStep={200} delayInMS={16.6}>
+        <ScrollToTop scrollStep={100} delayInMS={16.6}>
           <Fab color="inherit" size="small" aria-label="scroll back to top">
             <KeyboardArrowUp />
           </Fab>
