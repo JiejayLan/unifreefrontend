@@ -5,11 +5,11 @@ import { StateProvider } from '../../components/StateProvider';
 export const Post = () => {
   const initialState = {
     post: {
-      label: 'sample',
-      title: 'sample title',
-      content: 'This is a sample content for the sample post with sample title',
-      updatedAt: '2019-11-07T09:26:51.822Z',
-      username: 'sampleMe',
+      label: '',
+      title: '',
+      content: '',
+      updatedAt: '',
+      username: '',
       postID: 1,
       posterID: 1,
     },

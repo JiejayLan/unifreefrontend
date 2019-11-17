@@ -4,7 +4,7 @@ import { withInfo } from '@storybook/addon-info';
 import { PostForm } from './PostForm';
 
 storiesOf('Form', module)
-  .add('Create Post Form',
+  .add('Post Form',
     withInfo({
       text: 'description: Post form with label, contents, and title textfields',
       inline: false,
