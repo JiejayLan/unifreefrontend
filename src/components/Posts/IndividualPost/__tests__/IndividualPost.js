@@ -3,10 +3,25 @@ import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { IndividualPost } from '../IndividualPost';
 import { serviceRequest } from '../../../../services/serviceRequest';
+import { StateProvider } from '../../../StateProvider';
 
 jest.mock('../../../../services/serviceRequest');
 
 describe('Individual Post test', () => {
+  const initialState = {
+    post: {
+      label: 'general',
+      title: '',
+      content: '',
+      updatedAt: '',
+      username: '',
+      postID: 1,
+      posterID: 1,
+    },
+  };
+
+  const mockReducer = jest.fn();
+
   const successPayLoad = {
     status: 'success',
     data: {
@@ -35,21 +50,33 @@ describe('Individual Post test', () => {
 
   it('should render without crash', () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
-    const { baseElement } = render(<IndividualPost />);
+    const { baseElement } = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <IndividualPost />
+      </StateProvider>,
+    );
 
     expect(baseElement.outerHTML).toBeDefined();
   });
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const { getByText } = render(<IndividualPost />);
+    const { getByText } = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <IndividualPost />
+      </StateProvider>,
+    );
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('Internal Service Error, Please Return to the Home Page')).toBeInTheDocument();
   });
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockReturnValue({});
-    const { getByText } = render(<IndividualPost />);
+    const { getByText } = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <IndividualPost />
+      </StateProvider>,
+    );
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('Internal Service Error, Please Return to the Home Page')).toBeInTheDocument();
   });

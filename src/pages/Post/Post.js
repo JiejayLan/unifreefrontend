@@ -5,7 +5,7 @@ import { StateProvider } from '../../components/StateProvider';
 export const Post = () => {
   const initialState = {
     post: {
-      label: '',
+      label: 'general',
       title: '',
       content: '',
       updatedAt: '',
