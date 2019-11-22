@@ -46,7 +46,7 @@ export const CreatePostForm = () => {
         handleClose();
         setIsValidPost(true);
       } else if (response.status && response.status === 'error') {
-        setErrorMsg('Authentication Error');
+        setErrorMsg('An Error has occurred');
       } else {
         throw new Error('Internal Service Error');
       }
@@ -56,18 +56,18 @@ export const CreatePostForm = () => {
   };
 
   return (
-    <div>
+    <>
       {isValidPost && <Redirect to={Url} />}
       <Button data-testid="create-post-button" variant="outlined" color="inherit" onClick={handleClickOpen}>
         Create Post
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <PostForm
           handleCreate={handleCreate}
           handleClose={handleClose}
           errorMsg={errorMsg}
         />
       </Dialog>
-    </div>
+    </>
   );
 };

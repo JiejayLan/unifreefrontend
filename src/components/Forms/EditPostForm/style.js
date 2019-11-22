@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
-  deleteBtn: {
+  editBtn: {
     color: '#fff',
-    backgroundColor: '#f44336',
+    backgroundColor: '#3f51b5',
     '&:hover': {
-      backgroundColor: '#e57373',
+      backgroundColor: '#7986cb',
     },
   },
 }));

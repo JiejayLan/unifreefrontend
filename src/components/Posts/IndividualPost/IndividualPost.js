@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Typography, Container, Chip,
+  Typography, Container, Chip, Grid,
 } from '@material-ui/core';
 import cookie from 'react-cookies';
 import { serviceRequest } from '../../../services/serviceRequest';
@@ -61,46 +61,53 @@ export const IndividualPost = () => {
   }, [post]);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
-      <div>
-        <Typography
-          component="h1"
-          variant="h3"
-          color="inherit"
-          className={classes.title}
-          gutterBottom
-        >
-          {post.title}
-        </Typography>
+      <Typography
+        component="h1"
+        variant="h3"
+        color="inherit"
+        className={classes.title}
+        gutterBottom
+      >
+        {post.title}
+      </Typography>
+      <Grid container className={classes.root} justify="space-between">
+        <Grid item>
+          <Typography
+            component="h3"
+            variant="subtitle1"
+            color="inherit"
+            gutterBottom
+          >
+            {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
+            by
+            {` ${post && post.username}`}
+            <Chip label={post.label} size="small" color="primary" className={classes.chip} />
+          </Typography>
+        </Grid>
         {cookie.load('username') === post.username && (
-          <>
-            <DeletePost />
-            <EditPostForm />
-          </>
+          <Grid item>
+            <Grid container spacing={2}>
+              <Grid item>
+                <EditPostForm />
+              </Grid>
+              <Grid item>
+                <DeletePost />
+              </Grid>
+            </Grid>
+          </Grid>
         )}
-
-        <Typography
-          component="h3"
-          variant="subtitle1"
-          color="inherit"
-          gutterBottom
-        >
-          {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
-          by
-          {` ${post && post.username}`}
-          <Chip label={post.label} size="small" color="primary" className={classes.chip} />
-        </Typography>
-        <hr />
-        <Typography
-          variant="h5"
-          color="inherit"
-          paragraph
-          className={classes.content}
-        >
-          {post.content}
-        </Typography>
-      </div>
+      </Grid>
+      <hr />
+      <Typography
+        variant="h5"
+        color="inherit"
+        paragraph
+        className={classes.content}
+      >
+        {post.content}
+      </Typography>
     </Container>
   );
 };

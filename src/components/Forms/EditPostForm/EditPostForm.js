@@ -3,10 +3,12 @@ import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import { Dialog } from '@material-ui/core';
+import { Edit as EditIcon } from '@material-ui/icons';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { PostForm } from '../PostForm/PostForm';
 import { useStateValue } from '../../StateProvider';
+import useStyles from './style';
 
 const path = '/api/v1/user/updatepost';
 const domain = config.apiDomain;
@@ -24,6 +26,7 @@ const preparePayload = (method, data) => {
 };
 
 export const EditPostForm = () => {
+  const classes = useStyles();
   const [{ post }, dispatch] = useStateValue();
   const [open, setOpen] = useState(false);
   const [isValidPost, setIsValidPost] = useState(false);
@@ -50,7 +53,7 @@ export const EditPostForm = () => {
         handleClose();
         setIsValidPost(true);
       } else if (response.status && response.status === 'error') {
-        setErrorMsg('Authentication Error');
+        setErrorMsg('An Error has occured');
       } else {
         throw new Error('Internal Service Error');
       }
@@ -60,12 +63,19 @@ export const EditPostForm = () => {
   };
 
   return (
-    <div>
+    <>
       {isValidPost && <Redirect to={`/viewpost/${post.postID}`} />}
-      <Button data-testid="edit-post-button" variant="outlined" color="inherit" onClick={handleClickOpen}>
+      <Button
+        data-testid="edit-post-button"
+        variant="contained"
+        size="small"
+        onClick={handleClickOpen}
+        startIcon={<EditIcon />}
+        className={classes.editBtn}
+      >
         Edit
       </Button>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+      <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <PostForm
           handleCreate={handleCreate}
           handleClose={handleClose}
@@ -73,6 +83,6 @@ export const EditPostForm = () => {
           post={{ label: post.label, title: post.title, content: post.content }}
         />
       </Dialog>
-    </div>
+    </>
   );
 };

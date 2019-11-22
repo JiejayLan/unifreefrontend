@@ -7,6 +7,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(6),
     },
   },
+  root: {
+    flexGrow: 1,
+  },
   title: {
     paddingTop: theme.spacing(3),
   },
