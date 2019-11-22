@@ -73,8 +73,13 @@ export const IndividualPost = () => {
         >
           {post.title}
         </Typography>
-        <DeletePost />
-        <EditPostForm />
+        {cookie.load('username') === post.username && (
+          <>
+            <DeletePost />
+            <EditPostForm />
+          </>
+        )}
+
         <Typography
           component="h3"
           variant="subtitle1"
