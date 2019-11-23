@@ -7,6 +7,7 @@ import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 import config from '../../../config';
+import { ViewComments } from '../../Comments/ViewComments';
 
 const path = '/api/v1/user/getpostbyid?';
 const domain = config.apiDomain;
@@ -63,7 +64,7 @@ export const IndividualPost = () => {
   }, []);
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="md">
       {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
       <div>
         <Typography
@@ -96,6 +97,7 @@ export const IndividualPost = () => {
           {post.content}
         </Typography>
       </div>
+      <ViewComments />
     </Container>
   );
 };
