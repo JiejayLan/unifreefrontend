@@ -6,6 +6,8 @@ import {
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
+import { useStateValue } from '../../StateProvider';
+import { Pagination } from '../../Pagination';
 // import config from '../../../config';
 
 // const path = '/api/v1/post/viewcomments';
@@ -24,10 +26,7 @@ const preparePayload = (method, headers, params) => {
 
 export const ViewComments = () => {
   const classes = useStyles();
-
-  const [commentData, setCommentData] = useState({ comments: [] });
-  const comment = commentData.comments;
-  const { totalPages } = commentData;
+  const [{ comments, page }, dispatch] = useStateValue();
   const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
 
   const urls = window.location.href;
@@ -35,16 +34,29 @@ export const ViewComments = () => {
   const token = cookie.load('jwtToken');
   const commentHeaders = { Authorization: token };
 
+  const handleSuccessData = (data) => {
+    const { comments: newComments, totalPages } = data;
+    // setIsLoad(true);
+    dispatch({
+      type: 'changeComment',
+      newComments,
+    });
+    dispatch({
+      type: 'changePage',
+      newPage: { totalPages },
+    });
+    console.log(data);
+    console.log(page);
+  };
+
   const fetchAllComments = async () => {
     try {
       const requestPayload = preparePayload('get', commentHeaders,
-        { postID: postId, currentPage: 1, pageSize: 7 });
+        { postID: postId, page: page.currentPage, pageSize: page.pageSize });
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
-        // const { data } = response;
-        console.log(response.data);
-        console.log(response.data.comments);
-        setCommentData(response.data);
+        const { data } = response;
+        handleSuccessData(data);
       } else {
         throw new Error('Internal Service Error');
       }
@@ -59,51 +71,54 @@ export const ViewComments = () => {
 
   useEffect(() => {
     fetchAllComments();
-  }, []);
+  }, [page.currentPage, page.pageSize]);
 
 
   return (
     <div>
       {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
-      {totalPages > 0
-        ? (
-          <List>
-            <div className={classes.commentHeader}>COMMENTS</div>
-            <hr />
-            {comment.map((comments) => (
-              <ListItem key={comments.commentID} className={classes.list}>
-                <ListItemAvatar>
-                  <Avatar
-                    alt="profile"
-                    src={`http://api.adorable.io/avatar/50/${comments.username}`}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={(
-                    <>
-                      <Typography
-                        component="span"
-                        className={classes.left}
-                        color="textPrimary"
-                      >
-                        {comments.username}
-                      </Typography>
-                      <Typography component="span" className={classes.right}>
-                        {comments.createdAt.substr(0, comments.createdAt.indexOf('T'))}
-                      </Typography>
-                    </>
+      <List>
+        <div className={classes.commentHeader}>COMMENTS</div>
+        <hr />
+        {page.totalPages > 0
+          ? (
+            <List>
+              {comments.map((comment) => (
+                <ListItem key={comment.commentID} className={classes.list}>
+                  <ListItemAvatar>
+                    <Avatar
+                      alt="profile"
+                      src={`http://api.adorable.io/avatar/50/${comment.username}`}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={(
+                      <>
+                        <Typography
+                          component="span"
+                          className={classes.left}
+                          color="textPrimary"
+                        >
+                          {comment.username}
+                        </Typography>
+                        <Typography component="span" className={classes.right}>
+                          {comment.createdAt.substr(0, comment.createdAt.indexOf('T'))}
+                        </Typography>
+                      </>
               )}
-                  secondary={(
-                    <Typography className={classes.content}>
-                      {comments.content}
-                    </Typography>
+                    secondary={(
+                      <Typography className={classes.content}>
+                        {comment.content}
+                      </Typography>
                 )}
-                />
-              </ListItem>
-            ))}
-          </List>
-        )
-        : ''}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          )
+          : 'No Comment'}
+        <Pagination />
+      </List>
     </div>
   );
 };

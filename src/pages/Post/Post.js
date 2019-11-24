@@ -13,6 +13,8 @@ export const Post = () => {
       postID: 1,
       posterID: 1,
     },
+    comments: [],
+    page: { pageSize: 10, currentPage: 1, totalPages: 1 },
   };
 
   const reducer = (state, action) => {
@@ -21,6 +23,16 @@ export const Post = () => {
         return {
           ...state,
           post: action.newPost,
+        };
+      case 'changeComment':
+        return {
+          ...state,
+          comments: action.newComments,
+        };
+      case 'changePage':
+        return {
+          ...state,
+          page: { ...state.page, ...action.newPage },
         };
       default:
         return state;
