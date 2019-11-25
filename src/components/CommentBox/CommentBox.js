@@ -46,7 +46,7 @@ export const CommentBox = (props) => {
           setContent('');
         } else if (response.status && response.status === 'error') {
           setIsError(true);
-          setErrorMsg('An error occurred. Please try again');
+          setErrorMsg(response.message);
         } else {
           throw new Error('Internal Service Error');
         }
