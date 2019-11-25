@@ -16,5 +16,5 @@ export const useStyle = makeStyles((theme) => ({
   },
   button: {
     marginTop: theme.spacing(1),
-  }
+  },
 }));
