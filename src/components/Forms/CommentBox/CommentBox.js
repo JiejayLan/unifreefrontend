@@ -6,6 +6,7 @@ import {
   Button,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
+import cookie from 'react-cookies';
 import { useStyle } from './style';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
@@ -15,11 +16,14 @@ const path = '/api/v1/post/postcomment';
 const domain = config.apiDomain;
 
 const preparePayload = (method, data) => {
+  const token = cookie.load('jwtoken');
+  const requestHeaders = { Authorization: token };
   const url = `https://${domain}${path}`;
   return {
     method,
     url,
     data,
+    headers: requestHeaders,
   };
 };
 
@@ -29,7 +33,7 @@ export const CommentBox = (props) => {
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const classes = useStyle();
-  const { postID, commenterID } = props;
+  const { postID } = props;
 
   const handleChange = (event) => {
     setContent(event.target.value);
@@ -39,7 +43,7 @@ export const CommentBox = (props) => {
     e.preventDefault();
     if (content) {
       try {
-        const data = { postID, commenterID, content };
+        const data = { postID, content };
         const payload = preparePayload('post', data);
         const response = await serviceRequest(payload);
         if (response.status && response.status === 'success') {
@@ -67,8 +71,7 @@ export const CommentBox = (props) => {
           type="text"
           className={classes.input}
           multiline
-          autoCapitalize
-          autoComplete
+          autoComplete="on"
           placeholder="Write a comment"
           value={content}
           onChange={handleChange}
@@ -93,5 +96,4 @@ export const CommentBox = (props) => {
 
 CommentBox.propTypes = {
   postID: PropTypes.number.isRequired,
-  commenterID: PropTypes.number.isRequired,
 };

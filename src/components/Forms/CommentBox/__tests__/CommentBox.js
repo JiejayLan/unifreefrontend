@@ -12,7 +12,6 @@ describe('CommentBox Test Suite', () => {
     status: 'success',
     data: {
       postID: 123,
-      commentID: 456,
       content: 'comment',
     },
   };
