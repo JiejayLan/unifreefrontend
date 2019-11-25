@@ -86,7 +86,7 @@ describe('EditPostForm test suite', () => {
     expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
-  it('should catch error for authentication error', async () => {
+  it('should catch error for error status payload', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
     const renderDom = render(
       <StateProvider initialState={initialState} reducer={mockReducer}>
@@ -106,7 +106,7 @@ describe('EditPostForm test suite', () => {
 
     fireEvent.click(getByTestId('create-button'));
     await new Promise((_) => setTimeout(_, 500));
-    expect(getByText('Authentication Error')).toBeInTheDocument();
+    expect(getByText('An Error has occured')).toBeInTheDocument();
   });
 
   it('should catch error for internal service error', async () => {

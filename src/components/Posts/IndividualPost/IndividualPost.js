@@ -58,7 +58,7 @@ export const IndividualPost = () => {
     };
     fetchPost();
     // eslint-disable-next-line
-  }, [post]);
+  }, [post.title, post.content, post.label]);
 
   return (
     <Container maxWidth="md">
