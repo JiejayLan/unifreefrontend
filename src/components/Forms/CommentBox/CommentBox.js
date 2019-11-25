@@ -7,9 +7,9 @@ import {
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useStyle } from './style';
-import config from '../../config';
-import { serviceRequest } from '../../services/serviceRequest';
-import { ErrorMessage } from '../ErrorMessage';
+import config from '../../../config';
+import { serviceRequest } from '../../../services/serviceRequest';
+import { ErrorMessage } from '../../ErrorMessage';
 
 const path = '/api/v1/post/postcomment';
 const domain = config.apiDomain;

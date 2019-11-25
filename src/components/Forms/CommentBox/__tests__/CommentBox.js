@@ -2,9 +2,9 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
 import { CommentBox } from '../CommentBox';
-import { serviceRequest } from '../../../services/serviceRequest';
+import { serviceRequest } from '../../../../services/serviceRequest';
 
-jest.mock('../../../services/serviceRequest');
+jest.mock('../../../../services/serviceRequest');
 jest.setTimeout(5000);
 
 describe('CommentBox Test Suite', () => {
