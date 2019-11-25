@@ -87,16 +87,10 @@ export const IndividualPost = () => {
           </Typography>
         </Grid>
         {cookie.load('username') === post.username && (
-          <Grid item>
-            <Grid container spacing={2}>
-              <Grid item>
-                <EditPostForm />
-              </Grid>
-              <Grid item>
-                <DeletePost />
-              </Grid>
-            </Grid>
-          </Grid>
+          <div>
+            <EditPostForm />
+            <DeletePost />
+          </div>
         )}
       </Grid>
       <hr />
