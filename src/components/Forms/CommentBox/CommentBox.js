@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import {
   Container,
   CssBaseline,
-  Input,
+  TextField,
   Button,
+  Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import cookie from 'react-cookies';
@@ -64,15 +65,24 @@ export const CommentBox = (props) => {
   return (
     <Container>
       <CssBaseline />
-      {isError && <ErrorMessage message={errorMsg} />}
+      <Typography
+        variant="h5"
+        align="left"
+        className={classes.title}
+      >
+        Leave a Comment
+      </Typography>
+      {isError && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
       <form onSubmit={handleSubmit}>
-        <Input
+        <TextField
           fullWidth
           type="text"
-          className={classes.input}
           multiline
+          disableUnderline
           autoComplete="on"
-          placeholder="Write a comment"
+          label="Write comment"
+          margin="normal"
+          variant="outlined"
           value={content}
           onChange={handleChange}
         />

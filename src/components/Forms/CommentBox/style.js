@@ -6,13 +6,8 @@ export const useStyle = makeStyles((theme) => ({
       backgroundColor: theme.palette.common.white,
     },
   },
-  input: {
-    backgroundColor: '#f3f3f3',
-    paddingLeft: '1%',
-    paddingRight: '1%',
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
-    minHeight: 50,
+  title: {
+    borderBottom: '2px solid #000',
   },
   button: {
     marginTop: theme.spacing(1),
