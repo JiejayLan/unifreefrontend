@@ -63,29 +63,6 @@ describe('EditPostForm test suite', () => {
     expect(baseElement.outerHTML).toBeDefined();
   });
 
-  it('should catch error for internal service error', async () => {
-    serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
-    const renderDom = render(
-      <StateProvider initialState={initialState} reducer={mockReducer}>
-        <EditPostForm />
-      </StateProvider>,
-    );
-    const { getByTestId, getByText } = renderDom;
-    fireEvent.click(getByTestId('edit-post-button'));
-    await new Promise((_) => setTimeout(_, 500));
-    const labelInput = getByTestId('label');
-    const titleInput = getByTestId('title');
-    const contentInput = getByTestId('content');
-
-    fireEvent.change(labelInput, { target: { value: 'testLabel' } });
-    fireEvent.change(titleInput, { target: { value: 'testTitle' } });
-    fireEvent.change(contentInput, { target: { value: 'testContent' } });
-
-    fireEvent.click(getByTestId('create-button'));
-    await new Promise((_) => setTimeout(_, 500));
-    expect(getByText('Internal Service Error')).toBeInTheDocument();
-  });
-
   it('should catch error for error status payload', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
     const renderDom = render(
@@ -107,6 +84,29 @@ describe('EditPostForm test suite', () => {
     fireEvent.click(getByTestId('create-button'));
     await new Promise((_) => setTimeout(_, 500));
     expect(getByText('An Error has occured')).toBeInTheDocument();
+  });
+
+  it('should catch error for internal service error', async () => {
+    serviceRequest.mockImplementation({});
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
+    const { getByTestId, getByText } = renderDom;
+    fireEvent.click(getByTestId('edit-post-button'));
+    await new Promise((_) => setTimeout(_, 500));
+    const labelInput = getByTestId('label');
+    const titleInput = getByTestId('title');
+    const contentInput = getByTestId('content');
+
+    fireEvent.change(labelInput, { target: { value: 'testLabel' } });
+    fireEvent.change(titleInput, { target: { value: 'testTitle' } });
+    fireEvent.change(contentInput, { target: { value: 'testContent' } });
+
+    fireEvent.click(getByTestId('create-button'));
+    await new Promise((_) => setTimeout(_, 500));
+    expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
   it('should catch error for internal service error', async () => {
