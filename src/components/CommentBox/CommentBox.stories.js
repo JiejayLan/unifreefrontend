@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
 import { CommentBox } from './CommentBox';
 
-storiesOf('Forms', module)
+storiesOf('Form', module)
   .add('CommentBox',
     withInfo({
       text: 'description: Component for commenting posts',
