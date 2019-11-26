@@ -10,7 +10,7 @@ import { useStateValue } from '../../StateProvider';
 import { Pagination } from '../../Pagination';
 import config from '../../../config';
 
-const path = '/api/v1/post/viewcomments';
+const path = '/api/v1/post/viewcomments?';
 const domain = config.apiDomain;
 
 const preparePayload = (method, headers, params) => {
@@ -27,6 +27,7 @@ export const ViewComments = () => {
   const classes = useStyles();
   const [{ comments, page }, dispatch] = useStateValue();
   const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
+  const avatarURL = 'http://api.adorable.io/avatar/50/';
 
   const urls = window.location.href;
   const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
@@ -43,8 +44,6 @@ export const ViewComments = () => {
       type: 'changePage',
       newPage: { totalPages },
     });
-    console.log(data);
-    console.log(page);
   };
 
   const fetchAllComments = async () => {
@@ -71,7 +70,6 @@ export const ViewComments = () => {
     fetchAllComments();
   }, [page.currentPage, page.pageSize]);
 
-
   return (
     <div>
       {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
@@ -81,37 +79,40 @@ export const ViewComments = () => {
         {page.totalPages > 0
           ? (
             <List>
-              {comments.map((comment) => (
-                <ListItem key={comment.commentID} className={classes.list}>
-                  <ListItemAvatar>
-                    <Avatar
-                      alt="profile"
-                      src={`http://api.adorable.io/avatar/50/${comment.username}`}
+              {comments.map((comment) => {
+                const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
+                return (
+                  <ListItem key={comment.commentID} className={classes.list}>
+                    <ListItemAvatar>
+                      <Avatar
+                        alt="profile"
+                        src={avatarURL + comment.username}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={(
+                        <>
+                          <Typography
+                            component="span"
+                            className={classes.left}
+                            color="textPrimary"
+                          >
+                            {comment.username}
+                          </Typography>
+                          <Typography component="span" className={classes.right}>
+                            {commentTime}
+                          </Typography>
+                        </>
+                  )}
+                      secondary={(
+                        <Typography className={classes.content}>
+                          {comment.content}
+                        </Typography>
+                  )}
                     />
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary={(
-                      <>
-                        <Typography
-                          component="span"
-                          className={classes.left}
-                          color="textPrimary"
-                        >
-                          {comment.username}
-                        </Typography>
-                        <Typography component="span" className={classes.right}>
-                          {comment.createdAt.substr(0, comment.createdAt.indexOf('T'))}
-                        </Typography>
-                      </>
-              )}
-                    secondary={(
-                      <Typography className={classes.content}>
-                        {comment.content}
-                      </Typography>
-                )}
-                  />
-                </ListItem>
-              ))}
+                  </ListItem>
+                );
+              })}
               <Pagination />
             </List>
           )
