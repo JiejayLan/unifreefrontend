@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(6),
     },
   },
+  root: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+  },
   title: {
     paddingTop: theme.spacing(3),
   },
@@ -14,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(2),
   },
   chip: {
-    align: 'right',
     marginLeft: theme.spacing(2),
   },
 }));

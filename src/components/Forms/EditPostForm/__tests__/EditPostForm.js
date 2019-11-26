@@ -1,33 +1,38 @@
+import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import React from 'react';
-import { CreatePostForm } from '../CreatePostForm';
+import { EditPostForm } from '../EditPostForm';
 import { serviceRequest } from '../../../../services/serviceRequest';
+import { StateProvider } from '../../../StateProvider';
 
 jest.mock('../../../../services/serviceRequest');
-jest.setTimeout(5000);
 
-describe('CreatePostForm test suite', () => {
+describe('EditPostForm test suite', () => {
+  const initialState = {
+    post: {
+      label: 'general',
+      title: '',
+      content: '',
+      updatedAt: '',
+      username: '',
+      postID: 1,
+      posterID: 1,
+    },
+  };
+
+  const mockReducer = jest.fn();
+
   const successPayLoad = {
     status: 'success',
-    data: {
-      title: 'test title',
-      label: 'test label',
-      content: 'test content',
-    },
+    data: [1],
   };
 
   const failPayLoad = {
     status: 'error',
-    data: {
-      title: 'test title',
-      label: '',
-      content: 'test content',
-    },
+    data: [1],
   };
 
   beforeAll(() => {
-    // Silence console.error
     // eslint-disable-next-line no-console
     console.error = jest.fn();
   });
@@ -36,10 +41,14 @@ describe('CreatePostForm test suite', () => {
     serviceRequest.mockClear();
   });
 
-  it('should create post successfully', async () => {
+  it('should edit post successfully', async () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
-    const { baseElement, getByTestId } = render(<CreatePostForm />);
-    fireEvent.click(getByTestId('create-post-button'));
+    const { baseElement, getByTestId } = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const labelInput = getByTestId('label');
     const titleInput = getByTestId('title');
@@ -56,9 +65,13 @@ describe('CreatePostForm test suite', () => {
 
   it('should catch error for error status payload', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<CreatePostForm />);
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
     const { getByTestId, getByText } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const labelInput = getByTestId('label');
     const titleInput = getByTestId('title');
@@ -70,14 +83,41 @@ describe('CreatePostForm test suite', () => {
 
     fireEvent.click(getByTestId('create-button'));
     await new Promise((_) => setTimeout(_, 500));
-    expect(getByText('An Error has occurred')).toBeInTheDocument();
+    expect(getByText('An Error has occured')).toBeInTheDocument();
+  });
+
+  it('should catch error for internal service error', async () => {
+    serviceRequest.mockImplementation({});
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
+    const { getByTestId, getByText } = renderDom;
+    fireEvent.click(getByTestId('edit-post-button'));
+    await new Promise((_) => setTimeout(_, 500));
+    const labelInput = getByTestId('label');
+    const titleInput = getByTestId('title');
+    const contentInput = getByTestId('content');
+
+    fireEvent.change(labelInput, { target: { value: 'testLabel' } });
+    fireEvent.change(titleInput, { target: { value: 'testTitle' } });
+    fireEvent.change(contentInput, { target: { value: 'testContent' } });
+
+    fireEvent.click(getByTestId('create-button'));
+    await new Promise((_) => setTimeout(_, 500));
+    expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
   it('should catch error for internal service error', async () => {
     serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
-    const renderDom = render(<CreatePostForm />);
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
     const { getByTestId, getByText } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const labelInput = getByTestId('label');
     const titleInput = getByTestId('title');
@@ -92,30 +132,15 @@ describe('CreatePostForm test suite', () => {
     expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
-  it('should catch error for internal service error', async () => {
-    serviceRequest.mockReturnValue({});
-    const renderDom = render(<CreatePostForm />);
-    const { getByTestId, getByText } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
-    await new Promise((_) => setTimeout(_, 500));
-    const labelInput = getByTestId('label');
-    const titleInput = getByTestId('title');
-    const contentInput = getByTestId('content');
-
-    fireEvent.change(labelInput, { target: { value: 'testLabel' } });
-    fireEvent.change(titleInput, { target: { value: 'testTitle' } });
-    fireEvent.change(contentInput, { target: { value: 'testContent' } });
-
-    fireEvent.click(getByTestId('create-button'));
-    await new Promise((_) => setTimeout(_, 500));
-    expect(getByText('Internal Service Error')).toBeInTheDocument();
-  });
-
-  it('should fail to create post, because of missing label', async () => {
+  it('should fail to edit post, because of missing label', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<CreatePostForm />);
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
     const { getByTestId } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const labelInput = getByTestId('label');
     const titleInput = getByTestId('title');
@@ -128,11 +153,15 @@ describe('CreatePostForm test suite', () => {
     expect(serviceRequest).not.toHaveBeenCalled();
   });
 
-  it('should fail to create post, because of missing title', async () => {
+  it('should fail to edit post, because of missing title', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<CreatePostForm />);
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
     const { getByTestId } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const contentInput = getByTestId('content');
 
@@ -143,9 +172,13 @@ describe('CreatePostForm test suite', () => {
 
   it('should fail to create post, because of missing content', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<CreatePostForm />);
+    const renderDom = render(
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <EditPostForm />
+      </StateProvider>,
+    );
     const { getByTestId } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
+    fireEvent.click(getByTestId('edit-post-button'));
     await new Promise((_) => setTimeout(_, 500));
     const titleInput = getByTestId('title');
 

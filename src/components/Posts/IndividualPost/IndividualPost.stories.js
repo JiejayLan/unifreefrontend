@@ -6,8 +6,33 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { IndividualPost } from './IndividualPost';
 import config from '../../../config';
+import { StateProvider } from '../../StateProvider';
 
 const IndividualPosts = () => {
+  const initialState = {
+    post: {
+      label: 'sample',
+      title: 'sample',
+      content: 'sample',
+      updatedAt: '',
+      username: '',
+      postID: 1,
+      posterID: 1,
+    },
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'changePost':
+        return {
+          ...state,
+          post: action.newPost,
+        };
+      default:
+        return state;
+    }
+  };
+
   const path = '/api/v1/user/getpostbyid?';
   const domain = config.apiDomain;
   const mocks = new MockAdapter(axios);
@@ -32,7 +57,9 @@ const IndividualPosts = () => {
   mocks.onGet(postIDApi).reply(200, payLoads);
 
   return (
-    <IndividualPost />
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <IndividualPost />
+    </StateProvider>
   );
 };
 

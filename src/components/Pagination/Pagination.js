@@ -52,7 +52,7 @@ export const Pagination = () => {
               value={pageSize}
               onChange={handlePageSizeChange}
             >
-              { pageSizeOption.map((size) => <MenuItem key={size} value={size}>{size}</MenuItem>) }
+              {pageSizeOption.map((size) => <MenuItem key={size} value={size}>{size}</MenuItem>)}
             </Select>
           </FormControl>
         </Grid>

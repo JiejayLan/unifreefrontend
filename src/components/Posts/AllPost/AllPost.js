@@ -87,21 +87,18 @@ export const AllPost = () => {
 
   return (
     <>
-      <>
-        <CssBaseline />
-        <Container maxWidth="lg">
-          <main>
-            {posts[0] && <MainPost mainPost={posts[0]} />}
-            <Grid container spacing={4}>
-              {subPosts.map((post) => (
-                <SubPost post={post} key={post.postID + post.title} />
-              ))}
-            </Grid>
-            <Pagination />
-          </main>
-        </Container>
-      </>
-      )
+      <CssBaseline />
+      <Container maxWidth="lg">
+        <main>
+          {posts[0] && <MainPost mainPost={posts[0]} />}
+          <Grid container spacing={4}>
+            {subPosts.map((post) => (
+              <SubPost post={post} key={post.postID + post.title} />
+            ))}
+          </Grid>
+          <Pagination />
+        </main>
+      </Container>
     </>
   );
 };
