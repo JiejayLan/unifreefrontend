@@ -8,14 +8,13 @@ import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
 import { Pagination } from '../../Pagination';
-// import config from '../../../config';
+import config from '../../../config';
 
-// const path = '/api/v1/post/viewcomments';
-// const domain = config.apiDomain;
+const path = '/api/v1/post/viewcomments';
+const domain = config.apiDomain;
 
 const preparePayload = (method, headers, params) => {
-//   const url = `https://${domain}${path}`;
-  const url = 'http://localhost:8081/api/v1/post/viewcomments';
+  const url = `https://${domain}${path}`;
   return {
     method,
     url,
@@ -36,7 +35,6 @@ export const ViewComments = () => {
 
   const handleSuccessData = (data) => {
     const { comments: newComments, totalPages } = data;
-    // setIsLoad(true);
     dispatch({
       type: 'changeComment',
       newComments,
@@ -114,10 +112,10 @@ export const ViewComments = () => {
                   />
                 </ListItem>
               ))}
+              <Pagination />
             </List>
           )
           : 'No Comment'}
-        <Pagination />
       </List>
     </div>
   );
