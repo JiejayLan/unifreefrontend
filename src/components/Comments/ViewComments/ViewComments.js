@@ -68,7 +68,8 @@ export const ViewComments = () => {
 
   useEffect(() => {
     fetchAllComments();
-  }, [page.currentPage, page.pageSize, page.totalPages]);
+    // eslint-disable-next-line
+  }, [page.currentPage, page.pageSize]);
 
   return (
     <div>

@@ -55,7 +55,6 @@ export const IndividualPost = () => {
     };
     fetchPost();
     // eslint-disable-next-line
-    console.log(post);
   }, [post.title, post.content, post.label]);
 
   return (
