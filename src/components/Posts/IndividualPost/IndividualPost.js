@@ -5,7 +5,7 @@ import {
 import cookie from 'react-cookies';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
-import { CommentBox } from '../../Forms/CommentBox';
+import { CommentInput } from '../../Forms/CommentInput';
 import useStyles from './style';
 import config from '../../../config';
 
@@ -97,7 +97,7 @@ export const IndividualPost = () => {
           {post.content}
         </Typography>
       </div>
-      <CommentBox postID={post.postID} />
+      <CommentInput postID={post.postID} />
     </Container>
   );
 };

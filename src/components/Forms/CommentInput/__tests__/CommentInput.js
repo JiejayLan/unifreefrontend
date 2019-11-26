@@ -1,7 +1,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { CommentBox } from '../CommentBox';
+import { CommentInput } from '../CommentInput';
 import { serviceRequest } from '../../../../services/serviceRequest';
 
 jest.mock('../../../../services/serviceRequest');
@@ -27,13 +27,13 @@ describe('CommentBox Test Suite', () => {
   });
 
   it('renders without crashing', () => {
-    const { baseElement } = render(<CommentBox />);
+    const { baseElement } = render(<CommentInput />);
     expect(baseElement.outerHTML).toBeDefined();
   });
 
   it('create comment successfully', async () => {
     serviceRequest.mockImplementation(async () => (successPayload));
-    const renderDom = render(<CommentBox />);
+    const renderDom = render(<CommentInput />);
     const { container } = renderDom;
     const commentInput = container.querySelector('textarea');
     fireEvent.change(commentInput, { target: { value: 'comment' } });
@@ -44,7 +44,7 @@ describe('CommentBox Test Suite', () => {
 
   it('should catch Internal Service Error', async () => {
     serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
-    const renderDom = render(<CommentBox />);
+    const renderDom = render(<CommentInput />);
     const { container, getByText } = renderDom;
     const commentInput = container.querySelector('textarea');
     fireEvent.change(commentInput, { target: { value: 'comment' } });

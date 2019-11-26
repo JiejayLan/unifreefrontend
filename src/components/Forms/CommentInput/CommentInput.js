@@ -4,7 +4,6 @@ import {
   CssBaseline,
   TextField,
   Button,
-  Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import cookie from 'react-cookies';
@@ -29,7 +28,7 @@ const preparePayload = (method, data) => {
 };
 
 
-export const CommentBox = (props) => {
+export const CommentInput = (props) => {
   const [content, setContent] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -63,24 +62,18 @@ export const CommentBox = (props) => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="lg">
       <CssBaseline />
-      <Typography
-        variant="h5"
-        align="left"
-        className={classes.title}
-      >
-        Leave a Comment
-      </Typography>
       {isError && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
           type="text"
+          rowsMax={5}
           multiline
           disableUnderline
           autoComplete="on"
-          label="Write comment"
+          label="Leave a comment"
           margin="normal"
           variant="outlined"
           value={content}
@@ -104,6 +97,6 @@ export const CommentBox = (props) => {
   );
 };
 
-CommentBox.propTypes = {
+CommentInput.propTypes = {
   postID: PropTypes.number.isRequired,
 };

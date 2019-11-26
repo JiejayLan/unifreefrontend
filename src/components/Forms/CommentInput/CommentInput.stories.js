@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withInfo } from '@storybook/addon-info';
-import { CommentBox } from './CommentBox';
+import { CommentInput } from './CommentInput';
 
 storiesOf('Form', module)
   .add('CommentBox',
@@ -12,7 +12,7 @@ storiesOf('Form', module)
     })(() => (
       <>
         <h2>Sample post</h2>
-        <CommentBox />
+        <CommentInput />
       </>
     )),
     {
