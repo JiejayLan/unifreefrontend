@@ -20,7 +20,6 @@ export const ScrollToTop = (props) => {
     window.scroll({
       left: 0,
       top: window.pageYOffset - scrollStep,
-      behavior: 'smooth',
     });
   };
 
