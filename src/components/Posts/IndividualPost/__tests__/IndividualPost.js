@@ -70,11 +70,6 @@ describe('Individual Post test', () => {
     },
   };
 
-  // const failPayLoad = {
-  //   status: 'error',
-  //   message: 'Cannot read property "dataValues" of null',
-  // };
-
   beforeAll(() => {
     // eslint-disable-next-line no-console
     console.error = jest.fn();
@@ -105,26 +100,4 @@ describe('Individual Post test', () => {
     await new Promise((_) => setTimeout(_, 100));
     expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
   });
-
-  // it('should catch error for internal service error', async () => {
-  //   serviceRequest.mockReturnValue(failPayLoad);
-  //   const { baseElement } = render(
-  //     <StateProvider initialState={initialState} reducer={mockReducer}>
-  //       <IndividualPost />
-  //     </StateProvider>,
-  //   );
-  //   await new Promise((_) => setTimeout(_, 100));
-  //   expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
-  // });
-
-  // it('should catch error for internal service error', async () => {
-  //   serviceRequest.mockReturnValue({});
-  //   const { baseElement } = render(
-  //     <StateProvider initialState={initialState} reducer={mockReducer}>
-  //       <IndividualPost />
-  //     </StateProvider>,
-  //   );
-  //   await new Promise((_) => setTimeout(_, 100));
-  //   expect(expect(baseElement.outerHTML).toBe('<body><div></div></body>'));
-  // });
 });

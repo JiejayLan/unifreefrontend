@@ -1,7 +1,6 @@
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 import { ViewComments } from '../ViewComments';
 import { StateProvider } from '../../../StateProvider';
 import { serviceRequest } from '../../../../services/serviceRequest';
@@ -61,11 +60,9 @@ describe('ViewComments component test suits', () => {
   it('should render without crash when comments existed', () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
     const { getByText } = render(
-      <MemoryRouter>
-        <StateProvider initialState={initialState} reducer={mockReducer}>
-          <ViewComments />
-        </StateProvider>
-      </MemoryRouter>,
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <ViewComments />
+      </StateProvider>,
     );
     expect(getByText('COMMENTS')).toBeInTheDocument();
   });
@@ -73,11 +70,9 @@ describe('ViewComments component test suits', () => {
   it('should render without crash when comment do not exist', () => {
     serviceRequest.mockImplementation(async () => (failPayLoad));
     const { getByText } = render(
-      <MemoryRouter>
-        <StateProvider initialState={initialStatesForNoComment} reducer={mockReducer}>
-          <ViewComments />
-        </StateProvider>
-      </MemoryRouter>,
+      <StateProvider initialState={initialStatesForNoComment} reducer={mockReducer}>
+        <ViewComments />
+      </StateProvider>,
     );
     expect(getByText('No Comment')).toBeInTheDocument();
   });
@@ -85,11 +80,9 @@ describe('ViewComments component test suits', () => {
   it('should catch internal service error', async () => {
     serviceRequest.mockImplementation(async () => { throw new Error('Internal Service Error'); });
     const { getByText } = render(
-      <MemoryRouter>
-        <StateProvider initialState={initialState} reducer={mockReducer}>
-          <ViewComments />
-        </StateProvider>
-      </MemoryRouter>,
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <ViewComments />
+      </StateProvider>,
     );
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('Internal Service Error')).toBeInTheDocument();
@@ -98,11 +91,9 @@ describe('ViewComments component test suits', () => {
   it('should catch internal service error', async () => {
     serviceRequest.mockReturnValue({});
     const { getByText } = render(
-      <MemoryRouter>
-        <StateProvider initialState={initialState} reducer={mockReducer}>
-          <ViewComments />
-        </StateProvider>
-      </MemoryRouter>,
+      <StateProvider initialState={initialState} reducer={mockReducer}>
+        <ViewComments />
+      </StateProvider>,
     );
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('Internal Service Error')).toBeInTheDocument();

@@ -4,7 +4,6 @@ import {
 } from '@material-ui/core';
 import cookie from 'react-cookies';
 import { Redirect } from 'react-router-dom';
-// import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import useStyles from './style';
 import config from '../../../config';
@@ -30,7 +29,6 @@ export const IndividualPost = () => {
   const classes = useStyles();
   const [{ post }, dispatch] = useStateValue();
   const [isError, setIsError] = useState(false);
-  // const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
 
   useEffect(() => {
     const urls = window.location.href;
@@ -53,11 +51,6 @@ export const IndividualPost = () => {
         }
       } catch (err) {
         setIsError(true);
-        // const newErrorInfo = {
-        //   isError: true,
-        //   errorMsg: 'Internal Service Error, Please Return to the Home Page',
-        // };
-        // setErrorInfo(newErrorInfo);
       }
     };
     fetchPost();
@@ -69,7 +62,6 @@ export const IndividualPost = () => {
     <Container maxWidth="md">
       {post.obsolete && <Redirect to="/" />}
       {isError && <Redirect to="/" />}
-      {/* {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)} */}
       <div>
         <Typography
           component="h1"

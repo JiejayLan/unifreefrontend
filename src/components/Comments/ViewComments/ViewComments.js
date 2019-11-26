@@ -68,7 +68,7 @@ export const ViewComments = () => {
 
   useEffect(() => {
     fetchAllComments();
-  }, [page.currentPage, page.pageSize]);
+  }, [page.currentPage, page.pageSize, page.totalPages]);
 
   return (
     <div>
