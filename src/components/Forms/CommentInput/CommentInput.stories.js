@@ -16,5 +16,6 @@ storiesOf('Form', module)
       </>
     )),
     {
-      notes: 'note',
+      notes: 'This components is a textarea for users to write and post commments.'
+      + 'max number of lines = 5. This component utilizes the postComment functionality from the backend',
     });
