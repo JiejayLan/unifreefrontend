@@ -59,8 +59,7 @@ export const IndividualPost = () => {
 
   return (
     <Container maxWidth="md">
-      {post.obsolete && <Redirect to="/" />}
-      {isError && <Redirect to="/" />}
+      {(post.obsolete || isError) && <Redirect to="/" />}
       <div>
         <Typography
           component="h1"
