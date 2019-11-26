@@ -9,7 +9,11 @@ export const useStyle = makeStyles((theme) => ({
   title: {
     borderBottom: '2px solid #000',
   },
+  input: {
+    marginLeft: -28,
+  },
   button: {
     marginTop: theme.spacing(1),
+    marginLeft: -28,
   },
 }));

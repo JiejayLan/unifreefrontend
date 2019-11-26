@@ -73,8 +73,9 @@ export const CommentInput = (props) => {
           multiline
           disableUnderline
           autoComplete="on"
+          className={classes.input}
+          inputProps={{ maxLength: 600 }}
           label="Leave a comment"
-          margin="normal"
           variant="outlined"
           value={content}
           onChange={handleChange}
