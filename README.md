@@ -1,18 +1,48 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/94d7ef4074e419b84e5f/maintainability)](https://codeclimate.com/github/JiejayLan/unifreefrontend/maintainability) [![Build Status](https://travis-ci.org/JiejayLan/unifreefrontend.svg?branch=develop)](https://travis-ci.org/JiejayLan/unifreefrontend) [![Coverage Status](https://coveralls.io/repos/github/JiejayLan/unifreefrontend/badge.svg?branch=develop&service=github)](https://coveralls.io/github/JiejayLan/unifreefrontend?branch=develop)
 
-## UniFree Frontend Master Branch Deploy
-[Link](https://master.d1rfx6pqw4meql.amplifyapp.com/)
+# UniFree
+- This project is our class project for CSC59939, instructed by Nikolai Avteniev
 
-## UniFree Frontend Develop Branch Deploy
-[Link](https://develop.d2umjgzotd25pz.amplifyapp.com/)
+## UniFree Frontend 
+[Production Site](https://master.d1rfx6pqw4meql.amplifyapp.com/)
+[Develop Branch Site](https://develop.d2umjgzotd25pz.amplifyapp.com/)
 
-## UniFree Frontend Repo
-[Link](https://github.com/JiejayLan/unifreefrontend)
+## UniFree Backend
+[Github Repo](https://github.com/songrenzhao/rdb-crud-microservice)
 
-## UniFree Backend Repo
-[Link](https://github.com/songrenzhao/rdb-crud-microservice)
-## Document
-[Link](https://jiejaylan.github.io/unifreefrontend/docs)
+## Built With
+
++ [Create React App](https://github.com/facebook/create-react-app) - Create new React App with no build configuration
++ [React](https://reactjs.org/) - Building user interfaces
++ [Axios](https://github.com/axios/axios) - Promise based HTTP client
++ [Material-UI](https://material-ui.com/) - React UI framework
++ [Storybook.js](https://github.com/storybookjs/storybook) - React component documentation
++ [Jest](https://jestjs.io/) - JavaScript testing Framework
++ [React Testing Library](https://github.com/testing-library/react-testing-library) - React DOM testing utilities 
+
+## Getting Started
+
+1. Clone repo
+
+2. Download [Node.js](https://nodejs.org/en/download/)
+
+3. Install all npm packages
+
+```
+$ npm install
+```
+
+4. Setup .env file
+
+- add .env file at root of project folder
+
+5. Run command to start development server
+
+```
+$ npm run start
+```
+## Frontend Documentation
+[Storybook.js](https://jiejaylan.github.io/unifreefrontend/docs)
 <hr>
 
 # Team Members
@@ -23,6 +53,3 @@
 - Jie Lan
 - Enger Then
 
-# Project: UniFree
-- This project is our class project for CSC59939, instructed by Nikolai Avteniev
-- This is a frontend repo for our project UniFree, the front end repo can be found [here](https://github.com/JiejayLan/unifreefrontend)
