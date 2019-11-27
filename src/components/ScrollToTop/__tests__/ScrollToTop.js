@@ -5,6 +5,7 @@ import { ScrollToTop } from '../ScrollToTop';
 
 describe('ElevationScroll Test Suit', () => {
   beforeAll(() => {
+    // Silence console.error
     // eslint-disable-next-line no-console
     console.error = jest.fn();
   });

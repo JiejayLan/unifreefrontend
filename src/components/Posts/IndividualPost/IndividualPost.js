@@ -5,6 +5,7 @@ import {
 import cookie from 'react-cookies';
 import { Redirect } from 'react-router-dom';
 import { serviceRequest } from '../../../services/serviceRequest';
+import { CommentInput } from '../../Forms/CommentInput';
 import useStyles from './style';
 import config from '../../../config';
 import { ViewComments } from '../../Comments/ViewComments';
@@ -101,6 +102,7 @@ export const IndividualPost = () => {
           {post.content}
         </Typography>
       </div>
+      <CommentInput postID={post.postID} />
       <ViewComments />
     </Container>
   );
