@@ -3,11 +3,14 @@ import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 import cookie from 'react-cookies';
 import { Dialog } from '@material-ui/core';
+import { Edit as EditIcon } from '@material-ui/icons';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { PostForm } from '../PostForm/PostForm';
+import { useStateValue } from '../../StateProvider';
+import useStyles from './style';
 
-const path = '/api/v1/user/createpost';
+const path = '/api/v1/user/updatepost';
 const domain = config.apiDomain;
 
 const preparePayload = (method, data) => {
@@ -22,10 +25,11 @@ const preparePayload = (method, data) => {
   };
 };
 
-export const CreatePostForm = () => {
+export const EditPostForm = () => {
+  const classes = useStyles();
+  const [{ post }, dispatch] = useStateValue();
   const [open, setOpen] = useState(false);
   const [isValidPost, setIsValidPost] = useState(false);
-  const [Url, setUrl] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
 
   const handleClickOpen = () => {
@@ -39,14 +43,17 @@ export const CreatePostForm = () => {
 
   const handleCreate = async (formData) => {
     try {
-      const requestPayload = preparePayload('post', formData);
+      const requestPayload = preparePayload('put', { postID: post.postID, ...formData });
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
-        setUrl(`/viewpost/${response.data.postID}`);
+        dispatch({
+          type: 'changePost',
+          newPost: { ...post, ...formData },
+        });
         handleClose();
         setIsValidPost(true);
       } else if (response.status && response.status === 'error') {
-        setErrorMsg('An Error has occurred');
+        setErrorMsg('An Error has occured');
       } else {
         throw new Error('Internal Service Error');
       }
@@ -57,15 +64,23 @@ export const CreatePostForm = () => {
 
   return (
     <>
-      {isValidPost && <Redirect to={Url} />}
-      <Button data-testid="create-post-button" variant="outlined" color="inherit" onClick={handleClickOpen}>
-        Create Post
+      {isValidPost && <Redirect to={`/viewpost/${post.postID}`} />}
+      <Button
+        data-testid="edit-post-button"
+        variant="contained"
+        size="small"
+        onClick={handleClickOpen}
+        startIcon={<EditIcon />}
+        className={classes.editBtn}
+      >
+        Edit
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <PostForm
           handleCreate={handleCreate}
           handleClose={handleClose}
           errorMsg={errorMsg}
+          post={{ label: post.label, title: post.title, content: post.content }}
         />
       </Dialog>
     </>
