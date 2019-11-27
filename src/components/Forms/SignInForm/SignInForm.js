@@ -49,6 +49,7 @@ export const SignInForm = () => {
         const { data } = response;
         const jwtToken = `bearer ${data.token}`;
         cookie.save('jwtToken', jwtToken, { path: '/', maxAge: expiredTime });
+        cookie.save('username', formData.username, { path: '/', maxAge: expiredTime });
         setIsLogin(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Invalid username or password');

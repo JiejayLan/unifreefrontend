@@ -4,10 +4,38 @@ import { withInfo } from '@storybook/addon-info';
 import StoryRouter from 'storybook-react-router';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { MemoryRouter } from 'react-router-dom';
 import { IndividualPost } from './IndividualPost';
 import config from '../../../config';
+import { StateProvider } from '../../StateProvider';
 
 const IndividualPosts = () => {
+  const initialState = {
+    post: {
+      label: 'general',
+      title: '',
+      content: '',
+      updatedAt: '',
+      username: '',
+      postID: 1,
+      posterID: 1,
+    },
+    comments: [],
+    page: { pageSize: 10, currentPage: 1, totalPages: 1 },
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'changePost':
+        return {
+          ...state,
+          post: action.newPost,
+        };
+      default:
+        return state;
+    }
+  };
+
   const path = '/api/v1/user/getpostbyid?';
   const domain = config.apiDomain;
   const mocks = new MockAdapter(axios);
@@ -16,23 +44,22 @@ const IndividualPosts = () => {
   const payLoads = {
     status: 'success',
     data: {
-      canEdit: true,
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. ',
-      createdAt: '2019-11-10T15:40:29.201Z',
-      label: 'general',
-      obsolete: false,
-      postID: 183,
-      posterID: 55,
-      title: 'Lorem Ipsum',
-      updatedAt: '2019-11-10T15:40:29.201Z',
-      username: 'jielan3',
+      label: 'sample',
+      title: 'sample title',
+      content: 'This is a sample content for the sample post with sample title',
+      updatedAt: '2019-11-07T09:26:51.822Z',
+      username: 'sample',
+      postID: 1,
+      posterID: 1,
     },
   };
 
   mocks.onGet(postIDApi).reply(200, payLoads);
 
   return (
-    <IndividualPost />
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <IndividualPost />
+    </StateProvider>
   );
 };
 
@@ -43,4 +70,8 @@ storiesOf('Post', module)
       text: 'description: Display a specific post with postID get from URL',
       inline: false,
       source: false,
-    })(() => <IndividualPosts />));
+    })(() => (
+      <MemoryRouter>
+        <IndividualPosts />
+      </MemoryRouter>
+    )));
