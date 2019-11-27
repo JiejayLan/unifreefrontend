@@ -14,11 +14,11 @@ import { ErrorMessage } from '../../ErrorMessage';
 
 const path = '/api/v1/post/postcomment';
 const domain = config.apiDomain;
-
 const preparePayload = (method, data) => {
-  const token = cookie.load('jwtoken');
+  const token = cookie.load('jwtToken');
   const requestHeaders = { Authorization: token };
   const url = `https://${domain}${path}`;
+
   return {
     method,
     url,
@@ -26,7 +26,6 @@ const preparePayload = (method, data) => {
     headers: requestHeaders,
   };
 };
-
 
 export const CommentInput = (props) => {
   const [content, setContent] = useState('');
