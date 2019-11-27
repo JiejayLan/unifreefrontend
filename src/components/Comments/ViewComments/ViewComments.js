@@ -49,7 +49,7 @@ export const ViewComments = () => {
   const fetchAllComments = async () => {
     try {
       const requestPayload = preparePayload('get', commentHeaders,
-        { postID: postId, page: page.currentPage, pageSize: page.pageSize });
+        { postID: postId, currentPage: page.currentPage, pageSize: page.pageSize });
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         const { data } = response;
@@ -104,12 +104,12 @@ export const ViewComments = () => {
                             {commentTime}
                           </Typography>
                         </>
-                  )}
+                      )}
                       secondary={(
                         <Typography className={classes.content}>
                           {comment.content}
                         </Typography>
-                  )}
+                      )}
                     />
                   </ListItem>
                 );
