@@ -114,11 +114,11 @@ export const ViewComments = () => {
                   </ListItem>
                 );
               })}
-              <Pagination />
             </List>
           )
           : 'No Comment'}
       </List>
+      <Pagination />
     </div>
   );
 };
