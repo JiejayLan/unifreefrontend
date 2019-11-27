@@ -47,6 +47,7 @@ export const CommentInput = (props) => {
         const response = await serviceRequest(payload);
         if (response.status && response.status === 'success') {
           setContent('');
+          window.location.reload();
         } else if (response.status && response.status === 'error') {
           setIsError(true);
           setErrorMsg(response.message);
