@@ -69,6 +69,7 @@ export const CommentInput = (props) => {
         <TextField
           fullWidth
           type="text"
+          rows={5}
           rowsMax={5}
           multiline
           disableUnderline
