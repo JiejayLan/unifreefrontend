@@ -3,10 +3,11 @@ import {
   Typography, Container, Chip, Grid,
 } from '@material-ui/core';
 import cookie from 'react-cookies';
+import { Redirect } from 'react-router-dom';
 import { serviceRequest } from '../../../services/serviceRequest';
-import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 import config from '../../../config';
+import { ViewComments } from '../../Comments/ViewComments';
 import { DeletePost } from '../DeletePost';
 import { EditPostForm } from '../../Forms/EditPostForm';
 import { useStateValue } from '../../StateProvider';
@@ -27,7 +28,7 @@ const preparePayload = (method, headers, params) => {
 export const IndividualPost = () => {
   const classes = useStyles();
   const [{ post }, dispatch] = useStateValue();
-  const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const urls = window.location.href;
@@ -49,11 +50,7 @@ export const IndividualPost = () => {
           throw new Error('Internal Service Error');
         }
       } catch (err) {
-        const newErrorInfo = {
-          isError: true,
-          errorMsg: 'Internal Service Error, Please Return to the Home Page',
-        };
-        setErrorInfo(newErrorInfo);
+        setIsError(true);
       }
     };
     fetchPost();
@@ -62,46 +59,49 @@ export const IndividualPost = () => {
 
   return (
     <Container maxWidth="md">
-      {errorInfo.isError && (<ErrorMessage message={errorInfo.errorMsg} styles={{ color: 'red' }} />)}
-      <Typography
-        component="h1"
-        variant="h3"
-        color="inherit"
-        className={classes.title}
-        gutterBottom
-      >
-        {post.title}
-      </Typography>
-      <Grid container className={classes.root} justify="space-between">
-        <Grid item>
-          <Typography
-            component="h3"
-            variant="subtitle1"
-            color="inherit"
-            gutterBottom
-          >
-            {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
-            by
-            {` ${post && post.username}`}
-            <Chip label={post.label} size="small" color="primary" className={classes.chip} />
-          </Typography>
+      {(post.obsolete || isError) && <Redirect to="/" />}
+      <div>
+        <Typography
+          component="h1"
+          variant="h3"
+          color="inherit"
+          className={classes.title}
+          gutterBottom
+        >
+          {post.title}
+        </Typography>
+        <Grid container className={classes.root} justify="space-between">
+          <Grid item>
+            <Typography
+              component="h3"
+              variant="subtitle1"
+              color="inherit"
+              gutterBottom
+            >
+              {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
+              by
+              {` ${post && post.username}`}
+              <Chip label={post.label} size="small" color="primary" className={classes.chip} />
+            </Typography>
+          </Grid>
+          {cookie.load('username') === post.username && (
+            <div>
+              <EditPostForm />
+              <DeletePost />
+            </div>
+          )}
         </Grid>
-        {cookie.load('username') === post.username && (
-          <div>
-            <EditPostForm />
-            <DeletePost />
-          </div>
-        )}
-      </Grid>
-      <hr />
-      <Typography
-        variant="h5"
-        color="inherit"
-        paragraph
-        className={classes.content}
-      >
-        {post.content}
-      </Typography>
+        <hr />
+        <Typography
+          variant="h5"
+          color="inherit"
+          paragraph
+          className={classes.content}
+        >
+          {post.content}
+        </Typography>
+      </div>
+      <ViewComments />
     </Container>
   );
 };
