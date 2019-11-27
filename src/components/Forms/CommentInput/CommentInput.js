@@ -71,7 +71,7 @@ export const CommentInput = (props) => {
           rows={5}
           rowsMax={5}
           multiline
-          disableUnderline
+          disableunderline="true"
           autoComplete="on"
           className={classes.input}
           inputProps={{ maxLength: 600 }}
