@@ -108,10 +108,15 @@ export const ViewComments = () => {
                         </>
                       )}
                       secondary={(
-                        <Typography className={classes.content}>
-                          {comment.content}
-                          {username === comment.username && <DeleteComment commentID={comment.commentID} />}
-                        </Typography>
+                        <>
+                          <Typography className={classes.content}>
+                            {comment.content}
+                          </Typography>
+                          <Typography component="span" className={[classes.right, classes.delete_icon].join(' ')}>
+                            {username === comment.username
+                          && <DeleteComment className={classes.right} commentID={comment.commentID} />}
+                          </Typography>
+                        </>
                       )}
                     />
                   </ListItem>

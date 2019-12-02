@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import cookie from 'react-cookies';
-import { Redirect } from 'react-router-dom';
 import {
   Button,
   Dialog,
@@ -9,14 +8,14 @@ import {
   DialogContent,
   DialogActions,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { Delete as DeleteIcon } from '@material-ui/icons';
 import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
-// import { useStateValue } from '../../StateProvider';
 
-const path = '/api/v1/user/deletecomment';
+const path = '/api/v1/post/deletecomment';
 const domain = config.apiDomain;
 
 const preparePayload = (method, data) => {
@@ -31,12 +30,11 @@ const preparePayload = (method, data) => {
   };
 };
 
-export const DeleteComment = () => {
+export const DeleteComment = (props) => {
   const classes = useStyles();
-
   const [open, setOpen] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const { commentID } = props;
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -50,11 +48,11 @@ export const DeleteComment = () => {
   const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      const requestPayload = preparePayload('delete', { commentID: 2400 });
+      const requestPayload = preparePayload('delete', { commentID });
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         handleClose();
-        setIsDelete(true);
+        window.location.reload(true);
       } else if (response.status && response.status === 'error') {
         setErrorMsg('Authentication Error');
       } else {
@@ -67,7 +65,6 @@ export const DeleteComment = () => {
 
   return (
     <>
-      {isDelete && <Redirect to="/" />}
       <Button
         variant="contained"
         onClick={handleClickOpen}
@@ -85,7 +82,7 @@ export const DeleteComment = () => {
         <DialogContent>
           {(!!errorMsg) && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
           <DialogContentText>
-            Are you sure you want to delete this comment? You cannot undo this action.
+            Are you sure you want to delete this comment?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -102,4 +99,8 @@ export const DeleteComment = () => {
       </Dialog>
     </>
   );
+};
+
+DeleteComment.propTypes = {
+  commentID: PropTypes.number.isRequired,
 };

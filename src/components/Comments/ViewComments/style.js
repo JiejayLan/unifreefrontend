@@ -8,8 +8,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(5),
   },
   content: {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(5),
     color: theme.palette.common.black,
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
   },
   left: {
     display: 'block',
@@ -18,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
   right: {
     display: 'block',
     float: 'right',
+  },
+  delete_icon: {
+    '& .MuiButton-iconSizeSmall': {
+      margin: 0,
+    },
   },
 }));
 
