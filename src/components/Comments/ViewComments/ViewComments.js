@@ -7,6 +7,7 @@ import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
+import { DeleteComment } from '../DeleteComment';
 import { Pagination } from '../../Pagination';
 import config from '../../../config';
 
@@ -108,6 +109,7 @@ export const ViewComments = () => {
                       secondary={(
                         <Typography className={classes.content}>
                           {comment.content}
+                          <DeleteComment />
                         </Typography>
                       )}
                     />
