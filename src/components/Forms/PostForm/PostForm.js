@@ -18,6 +18,10 @@ import useStyles from './style';
 export const PostForm = ({
   handleCreate, handleClose, errorMsg, post,
 }) => {
+  const LABEL_CHAR_LIMIT = 30;
+  const TITLE_CHAR_LIMIT = 50;
+  const CONTENT_CHAR_LIMIT = 2000;
+
   const classes = useStyles();
   const [formData, setForm] = useState({
     label: post.label,
@@ -60,7 +64,7 @@ export const PostForm = ({
             You must filled out all the fields below
           </DialogContentText>
           <TextField
-            inputProps={{ 'data-testid': 'label' }}
+            inputProps={{ 'data-testid': 'label', maxlength: LABEL_CHAR_LIMIT }}
             margin="normal"
             id="label"
             name="label"
@@ -72,9 +76,10 @@ export const PostForm = ({
             autoFocus
             value={formData.label}
             variant="outlined"
+            helperText={`${formData.label.length}/${LABEL_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'title' }}
+            inputProps={{ 'data-testid': 'title', maxlength: TITLE_CHAR_LIMIT }}
             margin="normal"
             id="title"
             name="title"
@@ -85,9 +90,10 @@ export const PostForm = ({
             required
             value={formData.title}
             variant="outlined"
+            helperText={`${formData.title.length}/${TITLE_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'content' }}
+            inputProps={{ 'data-testid': 'content', maxlength: CONTENT_CHAR_LIMIT }}
             multiline
             margin="normal"
             id="content"
@@ -101,6 +107,7 @@ export const PostForm = ({
             variant="outlined"
             rowsMax="10"
             rows="10"
+            helperText={`${formData.content.length}/${CONTENT_CHAR_LIMIT}`}
           />
         </DialogContent>
       </Container>

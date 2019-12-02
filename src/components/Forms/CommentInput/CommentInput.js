@@ -28,6 +28,8 @@ const preparePayload = (method, data) => {
 };
 
 export const CommentInput = (props) => {
+  const INPUT_CHAR_LIMIT = 1000;
+
   const [content, setContent] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -75,11 +77,12 @@ export const CommentInput = (props) => {
           disableunderline="true"
           autoComplete="on"
           className={classes.input}
-          inputProps={{ maxLength: 600 }}
+          inputProps={{ maxLength: INPUT_CHAR_LIMIT }}
           label="Leave a comment"
           variant="outlined"
           value={content}
           onChange={handleChange}
+          helperText={`${content.length}/${INPUT_CHAR_LIMIT}`}
         />
         {
           content !== ''
