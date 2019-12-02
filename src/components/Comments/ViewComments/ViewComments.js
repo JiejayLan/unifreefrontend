@@ -13,6 +13,7 @@ import config from '../../../config';
 
 const path = '/api/v1/post/viewcomments?';
 const domain = config.apiDomain;
+const username = cookie.load('username');
 
 const preparePayload = (method, headers, params) => {
   const url = `https://${domain}${path}`;
@@ -109,7 +110,7 @@ export const ViewComments = () => {
                       secondary={(
                         <Typography className={classes.content}>
                           {comment.content}
-                          <DeleteComment />
+                          {username === comment.username && <DeleteComment commentID={comment.commentID} />}
                         </Typography>
                       )}
                     />
