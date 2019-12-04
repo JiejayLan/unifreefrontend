@@ -37,7 +37,10 @@ export const PostForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!formData.label || !formData.title || !formData.content) return;
+    if (!formData.label.trim() || !formData.title.trim() || !formData.content.trim()) {
+      setForm({ label: 'general', title: '', content: '' });
+      return;
+    }
     handleCreate(formData);
   };
 
@@ -64,7 +67,7 @@ export const PostForm = ({
             You must filled out all the fields below
           </DialogContentText>
           <TextField
-            inputProps={{ 'data-testid': 'label', maxlength: LABEL_CHAR_LIMIT }}
+            inputProps={{ 'data-testid': 'label', maxLength: LABEL_CHAR_LIMIT }}
             margin="normal"
             id="label"
             name="label"
@@ -79,7 +82,7 @@ export const PostForm = ({
             helperText={`${formData.label.length}/${LABEL_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'title', maxlength: TITLE_CHAR_LIMIT }}
+            inputProps={{ 'data-testid': 'title', maxLength: TITLE_CHAR_LIMIT }}
             margin="normal"
             id="title"
             name="title"
@@ -93,7 +96,7 @@ export const PostForm = ({
             helperText={`${formData.title.length}/${TITLE_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'content', maxlength: CONTENT_CHAR_LIMIT }}
+            inputProps={{ 'data-testid': 'content', maxLength: CONTENT_CHAR_LIMIT }}
             multiline
             margin="normal"
             id="content"
