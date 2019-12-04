@@ -41,6 +41,7 @@ export const DeleteComment = (props) => {
   };
 
   const handleClose = () => {
+    console.log('______close______');
     setOpen(false);
     setErrorMsg('');
   };
@@ -49,6 +50,7 @@ export const DeleteComment = (props) => {
     e.preventDefault();
     try {
       const requestPayload = preparePayload('delete', { commentID });
+      console.log('______close______');
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         handleClose();
@@ -86,7 +88,7 @@ export const DeleteComment = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>
+          <Button onClick={handleClose} id="No">
             No
           </Button>
           <Button
