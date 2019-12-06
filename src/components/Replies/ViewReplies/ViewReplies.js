@@ -21,7 +21,7 @@ export const ViewReplies = ({ commentID, replies }) => {
   return (
     replies && replies.map((reply) => (
       // eslint-disable-next-line react/no-array-index-key
-      <ListItem className={classes.reply} key={`${commentID}-${reply.username}`} m={1}>
+      <ListItem data-testid="replyList" className={classes.reply} key={`${commentID}-${reply.username}`} m={1}>
         <ListItemAvatar>
           <Avatar
             alt="profile"
