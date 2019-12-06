@@ -11,7 +11,7 @@ const singleReply = {
 const replies = new Array(10).fill(singleReply);
 
 describe('ViewReplies component test suits', () => {
-  it('should renders with crash with empty replies array', () => {
+  it('should not be rendered with empty replies array', () => {
     const { queryByTestId } = render(<ViewReplies replies={[]} commentID={233} />);
     expect(queryByTestId('replyList')).toBeNull();
   });
