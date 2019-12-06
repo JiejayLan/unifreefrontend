@@ -8,6 +8,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
 import { Pagination } from '../../Pagination';
+import { ViewReplies } from '../../Replies/ViewReplies';
 import config from '../../../config';
 
 const path = '/api/v1/post/viewcomments?';
@@ -83,35 +84,38 @@ export const ViewComments = () => {
               {comments.map((comment) => {
                 const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
                 return (
-                  <ListItem key={comment.commentID} className={classes.list}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt="profile"
-                        src={avatarURL + comment.username}
+                  <>
+                    <ListItem key={comment.commentID} className={classes.list}>
+                      <ListItemAvatar>
+                        <Avatar
+                          alt="profile"
+                          src={avatarURL + comment.username}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={(
+                          <>
+                            <Typography
+                              component="span"
+                              className={classes.left}
+                              color="textPrimary"
+                            >
+                              {comment.username}
+                            </Typography>
+                            <Typography component="span" className={classes.right}>
+                              {commentTime}
+                            </Typography>
+                          </>
+                        )}
+                        secondary={(
+                          <Typography className={classes.content}>
+                            {comment.content}
+                          </Typography>
+                        )}
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={(
-                        <>
-                          <Typography
-                            component="span"
-                            className={classes.left}
-                            color="textPrimary"
-                          >
-                            {comment.username}
-                          </Typography>
-                          <Typography component="span" className={classes.right}>
-                            {commentTime}
-                          </Typography>
-                        </>
-                      )}
-                      secondary={(
-                        <Typography className={classes.content}>
-                          {comment.content}
-                        </Typography>
-                      )}
-                    />
-                  </ListItem>
+                    </ListItem>
+                    <ViewReplies commentID={comment.commentID} replies={comment.reply} />
+                  </>
                 );
               })}
             </List>
