@@ -19,7 +19,7 @@ export const ViewReplies = ({ commentID, replies }) => {
   const avatarURL = 'http://api.adorable.io/avatar/50/';
 
   return (
-    replies.length > 0 && replies.map((reply) => (
+    replies && replies.map((reply) => (
       // eslint-disable-next-line react/no-array-index-key
       <ListItem className={classes.reply} key={`${commentID}-${reply.username}`} m={1}>
         <ListItemAvatar>
