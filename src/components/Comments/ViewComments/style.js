@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     float: 'right',
   },
+  chip: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 export default useStyles;
