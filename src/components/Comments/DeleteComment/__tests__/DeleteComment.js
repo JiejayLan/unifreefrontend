@@ -21,7 +21,7 @@ describe('Delete comment test suite', () => {
     serviceRequest.mockClear();
   });
 
-  it('should edit post successfully', async () => {
+  it('should open delete comment modal successfully', async () => {
     serviceRequest.mockImplementation(async () => (successPayLoad));
     const { getByText, container } = render(
       <DeleteComment commentID={123} />,
