@@ -42,24 +42,26 @@ export const CommentInput = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (content) {
-      try {
-        const data = { postID, content };
-        const payload = preparePayload('post', data);
-        const response = await serviceRequest(payload);
-        if (response.status && response.status === 'success') {
-          setContent('');
-          window.location.reload();
-        } else if (response.status && response.status === 'error') {
-          setIsError(true);
-          setErrorMsg(response.message);
-        } else {
-          throw new Error('Internal Service Error');
-        }
-      } catch (error) {
-        setErrorMsg('Internal Service Error');
+    if (!content.trim()) {
+      setContent('');
+      return;
+    }
+    try {
+      const data = { postID, content };
+      const payload = preparePayload('post', data);
+      const response = await serviceRequest(payload);
+      if (response.status && response.status === 'success') {
+        setContent('');
+        window.location.reload();
+      } else if (response.status && response.status === 'error') {
         setIsError(true);
+        setErrorMsg(response.message);
+      } else {
+        throw new Error('Internal Service Error');
       }
+    } catch (error) {
+      setErrorMsg('Internal Service Error');
+      setIsError(true);
     }
   };
 
