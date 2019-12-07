@@ -41,7 +41,6 @@ export const DeleteComment = (props) => {
   };
 
   const handleClose = () => {
-    console.log('______close______');
     setOpen(false);
     setErrorMsg('');
   };
@@ -50,7 +49,6 @@ export const DeleteComment = (props) => {
     e.preventDefault();
     try {
       const requestPayload = preparePayload('delete', { commentID });
-      console.log('______close______');
       const response = await serviceRequest(requestPayload);
       if (response.status && response.status === 'success') {
         handleClose();
