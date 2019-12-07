@@ -36,8 +36,6 @@ export const ViewReplies = ({ replies }) => {
                 color="textPrimary"
               >
                 {reply.username}
-                {reply.createdAt}
-                {reply.username}
               </Typography>
               <Typography component="span" className={classes.right}>
                 {reply.createdAt.substr(0, reply.createdAt.indexOf('T'))}
