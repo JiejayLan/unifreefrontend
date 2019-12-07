@@ -84,8 +84,8 @@ export const ViewComments = () => {
               {comments.map((comment) => {
                 const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
                 return (
-                  <>
-                    <ListItem key={comment.commentID} className={classes.list}>
+                  <div key={comment.commentID}>
+                    <ListItem className={classes.list}>
                       <ListItemAvatar>
                         <Avatar
                           alt="profile"
@@ -114,8 +114,8 @@ export const ViewComments = () => {
                         )}
                       />
                     </ListItem>
-                    <ViewReplies commentID={comment.commentID} replies={comment.reply} />
-                  </>
+                    <ViewReplies replies={comment.reply} />
+                  </div>
                 );
               })}
             </List>
