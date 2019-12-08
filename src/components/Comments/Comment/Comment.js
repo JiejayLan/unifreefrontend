@@ -2,11 +2,42 @@ import React, { useState } from 'react';
 import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
 } from '@material-ui/core';
-import { string, shape, arrayOf } from 'prop-types';
+import {
+  string, shape, arrayOf, number, bool, func,
+} from 'prop-types';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
+
+const DisplayRepliesButton = (props) => {
+  const { replyNum, replyStatus, changeReplyStatus } = props;
+  const classes = useStyles();
+  return (
+    <Button
+      type="submit"
+      className={classes.button}
+      onClick={() => { changeReplyStatus(!replyStatus); }}
+    >
+      {replyStatus ? (
+        <>
+        HIDE REPLY
+          <ArrowUpwardIcon fontSize="small" />
+        </>
+      ) : (
+        <>
+          {`${replyNum} replies`}
+          <ArrowDownwardIcon fontSize="small" />
+        </>
+      )}
+    </Button>
+  );
+};
+DisplayRepliesButton.propTypes = {
+  replyNum: number.isRequired,
+  replyStatus: bool.isRequired,
+  changeReplyStatus: func.isRequired,
+};
 
 export const Comment = (props) => {
   const { comment } = props;
@@ -15,6 +46,7 @@ export const Comment = (props) => {
   const classes = useStyles();
   const avatarURL = 'http://api.adorable.io/avatar/50/';
   const replyNum = comment.reply ? comment.reply.length : 0;
+
   return (
     <div key={comment.commentID}>
       <ListItem className={classes.list}>
@@ -46,24 +78,14 @@ export const Comment = (props) => {
             )}
         />
       </ListItem>
-      <Button
-        type="submit"
-        className={classes.button}
-        onClick={() => { changeReplyStatus(!replyStatus); }}
-      >
-        {replyStatus ? (
-          <>
-            HIDE REPLY
-            <ArrowUpwardIcon fontSize="small" />
-          </>
-        ) : (
-          <>
-            {`${replyNum} replies`}
-            <ArrowDownwardIcon fontSize="small" />
-          </>
-        )}
-
-      </Button>
+      {replyNum > 0
+      && (
+      <DisplayRepliesButton
+        replyNum={replyNum}
+        replyStatus={replyStatus}
+        changeReplyStatus={changeReplyStatus}
+      />
+      )}
       {replyStatus && <ViewReplies replies={comment.reply} />}
     </div>
   );
