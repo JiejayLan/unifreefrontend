@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
-import { List } from '@material-ui/core';
+import {
+  List,
+} from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
+
 import { Pagination } from '../../Pagination';
+
 import { Comment } from '../Comment';
 import config from '../../../config';
 

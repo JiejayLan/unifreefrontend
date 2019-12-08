@@ -3,11 +3,14 @@ import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
 import { string, shape, arrayOf } from 'prop-types';
+import cookie from 'react-cookies';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
+import { DeleteComment } from '../DeleteComment';
 
 export const Comment = (props) => {
   const { comment } = props;
+  const username = cookie.load('username');
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
   const classes = useStyles();
   const avatarURL = 'http://api.adorable.io/avatar/50/';
@@ -36,9 +39,15 @@ export const Comment = (props) => {
             </>
             )}
           secondary={(
-            <Typography className={classes.content}>
-              {comment.content}
-            </Typography>
+            <>
+              <Typography className={classes.content}>
+                {comment.content}
+              </Typography>
+              <Typography component="span" className={[classes.right, classes.delete_icon].join(' ')}>
+                {username === comment.username
+            && <DeleteComment className={classes.right} commentID={comment.commentID} />}
+              </Typography>
+            </>
             )}
         />
       </ListItem>
