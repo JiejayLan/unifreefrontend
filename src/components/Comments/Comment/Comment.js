@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
 } from '@material-ui/core';
@@ -7,6 +7,8 @@ import { ViewReplies } from '../../Replies/ViewReplies';
 
 export const Comment = (props) => {
   const { comment } = props;
+  const [replyStatus, changeReplyStatus] = useState(false);
+
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
   const classes = useStyles();
   const avatarURL = 'http://api.adorable.io/avatar/50/';
@@ -44,10 +46,12 @@ export const Comment = (props) => {
       <Button
         type="submit"
         className={classes.showReply}
+        onClick={() => { changeReplyStatus(!replyStatus); }}
       >
-          VIEW REPLY
+        {replyStatus ? 'HIDE REPLY' : 'SHOW REPLY'}
+
       </Button>
-      <ViewReplies replies={comment.reply} />
+      {replyStatus && <ViewReplies replies={comment.reply} />}
     </div>
   );
 };
