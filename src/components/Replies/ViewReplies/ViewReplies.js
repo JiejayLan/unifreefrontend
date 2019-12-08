@@ -10,18 +10,17 @@ import {
   arrayOf,
   shape,
   string,
-  number,
 } from 'prop-types';
 import useStyles from './style';
 
-export const ViewReplies = ({ commentID, replies }) => {
+export const ViewReplies = ({ replies }) => {
   const classes = useStyles();
   const avatarURL = 'http://api.adorable.io/avatar/50/';
 
   return (
     replies && replies.map((reply) => (
       // eslint-disable-next-line react/no-array-index-key
-      <ListItem data-testid="replyList" className={classes.reply} key={`${commentID}-${reply.username}`} m={1}>
+      <ListItem className={classes.reply} key={`${reply.username}${reply.createdAt}`} m={1}>
         <ListItemAvatar>
           <Avatar
             alt="profile"
@@ -60,7 +59,6 @@ ViewReplies.defaultProps = {
 };
 
 ViewReplies.propTypes = {
-  commentID: number.isRequired,
   replies: arrayOf(shape({
     content: string,
     username: string,

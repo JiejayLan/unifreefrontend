@@ -1,13 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  reply: {
-    width: 'calc(100% - 48px)',
-    marginLeft: theme.spacing(6),
-    background: '#f6f7fa',
-    border: '1px solid',
-    borderColor: '#eff1f5',
-    borderBottom: 0,
+  list: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(4),
+  },
+  content: {
+    paddingTop: theme.spacing(3),
+    color: theme.palette.common.black,
   },
   left: {
     display: 'block',
@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme) => ({
   right: {
     display: 'block',
     float: 'right',
-  },
-  content: {
-    paddingTop: theme.spacing(3),
   },
 }));
 
