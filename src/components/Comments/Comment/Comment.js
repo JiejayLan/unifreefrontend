@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
 } from '@material-ui/core';
+import cookie from 'react-cookies';
 import {
   string, shape, arrayOf, number, bool, func,
 } from 'prop-types';
@@ -9,6 +10,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
+import { DeleteComment } from '../DeleteComment';
 
 export const DisplayRepliesButton = (props) => {
   const { replyNum, replyStatus, changeReplyStatus } = props;
@@ -42,6 +44,7 @@ DisplayRepliesButton.propTypes = {
 
 export const Comment = (props) => {
   const { comment } = props;
+  const username = cookie.load('username');
   const [replyStatus, changeReplyStatus] = useState(false);
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
   const classes = useStyles();
@@ -73,9 +76,15 @@ export const Comment = (props) => {
             </>
             )}
           secondary={(
-            <Typography className={classes.content}>
-              {comment.content}
-            </Typography>
+            <>
+              <Typography className={classes.content}>
+                {comment.content}
+              </Typography>
+              <Typography component="span" className={[classes.right, classes.delete_icon].join(' ')}>
+                {username === comment.username
+            && <DeleteComment className={classes.right} commentID={comment.commentID} />}
+              </Typography>
+            </>
             )}
         />
       </ListItem>
