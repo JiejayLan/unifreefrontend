@@ -78,7 +78,7 @@ export const ViewComments = () => {
         {page.totalPages > 0
           ? (
             <List>
-              {comments.map((comment) => <Comment comment={comment} />)}
+              {comments.map((comment) => <Comment comment={comment} key={comment.commentID} />)}
             </List>
           )
           : 'No Comment'}

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
 } from '@material-ui/core';
+import { string, shape, arrayOf } from 'prop-types';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 
@@ -52,6 +53,20 @@ export const Comment = (props) => {
 
       </Button>
       {replyStatus && <ViewReplies replies={comment.reply} />}
+      <ViewReplies replies={comment.reply} />
     </div>
   );
+};
+
+Comment.propTypes = {
+  comment: shape({
+    content: string.isRequired,
+    username: string.isRequired,
+    createdAt: string.isRequired,
+    reply: arrayOf(shape({
+      content: string,
+      username: string,
+      createdAt: string,
+    })),
+  }).isRequired,
 };
