@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     float: 'right',
   },
+  button: {
+    marginLeft: theme.spacing(8),
+  },
 }));
 
 export default useStyles;
