@@ -10,7 +10,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 
-const DisplayRepliesButton = (props) => {
+export const DisplayRepliesButton = (props) => {
   const { replyNum, replyStatus, changeReplyStatus } = props;
   const classes = useStyles();
   return (
@@ -38,6 +38,7 @@ DisplayRepliesButton.propTypes = {
   replyStatus: bool.isRequired,
   changeReplyStatus: func.isRequired,
 };
+
 
 export const Comment = (props) => {
   const { comment } = props;
