@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-  Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
+  Typography, Avatar, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
+import { string, shape, arrayOf } from 'prop-types';
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 
@@ -41,13 +42,20 @@ export const Comment = (props) => {
             )}
         />
       </ListItem>
-      <Button
-        type="submit"
-        className={classes.showReply}
-      >
-          VIEW REPLY
-      </Button>
       <ViewReplies replies={comment.reply} />
     </div>
   );
+};
+
+Comment.propTypes = {
+  comment: shape({
+    content: string.isRequired,
+    username: string.isRequired,
+    createdAt: string.isRequired,
+    reply: arrayOf(shape({
+      content: string,
+      username: string,
+      createdAt: string,
+    })),
+  }).isRequired,
 };

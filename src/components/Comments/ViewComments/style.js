@@ -4,7 +4,6 @@ const useStyles = makeStyles((theme) => ({
   commentHeader: {
     marginTop: theme.spacing(5),
   },
-
 }));
 
 export default useStyles;
