@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
 import {
-  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Chip,
+  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
@@ -100,7 +100,6 @@ export const ViewComments = () => {
                           >
                             {comment.username}
                           </Typography>
-                          <Chip label="school" size="small" color="primary" className={classes.chip} />
                           <Typography component="span" className={classes.right}>
                             {commentTime}
                           </Typography>
