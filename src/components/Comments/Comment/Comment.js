@@ -53,7 +53,6 @@ export const Comment = (props) => {
 
       </Button>
       {replyStatus && <ViewReplies replies={comment.reply} />}
-      <ViewReplies replies={comment.reply} />
     </div>
   );
 };
