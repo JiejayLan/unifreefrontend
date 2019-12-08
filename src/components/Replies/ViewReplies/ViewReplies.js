@@ -19,7 +19,7 @@ export const ViewReplies = ({ replies }) => {
 
   return (
     replies && replies.map((reply) => (
-      <ListItem className={classes.reply} key={`${reply.username}${reply.createdAt}`} m={1}>
+      <ListItem data-testid="replyList" className={classes.reply} key={`${reply.username}${reply.createdAt}`} m={1}>
         <ListItemAvatar>
           <Avatar
             alt="profile"
