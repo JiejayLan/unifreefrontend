@@ -81,7 +81,7 @@ export const ReplyForm = () => {
       </Button>
       {replyForm && (
         <form onSubmit={handleSubmit}>
-          <Grid container wrap="nowrap" className={classes.grid}>
+          <Grid container wrap="nowrap" className={classes.grid} spacing={1}>
             <Grid item>
               <Avatar
                 component="span"
@@ -101,6 +101,7 @@ export const ReplyForm = () => {
             //   variant="outlined"
                 value={content}
                 onChange={handleChange}
+                inputProps={{ maxLength: 500 }}
               />
               <Button
                 disabled={!content.trim()}
