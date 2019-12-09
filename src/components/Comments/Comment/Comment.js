@@ -1,46 +1,16 @@
 import React, { useState } from 'react';
 import {
-  Typography, Avatar, ListItem, ListItemAvatar, ListItemText, Button,
+  Typography, Avatar, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
 import cookie from 'react-cookies';
 import {
-  string, shape, arrayOf, number, bool, func,
+  string, shape, arrayOf,
 } from 'prop-types';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 import { DeleteComment } from '../DeleteComment';
-
-export const DisplayRepliesButton = (props) => {
-  const { replyNum, replyStatus, changeReplyStatus } = props;
-  const classes = useStyles();
-  return (
-    <Button
-      type="submit"
-      className={classes.button}
-      onClick={() => { changeReplyStatus(!replyStatus); }}
-    >
-      {replyStatus ? (
-        <>
-        HIDE REPLY
-          <ArrowUpwardIcon fontSize="small" />
-        </>
-      ) : (
-        <>
-          {`${replyNum} replies`}
-          <ArrowDownwardIcon fontSize="small" />
-        </>
-      )}
-    </Button>
-  );
-};
-DisplayRepliesButton.propTypes = {
-  replyNum: number.isRequired,
-  replyStatus: bool.isRequired,
-  changeReplyStatus: func.isRequired,
-};
-
+import { DisplayButton } from '../DisplayButton';
 
 export const Comment = (props) => {
   const { comment } = props;
@@ -90,7 +60,7 @@ export const Comment = (props) => {
       </ListItem>
       {replyNum > 0
       && (
-      <DisplayRepliesButton
+      <DisplayButton
         replyNum={replyNum}
         replyStatus={replyStatus}
         changeReplyStatus={changeReplyStatus}

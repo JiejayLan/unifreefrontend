@@ -24,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
     },
   },
-  button: {
-    marginLeft: theme.spacing(8),
-  },
 }));
 
 export default useStyles;
