@@ -1,6 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
+  body: {
+    textAlign: 'center',
+  },
   reply: {
     width: 'calc(100% - 48px)',
     marginLeft: theme.spacing(6),

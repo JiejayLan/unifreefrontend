@@ -1,19 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Typography, Avatar, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
-import { string, shape, arrayOf } from 'prop-types';
 import cookie from 'react-cookies';
+import {
+  string, shape, arrayOf,
+} from 'prop-types';
+
 import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 import { DeleteComment } from '../DeleteComment';
+import { DisplayButton } from '../DisplayButton';
 
 export const Comment = (props) => {
   const { comment } = props;
   const username = cookie.load('username');
+  const [replyStatus, changeReplyStatus] = useState(false);
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
   const classes = useStyles();
   const avatarURL = 'http://api.adorable.io/avatar/50/';
+  const replyNum = comment.reply ? comment.reply.length : 0;
+
   return (
     <div key={comment.commentID}>
       <ListItem className={classes.list}>
@@ -51,7 +58,15 @@ export const Comment = (props) => {
             )}
         />
       </ListItem>
-      <ViewReplies replies={comment.reply} />
+      {replyNum > 0
+      && (
+      <DisplayButton
+        replyNum={replyNum}
+        replyStatus={replyStatus}
+        changeReplyStatus={changeReplyStatus}
+      />
+      )}
+      {replyStatus && <ViewReplies replies={comment.reply} />}
     </div>
   );
 };
