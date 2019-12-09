@@ -11,12 +11,13 @@ export const useStyle = makeStyles((theme) => ({
   button: {
     float: 'right',
     marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
   },
   avatar: {
     width: 25,
     height: 25,
   },
   grid: {
-    marginLeft: theme.spacing(4),
+    marginLeft: theme.spacing(2),
   },
 }));

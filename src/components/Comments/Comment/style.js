@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  commentHeader: {
-    marginTop: theme.spacing(5),
+  list: {
+    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(4),
   },
   content: {
     paddingTop: theme.spacing(5),
