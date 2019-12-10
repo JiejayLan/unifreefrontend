@@ -5,17 +5,16 @@ import {
 import PropTypes from 'prop-types';
 import cookie from 'react-cookies';
 import { useStyle } from './style';
-// import config from '../../../config';
+import config from '../../../config';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { ErrorMessage } from '../../ErrorMessage';
 
-// const path = '/api/v1/post/postreply';
-// const domain = config.apiDomain;
+const path = '/api/v1/post/postreply';
+const domain = config.apiDomain;
 const preparePayload = (method, data) => {
   const token = cookie.load('jwtToken');
   const requestHeaders = { Authorization: token };
-  // const url = `https://${domain}${path}`;
-  const url = 'http://localhost:8081/api/v1/post/postreply';
+  const url = `https://${domain}${path}`;
   return {
     method,
     url,
@@ -43,8 +42,8 @@ export const ReplyForm = (props) => {
     setReplyForm(true);
   };
   const closeReplyForm = () => {
-    setReplyForm(false);
     setContent('');
+    setReplyForm(false);
   };
 
   const handleSubmit = async (event) => {
@@ -73,7 +72,7 @@ export const ReplyForm = (props) => {
       <CssBaseline />
       {isError && <ErrorMessage message={errorMsg} styles={{ color: 'red' }} />}
       <Button
-        type="submit"
+        data-testid="showReplyButton"
         className={classes.replyButton}
         onClick={openReplyForm}
       >
@@ -97,6 +96,7 @@ export const ReplyForm = (props) => {
                 multiline
                 autoComplete="on"
                 component="span"
+                data-testid="replyInput"
                 className={classes.input}
                 value={content}
                 onChange={handleChange}
@@ -104,6 +104,7 @@ export const ReplyForm = (props) => {
               />
               <Button
                 disabled={!content.trim()}
+                data-testid="replyButton"
                 variant="contained"
                 type="submit"
                 color="primary"
@@ -112,7 +113,7 @@ export const ReplyForm = (props) => {
                 REPLY
               </Button>
               <Button
-                type="submit"
+                data-testid="cancelButton"
                 color="primary"
                 className={classes.button}
                 onClick={closeReplyForm}
