@@ -10,7 +10,6 @@ import { Pagination } from '../../Pagination';
 
 import { Comment } from '../Comment';
 import config from '../../../config';
-import { Label } from '../../Label';
 
 const path = '/api/v1/post/viewcomments?';
 const domain = config.apiDomain;
