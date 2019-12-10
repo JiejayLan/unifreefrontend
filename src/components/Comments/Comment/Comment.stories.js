@@ -11,6 +11,14 @@ const singleComment = {
   numReply: 0,
   createdAt: '2019-11-17T05:20:04.292Z',
   username: 'user',
+  reply: [{ content: 'good test case', username: '323', createdAt: '2011-12-01T05:00:20.004Z' },
+    { content: '123', username: '323', createdAt: '2012-12-01T05:00:20.004Z' },
+    { content: 'good test case', username: '323', createdAt: '2019-12-01T05:00:20.004Z' },
+    { content: '123', username: '323', createdAt: '2013-12-01T05:00:20.004Z' },
+    { content: 'good test case', username: '323', createdAt: '2019-12-01T05:00:20.004Z' },
+    { content: '123', username: '323', createdAt: '2014-12-01T05:00:20.004Z' },
+    { content: 'good test case', username: '323', createdAt: '2019-12-01T05:00:20.004Z' },
+    { content: '123', username: '323', createdAt: '2015-12-01T05:00:20.004Z' }],
 };
 
 storiesOf('Comment', module)
