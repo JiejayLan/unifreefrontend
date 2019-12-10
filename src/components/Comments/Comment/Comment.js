@@ -80,6 +80,7 @@ Comment.propTypes = {
     content: string.isRequired,
     username: string.isRequired,
     createdAt: string.isRequired,
+    label: string.isRequired,
     reply: arrayOf(shape({
       content: string,
       username: string,
