@@ -15,7 +15,7 @@ import { ReplyForm } from '../../Forms/ReplyForm';
 import { Label } from '../../Label';
 
 export const Comment = (props) => {
-  const { comment, label } = props;
+  const { comment } = props;
   const username = cookie.load('username');
   const [replyStatus, changeReplyStatus] = useState(false);
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
@@ -42,7 +42,7 @@ export const Comment = (props) => {
               >
                 {comment.username}
               </Typography>
-              <Label label={label} />
+              <Label label={comment.label} style={classes.label} />
               <Typography component="span" className={classes.right}>
                 {commentTime}
               </Typography>
