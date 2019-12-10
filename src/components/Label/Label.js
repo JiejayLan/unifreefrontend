@@ -5,10 +5,15 @@ import useStyles from './style';
 
 export const Label = ({ label }) => {
   const classes = useStyles();
-  const hasLabel = label !== '';
+  const renderLabel = () => {
+    if (label != null) {
+      return <Chip label={label} size="small" color="primary" className={classes.chip} />;
+    }
+    return undefined;
+  };
   return (
     <>
-      { hasLabel && <Chip label="school" size="small" color="primary" className={classes.chip} /> }
+      { renderLabel() }
     </>
   );
 };
