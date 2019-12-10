@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
-import {
-  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText,
-  List,
-} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
@@ -84,7 +81,7 @@ export const ViewComments = () => {
         {page.totalPages > 0
           ? (
             <List>
-              {comments.map((comment) => <Comment comment={comment} key={comment.commentID} />)}
+              {comments.map((comment) => <Comment comment={comment} label={comment.label} key={comment.commentID} />)}
             </List>
           )
           : 'No Comment'}

@@ -12,9 +12,10 @@ import { ViewReplies } from '../../Replies/ViewReplies';
 import { DeleteComment } from '../DeleteComment';
 import { DisplayButton } from '../DisplayButton';
 import { ReplyForm } from '../../Forms/ReplyForm';
+import { Label } from '../../Label';
 
 export const Comment = (props) => {
-  const { comment } = props;
+  const { comment, label } = props;
   const username = cookie.load('username');
   const [replyStatus, changeReplyStatus] = useState(false);
   const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
@@ -41,6 +42,7 @@ export const Comment = (props) => {
               >
                 {comment.username}
               </Typography>
+              <Label label={label} />
               <Typography component="span" className={classes.right}>
                 {commentTime}
               </Typography>
