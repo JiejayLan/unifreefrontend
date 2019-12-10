@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
 import {
-  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Chip,
+  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText,
 } from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
@@ -9,6 +9,7 @@ import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
 import { Pagination } from '../../Pagination';
 import config from '../../../config';
+import { Label } from '../../Label';
 
 const path = '/api/v1/post/viewcomments?';
 const domain = config.apiDomain;
@@ -100,7 +101,7 @@ export const ViewComments = () => {
                           >
                             {comment.username}
                           </Typography>
-                          <Chip label="school" size="small" color="primary" className={classes.chip} />
+                          <Label label={comment.label} />
                           <Typography component="span" className={classes.right}>
                             {commentTime}
                           </Typography>

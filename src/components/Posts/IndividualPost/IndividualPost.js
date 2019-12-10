@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Typography, Container, Chip, Grid,
+  Typography, Container, Grid,
 } from '@material-ui/core';
 import cookie from 'react-cookies';
 import { Redirect } from 'react-router-dom';
@@ -12,6 +12,7 @@ import { ViewComments } from '../../Comments/ViewComments';
 import { DeletePost } from '../DeletePost';
 import { EditPostForm } from '../../Forms/EditPostForm';
 import { useStateValue } from '../../StateProvider';
+import { Label } from '../../Label';
 
 const path = '/api/v1/user/getpostbyid?';
 const domain = config.apiDomain;
@@ -82,7 +83,7 @@ export const IndividualPost = () => {
               {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
               by
               {` ${post && post.username}`}
-              <Chip label={post.label} size="small" color="primary" className={classes.chip} />
+              <Label label={post.label} />
             </Typography>
           </Grid>
           {cookie.load('username') === post.username && (

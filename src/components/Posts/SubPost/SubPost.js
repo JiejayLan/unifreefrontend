@@ -7,7 +7,6 @@ import {
   CardContent,
   CardMedia,
   Hidden,
-  Chip,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import {
@@ -16,6 +15,7 @@ import {
   shape,
 } from 'prop-types';
 import useStyles from './style';
+import { Label } from '../../Label';
 
 export const SubPost = ({ post }) => {
   const classes = useStyles();
@@ -26,7 +26,7 @@ export const SubPost = ({ post }) => {
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
-              <Chip label={post.label} size="small" color="primary" />
+              <Label label={post.label} />
               <Typography component="h2" variant="h5">
                 {post.title}
               </Typography>
