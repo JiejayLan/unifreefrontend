@@ -9,7 +9,6 @@ describe('Comment component test suits', () => {
     // eslint-disable-next-line no-console
     console.error = jest.fn();
   });
-
   it('should display correct replies content', async () => {
     const commentPayLoad = {
       commentID: 1,
@@ -27,7 +26,7 @@ describe('Comment component test suits', () => {
         comment={commentPayLoad}
       />,
     );
-    fireEvent.click(container.querySelector('button'));
+    fireEvent.click(container.querySelectorAll('button')[1]);
     await new Promise((_) => setTimeout(_, 100));
     expect(getByText('good test case')).toBeInTheDocument();
     expect(container.querySelectorAll('li.MuiListItem-root').length).toBe(3);
@@ -49,6 +48,6 @@ describe('Comment component test suits', () => {
         comment={commentPayLoad}
       />,
     );
-    expect(container.querySelectorAll('button').length).toBe(0);
+    expect(container.querySelectorAll('button').length).toBe(1);
   });
 });

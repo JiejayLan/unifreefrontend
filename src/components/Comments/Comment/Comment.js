@@ -11,6 +11,7 @@ import useStyles from './style';
 import { ViewReplies } from '../../Replies/ViewReplies';
 import { DeleteComment } from '../DeleteComment';
 import { DisplayButton } from '../DisplayButton';
+import { ReplyForm } from '../../Forms/ReplyForm';
 
 export const Comment = (props) => {
   const { comment } = props;
@@ -58,6 +59,7 @@ export const Comment = (props) => {
             )}
         />
       </ListItem>
+      <ReplyForm commentID={comment.commentID} />
       {replyNum > 0
       && (
       <DisplayButton
