@@ -101,6 +101,7 @@ export const ReplyForm = (props) => {
                 value={content}
                 onChange={handleChange}
                 inputProps={{ maxLength: 500 }}
+                helperText={`${content.length}/${500}`}
               />
               <Button
                 disabled={!content.trim()}
