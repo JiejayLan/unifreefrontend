@@ -77,6 +77,7 @@ export const EditPostForm = () => {
       </Button>
       <Dialog fullScreen open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <PostForm
+          editingPost
           handleCreate={handleCreate}
           handleClose={handleClose}
           errorMsg={errorMsg}

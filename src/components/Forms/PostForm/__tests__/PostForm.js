@@ -13,23 +13,13 @@ describe('PostForm test suite', () => {
     content: 'sample content',
   };
 
-  it('renders with default values', () => {
-    const { getByTestId } = render(
-      <PostForm
-        handleCreate={handleCreate}
-        handleClose={handleClose}
-        errorMsg={errorMsg}
-      />,
-    );
-    expect(getByTestId('label').value).toBe('general');
-  });
-
   it('renders with post values', () => {
     const { getByTestId } = render(
       <PostForm
         handleCreate={handleCreate}
         handleClose={handleClose}
         errorMsg={errorMsg}
+        editingPost
         post={post}
       />,
     );

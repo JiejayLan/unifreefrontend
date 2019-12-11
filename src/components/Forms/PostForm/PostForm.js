@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { func, string, shape } from 'prop-types';
+import {
+  func, string, shape, bool,
+} from 'prop-types';
 import {
   TextField,
   Button,
@@ -16,7 +18,7 @@ import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 
 export const PostForm = ({
-  handleCreate, handleClose, errorMsg, post,
+  handleCreate, handleClose, errorMsg, post, editingPost,
 }) => {
   const LABEL_CHAR_LIMIT = 30;
   const TITLE_CHAR_LIMIT = 50;
@@ -24,7 +26,7 @@ export const PostForm = ({
 
   const classes = useStyles();
   const [formData, setForm] = useState({
-    label: post.label,
+    label: editingPost ? post.label : '',
     title: post.title,
     content: post.content,
   });
@@ -37,8 +39,7 @@ export const PostForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!formData.label.trim() || !formData.title.trim() || !formData.content.trim()) {
-      setForm({ label: 'general', title: '', content: '' });
+    if (!formData.title.trim() || !formData.content.trim()) {
       return;
     }
     handleCreate(formData);
@@ -120,16 +121,18 @@ export const PostForm = ({
 
 PostForm.defaultProps = {
   post: {
-    label: 'general',
+    label: '',
     title: '',
     content: '',
   },
+  editingPost: false,
 };
 
 PostForm.propTypes = {
   handleCreate: func.isRequired,
   handleClose: func.isRequired,
   errorMsg: string.isRequired,
+  editingPost: bool,
   post: shape({
     label: string,
     title: string,
