@@ -111,23 +111,6 @@ describe('CreatePostForm test suite', () => {
     expect(getByText('Internal Service Error')).toBeInTheDocument();
   });
 
-  it('should fail to create post, because of missing label', async () => {
-    serviceRequest.mockReturnValue(failPayLoad);
-    const renderDom = render(<CreatePostForm />);
-    const { getByTestId } = renderDom;
-    fireEvent.click(getByTestId('create-post-button'));
-    await new Promise((_) => setTimeout(_, 500));
-    const labelInput = getByTestId('label');
-    const titleInput = getByTestId('title');
-    const contentInput = getByTestId('content');
-
-    fireEvent.change(labelInput, { target: { value: '' } });
-    fireEvent.change(titleInput, { target: { value: 'testTitle' } });
-    fireEvent.change(contentInput, { target: { value: 'testContent' } });
-    fireEvent.click(getByTestId('create-button'));
-    expect(serviceRequest).not.toHaveBeenCalled();
-  });
-
   it('should fail to create post, because of missing title', async () => {
     serviceRequest.mockReturnValue(failPayLoad);
     const renderDom = render(<CreatePostForm />);
