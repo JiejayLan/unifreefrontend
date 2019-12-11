@@ -40,7 +40,6 @@ export const PostForm = ({
   const onSubmit = (e) => {
     e.preventDefault();
     if (!formData.title.trim() || !formData.content.trim()) {
-      setForm({ label: '', title: '', content: '' });
       return;
     }
     handleCreate(formData);
@@ -122,7 +121,7 @@ export const PostForm = ({
 
 PostForm.defaultProps = {
   post: {
-    label: 'general',
+    label: '',
     title: '',
     content: '',
   },
