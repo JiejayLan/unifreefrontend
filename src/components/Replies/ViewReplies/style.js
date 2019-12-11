@@ -11,6 +11,9 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid',
     borderColor: '#eff1f5',
     borderBottom: 0,
+    whiteSpace: 'normal',
+    wordWrap: 'break-word',
+    alignItems: 'flex-start',
   },
   left: {
     display: 'block',
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'right',
   },
   content: {
-    paddingTop: theme.spacing(3),
+    paddingTop: theme.spacing(5),
   },
 }));
 
