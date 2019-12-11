@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
-import {
-  Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText,
-} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';
 import { useStateValue } from '../../StateProvider';
+
 import { Pagination } from '../../Pagination';
+
+import { Comment } from '../Comment';
 import config from '../../../config';
-import { Label } from '../../Label';
 
 const path = '/api/v1/post/viewcomments?';
 const domain = config.apiDomain;
@@ -28,7 +28,6 @@ export const ViewComments = () => {
   const classes = useStyles();
   const [{ comments, page }, dispatch] = useStateValue();
   const [errorInfo, setErrorInfo] = useState({ isError: false, errorMsg: null });
-  const avatarURL = 'http://api.adorable.io/avatar/50/';
 
   const urls = window.location.href;
   const postId = urls.slice(urls.lastIndexOf('/') + 1, urls.length);
@@ -81,41 +80,7 @@ export const ViewComments = () => {
         {page.totalPages > 0
           ? (
             <List>
-              {comments.map((comment) => {
-                const commentTime = comment.createdAt.substr(0, comment.createdAt.indexOf('T'));
-                return (
-                  <ListItem key={comment.commentID} className={classes.list}>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt="profile"
-                        src={avatarURL + comment.username}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={(
-                        <>
-                          <Typography
-                            component="span"
-                            className={classes.left}
-                            color="textPrimary"
-                          >
-                            {comment.username}
-                          </Typography>
-                          <Label label={comment.label} />
-                          <Typography component="span" className={classes.right}>
-                            {commentTime}
-                          </Typography>
-                        </>
-                      )}
-                      secondary={(
-                        <Typography className={classes.content}>
-                          {comment.content}
-                        </Typography>
-                      )}
-                    />
-                  </ListItem>
-                );
-              })}
+              {comments.map((comment) => <Comment comment={comment} key={comment.commentID} />)}
             </List>
           )
           : 'No Comment'}

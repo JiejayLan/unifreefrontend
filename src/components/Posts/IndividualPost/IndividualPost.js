@@ -83,7 +83,7 @@ export const IndividualPost = () => {
               {post && `${post.updatedAt.substr(0, post.updatedAt.indexOf('T'))} `}
               by
               {` ${post && post.username}`}
-              <Label label={post.label} />
+              <Label label={post.label} style={classes.chip} />
             </Typography>
           </Grid>
           {cookie.load('username') === post.username && (

@@ -26,7 +26,7 @@ export const SubPost = ({ post }) => {
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
-              <Label label={post.label} />
+              <Label label={post.label} style={classes.label} />
               <Typography component="h2" variant="h5">
                 {post.title}
               </Typography>

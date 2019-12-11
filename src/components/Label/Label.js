@@ -1,15 +1,13 @@
 import React from 'react';
 import { Chip } from '@material-ui/core';
-import PropTypes from 'prop-types';
-import useStyles from './style';
+import { string } from 'prop-types';
 
-export const Label = ({ label }) => {
-  const classes = useStyles();
+export const Label = ({ label, style }) => {
   const renderLabel = () => {
-    if (label != null) {
-      return <Chip label={label} size="small" color="primary" className={classes.chip} />;
+    if (label) {
+      return <Chip label={label} size="small" color="primary" className={style} />;
     }
-    return undefined;
+    return <span />;
   };
   return (
     <>
@@ -18,6 +16,11 @@ export const Label = ({ label }) => {
   );
 };
 
+Label.defaultProps = {
+  style: '',
+};
+
 Label.propTypes = {
-  label: PropTypes.string.isRequired,
+  label: string.isRequired,
+  style: string,
 };
