@@ -10,7 +10,6 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import useStyles from './style';
 
-
 export const DisplayButton = (props) => {
   const { replyNum, replyStatus, changeReplyStatus } = props;
   const classes = useStyles();

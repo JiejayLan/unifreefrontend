@@ -4,9 +4,10 @@ const useStyles = makeStyles((theme) => ({
   list: {
     marginBottom: theme.spacing(2),
     marginTop: theme.spacing(4),
+    alignItems: 'flex-start',
   },
   content: {
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(2),
     color: theme.palette.common.black,
     whiteSpace: 'normal',
     wordWrap: 'break-word',
