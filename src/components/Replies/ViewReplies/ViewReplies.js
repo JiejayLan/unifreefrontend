@@ -67,7 +67,6 @@ export const ViewReplies = ({ replies }) => {
   );
 };
 
-
 ViewReplies.defaultProps = {
   replies: [],
 };

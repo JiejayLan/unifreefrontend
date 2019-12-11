@@ -55,7 +55,7 @@ export const Comment = (props) => {
               </Typography>
               <Typography component="span" className={[classes.right, classes.delete_icon].join(' ')}>
                 {username === comment.username
-            && <DeleteComment className={classes.right} commentID={comment.commentID} />}
+                && <DeleteComment commentID={comment.commentID} />}
               </Typography>
             </>
             )}
