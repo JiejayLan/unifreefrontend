@@ -3,13 +3,11 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   list: {
     marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(4),
     alignItems: 'flex-start',
   },
-  commentHeader: {
-    marginTop: theme.spacing(5),
-  },
   content: {
-    paddingTop: theme.spacing(5),
+    paddingTop: theme.spacing(2),
     color: theme.palette.common.black,
     whiteSpace: 'normal',
     wordWrap: 'break-word',
@@ -26,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiButton-iconSizeSmall': {
       margin: 0,
     },
+  },
+  label: {
+    marginLeft: theme.spacing(2),
   },
 }));
 

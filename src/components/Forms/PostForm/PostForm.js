@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { func, string, shape } from 'prop-types';
+import {
+  func, string, shape, bool,
+} from 'prop-types';
 import {
   TextField,
   Button,
@@ -16,11 +18,15 @@ import { ErrorMessage } from '../../ErrorMessage';
 import useStyles from './style';
 
 export const PostForm = ({
-  handleCreate, handleClose, errorMsg, post,
+  handleCreate, handleClose, errorMsg, post, editingPost,
 }) => {
+  const LABEL_CHAR_LIMIT = 30;
+  const TITLE_CHAR_LIMIT = 50;
+  const CONTENT_CHAR_LIMIT = 2000;
+
   const classes = useStyles();
   const [formData, setForm] = useState({
-    label: post.label,
+    label: editingPost ? post.label : '',
     title: post.title,
     content: post.content,
   });
@@ -33,7 +39,9 @@ export const PostForm = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!formData.label || !formData.title || !formData.content) return;
+    if (!formData.title.trim() || !formData.content.trim()) {
+      return;
+    }
     handleCreate(formData);
   };
 
@@ -60,21 +68,21 @@ export const PostForm = ({
             You must filled out all the fields below
           </DialogContentText>
           <TextField
-            inputProps={{ 'data-testid': 'label' }}
+            inputProps={{ 'data-testid': 'label', maxLength: LABEL_CHAR_LIMIT }}
             margin="normal"
             id="label"
             name="label"
-            label="Label"
+            label="Label (optional)"
             type="text"
             onChange={handleChange}
             fullWidth
-            required
             autoFocus
             value={formData.label}
             variant="outlined"
+            helperText={`${formData.label.length}/${LABEL_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'title' }}
+            inputProps={{ 'data-testid': 'title', maxLength: TITLE_CHAR_LIMIT }}
             margin="normal"
             id="title"
             name="title"
@@ -85,9 +93,10 @@ export const PostForm = ({
             required
             value={formData.title}
             variant="outlined"
+            helperText={`${formData.title.length}/${TITLE_CHAR_LIMIT}`}
           />
           <TextField
-            inputProps={{ 'data-testid': 'content' }}
+            inputProps={{ 'data-testid': 'content', maxLength: CONTENT_CHAR_LIMIT }}
             multiline
             margin="normal"
             id="content"
@@ -101,6 +110,7 @@ export const PostForm = ({
             variant="outlined"
             rowsMax="10"
             rows="10"
+            helperText={`${formData.content.length}/${CONTENT_CHAR_LIMIT}`}
           />
         </DialogContent>
       </Container>
@@ -111,16 +121,18 @@ export const PostForm = ({
 
 PostForm.defaultProps = {
   post: {
-    label: 'general',
+    label: '',
     title: '',
     content: '',
   },
+  editingPost: false,
 };
 
 PostForm.propTypes = {
   handleCreate: func.isRequired,
   handleClose: func.isRequired,
   errorMsg: string.isRequired,
+  editingPost: bool,
   post: shape({
     label: string,
     title: string,

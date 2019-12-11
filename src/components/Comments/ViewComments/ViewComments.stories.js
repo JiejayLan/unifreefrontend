@@ -46,6 +46,7 @@ const ViewComment = () => {
       numReply: 0,
       createdAt: '2019-11-17T05:20:04.292Z',
       username: 'user',
+      label: 'university',
     };
 
     const comments = new Array(10).fill(singleComment);

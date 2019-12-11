@@ -28,6 +28,8 @@ const preparePayload = (method, data) => {
 };
 
 export const CommentInput = (props) => {
+  const INPUT_CHAR_LIMIT = 1000;
+
   const [content, setContent] = useState('');
   const [isError, setIsError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -40,24 +42,26 @@ export const CommentInput = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (content) {
-      try {
-        const data = { postID, content };
-        const payload = preparePayload('post', data);
-        const response = await serviceRequest(payload);
-        if (response.status && response.status === 'success') {
-          setContent('');
-          window.location.reload();
-        } else if (response.status && response.status === 'error') {
-          setIsError(true);
-          setErrorMsg(response.message);
-        } else {
-          throw new Error('Internal Service Error');
-        }
-      } catch (error) {
-        setErrorMsg('Internal Service Error');
+    if (!content.trim()) {
+      setContent('');
+      return;
+    }
+    try {
+      const data = { postID, content };
+      const payload = preparePayload('post', data);
+      const response = await serviceRequest(payload);
+      if (response.status && response.status === 'success') {
+        setContent('');
+        window.location.reload();
+      } else if (response.status && response.status === 'error') {
         setIsError(true);
+        setErrorMsg(response.message);
+      } else {
+        throw new Error('Internal Service Error');
       }
+    } catch (error) {
+      setErrorMsg('Internal Service Error');
+      setIsError(true);
     }
   };
 
@@ -75,11 +79,12 @@ export const CommentInput = (props) => {
           disableunderline="true"
           autoComplete="on"
           className={classes.input}
-          inputProps={{ maxLength: 600 }}
+          inputProps={{ maxLength: INPUT_CHAR_LIMIT }}
           label="Leave a comment"
           variant="outlined"
           value={content}
           onChange={handleChange}
+          helperText={`${content.length}/${INPUT_CHAR_LIMIT}`}
         />
         {
           content !== ''
