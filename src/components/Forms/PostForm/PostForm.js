@@ -71,11 +71,10 @@ export const PostForm = ({
             margin="normal"
             id="label"
             name="label"
-            label="Label"
+            label="Label (optional)"
             type="text"
             onChange={handleChange}
             fullWidth
-            required
             autoFocus
             value={formData.label}
             variant="outlined"

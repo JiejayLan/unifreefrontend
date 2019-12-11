@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import cookie from 'react-cookies';
-import {
-  List,
-} from '@material-ui/core';
+import { List } from '@material-ui/core';
 import useStyles from './style';
 import { ErrorMessage } from '../../ErrorMessage';
 import { serviceRequest } from '../../../services/serviceRequest';

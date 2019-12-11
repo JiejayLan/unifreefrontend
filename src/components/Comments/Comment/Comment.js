@@ -12,6 +12,7 @@ import { ViewReplies } from '../../Replies/ViewReplies';
 import { DeleteComment } from '../DeleteComment';
 import { DisplayButton } from '../DisplayButton';
 import { ReplyForm } from '../../Forms/ReplyForm';
+import { Label } from '../../Label';
 
 export const Comment = (props) => {
   const { comment } = props;
@@ -41,6 +42,7 @@ export const Comment = (props) => {
               >
                 {comment.username}
               </Typography>
+              <Label label={comment.label} style={classes.label} />
               <Typography component="span" className={classes.right}>
                 {commentTime}
               </Typography>
@@ -78,6 +80,7 @@ Comment.propTypes = {
     content: string.isRequired,
     username: string.isRequired,
     createdAt: string.isRequired,
+    label: string.isRequired,
     reply: arrayOf(shape({
       content: string,
       username: string,

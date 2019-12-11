@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
   },
@@ -9,6 +9,9 @@ const useStyles = makeStyles(() => ({
   },
   cardMedia: {
     width: 160,
+  },
+  label: {
+    marginLeft: theme.spacing(-0.5),
   },
 }));
 

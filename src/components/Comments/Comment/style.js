@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
     },
   },
+  label: {
+    marginLeft: theme.spacing(2),
+  },
 }));
 
 export default useStyles;
