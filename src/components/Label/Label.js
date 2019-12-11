@@ -4,10 +4,10 @@ import { string } from 'prop-types';
 
 export const Label = ({ label, style }) => {
   const renderLabel = () => {
-    if (label != null) {
+    if (label) {
       return <Chip label={label} size="small" color="primary" className={style} />;
     }
-    return undefined;
+    return <span />;
   };
   return (
     <>
