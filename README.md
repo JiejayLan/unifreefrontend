@@ -3,6 +3,10 @@
 # UniFree
 - This project is our class project for CSC59939, instructed by Nikolai Avteniev
 
+# Demo
+<img src='./view.gif' alt='customer View' />
+
+
 ## UniFree Frontend 
 [Production Site](https://master.d1rfx6pqw4meql.amplifyapp.com/)
 [Develop Branch Site](https://develop.d2umjgzotd25pz.amplifyapp.com/)
